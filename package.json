@@ -10,7 +10,7 @@
   "scripts": {
     "start": "electron index.js",
     "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
-    "postinstall": "typings install"
+    "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
     "VisualGit",
@@ -35,6 +35,7 @@
     "bootstrap-submenu": "2.0.4",
     "color-scheme": "0.0.5",
     "core-js": "2.4.0",
+    "crypto-js": "3.1.9-1",
     "electron-debug": "1.0.0",
     "font-awesome": "4.7.0",
     "fs-sync": "1.0.3",
@@ -59,6 +60,7 @@
     "devtron": "1.1.0",
     "electron-packager": "7.0.0",
     "electron-prebuilt": "^1.4.13",
+    "electron-builder": "20.39.0",
     "xo": "0.15.0"
   }
 }
