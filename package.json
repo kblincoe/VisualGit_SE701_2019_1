@@ -58,8 +58,8 @@
   },
   "devDependencies": {
     "devtron": "1.1.0",
-    "electron-packager": "7.0.0",
-    "electron-prebuilt": "^1.4.13",
+    "electron-packager": "13.1.1",
+    "electron": "4.1.0",
     "electron-builder": "20.39.0",
     "xo": "0.15.0"
   }
