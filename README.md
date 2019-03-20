@@ -8,6 +8,9 @@ You can get a summary of our project by reading our [cool poster](https://github
 ### Prerequisites
 
 npm (Node Package Manager) is used to manage VisualGit's dependencies, therefore it is required to install and run VisualGit.
+
+python2, versions of python3 do not work
+
 Follow the installation instructions below:
 
 #### Centos-based systems
@@ -29,6 +32,8 @@ Otherwise download and install the latest version of [Node.j](https://nodejs.org
 
 #### Windows
 Download and install the latest version of  [Node.js](https://nodejs.org/en/) (v6.2.1 or later)
+Download and install [python 2](https://www.python.org/downloads/release/python-2715/)
+Set the enviroment variable PYTHON to point to the python executable
 
 ### Setup
 Clone with either HTTPS or SSH:
@@ -57,6 +62,11 @@ As VisualGit utilises SSH for user authentication, ensure you [generate an SSH k
 
 ### TypeScript
 [TypeScript](https://www.typescriptlang.org/) is a statically-typed superset of JavaScript that compiles into JavaScript. Most of our source files are written in TypeScript (.ts files), therefore you will need to run a TypeScript compiler to compile the source code to JavaScript (.js files) as you make changes, e.g. [typescript-compiler](https://www.npmjs.com/package/typescript-compiler) for Node.
+
+To run the compiler use the following command:
+````
+npm run-script createjs
+````
 
 ### Sass
 [Sass](http://sass-lang.com/) (Syntactically Awesome Style Sheets) is a CSS preprocessor with some handy extra features. All of our Style Sheets are written in Sass (.scss files), which compile into CSS (.css files). Therefore, you will need to a run a Sass-compiler to compile your .scss files into .css files as you make changes, e.g. [node-sass](https://www.npmjs.com/package/node-sass) for Node.
