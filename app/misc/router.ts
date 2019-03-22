@@ -7,7 +7,6 @@ function collpaseSignPanel() {
 }
 
 function switchToClonePanel(){
-  console.log("switch to clone panel");
   hideAuthenticatePanel();
   hideFilePanel();
   hideGraphPanel();
@@ -22,7 +21,6 @@ function switchToMainPanel() {
 }
 
 function switchToAddRepositoryPanel() {
-  console.log("1111111");
   hideAuthenticatePanel();
   hideFilePanel();
   hideGraphPanel();
@@ -124,7 +122,6 @@ function disableDiffPanelEditOnHide(){
 } 
 
 function useSaved() {
-  console.log('button pressed!');
   decrypt();
   loginWithSaved(switchToMainPanel);
 }
