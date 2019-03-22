@@ -108,10 +108,9 @@ function getUserInfo(callback) {
     if (err) {
       return;
     } else {
-      console.log(data.length);
       for (let i = 0; i < data.length; i++) {
         let rep = Object.values(data)[i];
-        console.log(rep['html_url']);
+        console.log(`Getting repo info from: ${rep['html_url']}`);
         displayBranch(rep['full_name'], "repo-dropdown", "selectRepo(this)");
         repoList[rep['full_name']] = rep['html_url'];
       }
@@ -128,11 +127,10 @@ function getUserInfo(callback) {
   //   password: password
   // }).login(scopes, function (err, id, token) {
   //   if (err !== null) {
-  //     console.log("login fail -- " + err);
+      // console.log(`Error in authenticate.ts. Attempting to login, the error is: ${err}`);
   //   }
   //   aid = id;
   //   atoken = token;
-  //   console.log(id, token);
   // });
 }
 
@@ -141,7 +139,6 @@ function selectRepo(ele) {
   let butt = document.getElementById("cloneButton");
   butt.innerHTML = 'Clone ' + ele.innerHTML;
   butt.setAttribute('class', 'btn btn-primary');
-  console.log(url + 'JJJJJJJJ' + ele.innerHTML);
 }
 
 function cloneRepo() {
@@ -150,13 +147,12 @@ function cloneRepo() {
     return;
   }
 
-  console.log("cloneRepo().url = " + url);
+  console.log(`Cloning repo from: ${url}`);
   let splitUrl = url.split("/");
   let local;
   if (splitUrl.length >= 2) {
     local = splitUrl[splitUrl.length - 1];
   }
-  console.log("cloneRepo().local = " + local);
 
   if (local == null) {
     updateModalText("Error: could not define name of repo");
