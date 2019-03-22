@@ -60,7 +60,7 @@ function downloadFunc(cloneURL, fullLocalPath) {
   },
   function(err) {
     updateModalText("Clone Failed - " + err);
-    console.log(`Error in repo.ts. Attempting to clone repo, the error is: ${err}`); // TODO show error on screen
+    console.log(`Error in repo.ts. Attempting to clone repo, the error is: ${err}`);
   });
 }
 
