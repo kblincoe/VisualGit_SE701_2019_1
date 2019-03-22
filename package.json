@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron index.js",
     "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
-    "postinstall": "typings install"
+    "postinstall": "electron-builder install-app-deps && tsc",
+    "createjs": "tsc"
   },
   "keywords": [
     "VisualGit",
@@ -35,6 +36,7 @@
     "bootstrap-submenu": "2.0.4",
     "color-scheme": "0.0.5",
     "core-js": "2.4.0",
+    "crypto-js": "3.1.9-1",
     "electron-debug": "1.0.0",
     "font-awesome": "4.7.0",
     "fs-sync": "1.0.3",
@@ -42,10 +44,10 @@
     "github-username": "3.0.0",
     "jquery": "2.1.1",
     "jquery-contextmenu": "2.4.2",
-    "material-letter-icons": "1.0.7",
-    "node-sass": "3.7.0",
-    "nodegit": "0.13.2",
-    "octonode": "0.7.7",
+    "material-letter-icons": "^1.0.8",
+    "node-sass": "4.11.0",
+    "nodegit": "0.24.1",
+    "octonode": "^0.9.5",
     "opn": "4.0.2",
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
@@ -57,8 +59,10 @@
   },
   "devDependencies": {
     "devtron": "1.1.0",
-    "electron-packager": "7.0.0",
-    "electron-prebuilt": "1.2.8",
+    "electron": "4.1.0",
+    "electron-builder": "20.39.0",
+    "electron-packager": "13.1.1",
+    "typescript": "^3.3.4000",
     "xo": "0.15.0"
   }
 }
