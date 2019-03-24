@@ -38,6 +38,8 @@ Set the enviroment variable PYTHON to point to the python executable
 ### Setup
 Clone with either HTTPS or SSH:
 
+_Please note you must clone this to a location **without** any spaces in the path, otherwise you will get errors when running `npm install`_
+
 #### SSH
 ````
 git clone git@github.com:ElliotWhiley/VisualGit.git
