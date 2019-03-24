@@ -7,6 +7,7 @@ You can get a summary of our project by reading our [cool poster](https://github
 
 ### Prerequisites
 
+
 npm (Node Package Manager) is used to manage VisualGit's dependencies, therefore it is required to install and run VisualGit.
 
 python2, versions of python3 do not work
