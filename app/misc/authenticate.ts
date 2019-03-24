@@ -51,9 +51,10 @@ function ModalSignIn(callback){
 }
 
 function signInPage(callback) {
-
-  if (rememberLogin.checked == true) {
-    encrypt(username, password);
+    console.log("called sign in page");
+    if (document.getElementById("rememberLogin").checked == true) {
+        console.log("sign in remeber checked");
+    encrypt(document.getElementById("username").value, document.getElementById("password").value);
   }
 
   getUserInfo(callback);
