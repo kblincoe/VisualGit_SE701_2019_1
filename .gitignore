@@ -217,6 +217,7 @@ typings/
 # User-specific stuff
 
 # Generated files
+/data.json
 
 # Sensitive or high-churn files
 

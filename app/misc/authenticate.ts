@@ -51,12 +51,11 @@ function ModalSignIn(callback){
 }
 
 function signInPage(callback) {
+    if (document.getElementById("rememberLogin").checked == true) {
+        encrypt(document.getElementById("username").value, document.getElementById("password").value);
+    }
 
-  if (rememberLogin.checked == true) {
-    encrypt(username, password);
-  }
-
-  getUserInfo(callback);
+    getUserInfo(callback);
 }
 
 
@@ -168,7 +167,7 @@ function signInOrOut() {
   let doc = document.getElementById("avatar");
   if (doc.innerHTML == 'Sign out'){
     $('#avatar').removeAttr('data-toggle');
-    
+
     if ((changes == 1) || (CommitButNoPush == 1)){
 			$("#modalW2").modal();
     }
@@ -183,6 +182,6 @@ function redirectToHomePage() {
   window.location.href = "index.html";
   signed = 0;
   changes = 0;
-  CommitButNoPush = 0; 
+  CommitButNoPush = 0;
   //LogInAfterConfirm();
 }
