@@ -124,7 +124,7 @@ function refreshAll(repository) {
     let branchParts = reference.name().split("/");
     branch = branchParts[branchParts.length - 1];
   },function(err) {
-    console.log(`Error in repo.ts. Attempting to refresh branch, the error is: ${err}`);
+    console.log(`Error in repo.ts. Attempting to refresh branch, the error is: ${err}`); // TODO show error on screen
   })
   .then(function() {
     return repository.getReferences(Git.Reference.TYPE.LISTALL);
