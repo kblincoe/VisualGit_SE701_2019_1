@@ -100,7 +100,7 @@ function addAndCommit() {
     if (err.message == "No files selected to commit.") {
       displayModal(err.message);
     } else {
-      updateModalText("Oops, error occours! If u haven't login, please login and try again.");
+      updateModalText("No repository has been cloned yet. Please clone a repository and try again.");
     }
   });
 }
