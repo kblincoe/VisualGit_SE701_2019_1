@@ -6,10 +6,7 @@ function changeColor(color) {
   //     .scheme('mono')
   //     .variation('soft');
   // let colors = scheme.colors();
-  // for (let i = 0; i < colors.length; i++) {
-  //   console.log(colors[i]);
-  // }
-  console.log(color + '   ' + (color === 'white'));
+  console.log(`Color changed to ${color}`);
   let head = document.getElementsByClassName('navbar');
   let headButton = document.getElementsByClassName('navbar-btn');
   let fa = document.getElementsByClassName('fa');
@@ -23,7 +20,6 @@ function changeColor(color) {
   let auth = document.getElementById('authenticate');
   if (color === 'white') {
     for (let i = 0; i < head.length; i++) {
-      console.log(head[i]);
       head[i].className = 'navbar navbar-white';
     }
     for (let i = 0; i < headButton.length; i++) {
@@ -55,7 +51,6 @@ function changeColor(color) {
   }
   else if (color === 'pink') {
     for (var i = 0; i < head.length; i++) {
-            console.log(head[i]);
             head[i].className = 'navbar navbar-pink';
         }
         for (var i = 0; i < headButton.length; i++) {
@@ -85,7 +80,6 @@ function changeColor(color) {
     }
     else if (color === 'blue') {
       for (var i = 0; i < head.length; i++) {
-              console.log(head[i]);
               head[i].className = 'navbar navbar-blue';
           }
           for (var i = 0; i < headButton.length; i++) {
@@ -115,7 +109,6 @@ function changeColor(color) {
     }
     else if (color === 'navy') {
       for (var i = 0; i < head.length; i++) {
-              console.log(head[i]);
               head[i].className = 'navbar navbar-navy';
           }
           for (var i = 0; i < headButton.length; i++) {
@@ -146,7 +139,6 @@ function changeColor(color) {
     }
     else if (color === 'green') {
       for (var i = 0; i < head.length; i++) {
-              console.log(head[i]);
               head[i].className = 'navbar navbar-green';
           }
           for (var i = 0; i < headButton.length; i++) {
@@ -176,7 +168,6 @@ function changeColor(color) {
   } 
   else if (color === 'default') {
     for (let i = 0; i < head.length; i++) {
-      console.log(head[i]);
       head[i].className = 'navbar navbar-inverse';
     }
     for (let i = 0; i < headButton.length; i++) {

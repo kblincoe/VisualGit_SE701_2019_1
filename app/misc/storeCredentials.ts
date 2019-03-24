@@ -37,15 +37,11 @@ function getPasswordTemp() {
 }
 
 function writetoJSON(encryptedUsername, encryptedPassword) {
-      
-   //console.log("encrypted username is: " + encryptedUsername);
    var file = 'data.json';
    var obj = {'username': encryptedUsername.toString(), 'password': encryptedPassword.toString()};
     
    jsonfile.writeFile(file, obj, function (err) {
-     if (err) throw err;
-     console.log('Saved!');
-     
+     if (err) throw err;     
    })
 
 }

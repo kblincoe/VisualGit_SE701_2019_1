@@ -56,7 +56,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-white-style');
-				console.log('white');
 			}
 		},
 		{
@@ -64,7 +63,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-pink-style');
-				console.log('pink');
 			}
 		},
 		{
@@ -72,7 +70,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-blue-style');
-				console.log('blue');
 			}
 		},
 		{
@@ -80,7 +77,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-navy-style');
-				console.log('navy');
 			}
 		},
 		{
@@ -88,7 +84,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-green-style');
-				console.log('green');
 			}
 		},
 		{
@@ -96,7 +91,6 @@ function setMyMenu() {
 			click () {
 				var focusedWindow = BrowserWindow.getFocusedWindow();
 				focusedWindow.webContents.send('change-to-default-style');
-				console.log('default');
 			}
 		}]
 	},

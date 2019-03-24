@@ -330,7 +330,6 @@ function makeBasicNode(c, column: number) {
       let branchName = bname[c.toString()][i];
       let bp = branchName.name().split("/");
       let shortName = bp[bp.length - 1];
-      console.log(shortName + "   " + branchName.isHead().toString());
       if (branchName.isHead()) {
         shortName = "*" + shortName;
       }
@@ -397,7 +396,6 @@ function makeAbsNode(c, column: number) {
         let branchName = bname[c.toString()][i];
         let bp = branchName.name().split("/");
         let shortName = bp[bp.length - 1];
-        console.log(shortName + "   " + branchName.isHead().toString());
         if (branchName.isHead()) {
           shortName = "*" + shortName;
         }
@@ -459,7 +457,6 @@ function makeNode(c, column: number) {
       let branchName = bname[c.toString()][i];
       let bp = branchName.name().split("/");
       let shortName = bp[bp.length - 1];
-      console.log(shortName + "   " + branchName.isHead().toString());
       if (branchName.isHead()) {
         shortName = "*" + shortName;
       }
@@ -491,8 +488,6 @@ function makeNode(c, column: number) {
     reference: reference,
     branch: flag,
   });
-
-  //console.log(commitList[id-1]['id'] + '   ' + id);
 }
 
 function makeEdge(sha: string, parentSha: string) {
