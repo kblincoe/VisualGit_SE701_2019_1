@@ -96,7 +96,7 @@ function openRepository() {
   },
   function(err) {
     updateModalText("Opening Failed - " + err);
-    console.log(`Error in repo.ts. Attempting to open repo, the error is: ${err}`); // TODO show error on screen
+    console.log(`Error in repo.ts. Attempting to open repo, the error is: ${err}`);
   });
 }
 
