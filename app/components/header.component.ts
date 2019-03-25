@@ -51,7 +51,7 @@ import { GraphService } from "../services/graph.service";
           <ul class="navbar-nav navbar-right hidden-xs">
             <li>
               <label id="githubname" style="color:white"></label>
-              <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign in</a>
+              <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
             </li>
           </ul>
           <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse1">

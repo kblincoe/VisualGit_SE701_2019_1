@@ -66,12 +66,7 @@ function addAndCommit() {
   })
 
   .then(function(parent) {
-    let sign;
-    if (getUsernameTemp() !== null && getPasswordTemp !== null) {
-      sign = Git.Signature.now(getUsernameTemp(), getPasswordTemp());
-    } else {
-      sign = Git.Signature.default(repository);
-    }
+    const sign = Git.Signature.default(repository);
     commitMessage = document.getElementById('commit-message-input').value;
     if (readFile.exists(repoFullPath + "/.git/MERGE_HEAD")) {
       let tid = readFile.read(repoFullPath + "/.git/MERGE_HEAD", null);
@@ -100,7 +95,7 @@ function addAndCommit() {
     if (err.message == "No files selected to commit.") {
       displayModal(err.message);
     } else {
-      updateModalText("Oops, error occours! If u haven't login, please login and try again.");
+      updateModalText("No repository has been cloned yet. Please clone a repository and try again.");
     }
   });
 }

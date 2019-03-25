@@ -26,7 +26,6 @@ function CommitNoPush(){
 }
 
 function signInHead(callback) {
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	if (signed == 1){
 		if ((changes == 1) || (CommitButNoPush == 1)){
 			$("#modalW2").modal();
@@ -41,49 +40,46 @@ function signInHead(callback) {
 }
 
 function LogInAfterConfirm(callback){
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	getUserInfo(callback);
 }
 
 function ModalSignIn(callback){
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	getUserInfo(callback);
 }
 
 function signInPage(callback) {
-    if (document.getElementById("rememberLogin").checked == true) {
-        encrypt(document.getElementById("username").value, document.getElementById("password").value);
-    }
-
-    getUserInfo(callback);
+  if (document.getElementById("rememberLogin").checked == true) {
+    storeCredentials(document.getElementById("username").value, document.getElementById("password").value);
+  }
+  getUserInfo(callback);
 }
 
 
-function loginWithSaved(callback) {
-  
-    document.getElementById("username").value = getUsername();
-    document.getElementById("password").value = getPassword(); //get decrypted username n password  
-  
+async function loginWithSaved(callback) {
+  const credentials = await readCredentials();
+  if (credentials) {
+    document.getElementById("username").value = credentials.username;
+    document.getElementById("password").value = credentials.password;
   }
+}
   
 
 function getUserInfo(callback) {
-  
-  encryptTemp(document.getElementById("username").value, document.getElementById("password").value);
-
-  cred = Git.Cred.userpassPlaintextNew(getUsernameTemp(), getPasswordTemp());
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  cred = Git.Cred.userpassPlaintextNew(username, password);
 
   client = github.client({
-    username: getUsernameTemp(),
-    password: getPasswordTemp()
+    username: username,
+    password: password
   });
+  
   var ghme = client.me();
   ghme.info(function(err, data, head) {
     if (err) {
       displayModal(err);
     } else {
       avaterImg = Object.values(data)[2]
-      // let doc = document.getElementById("avater");
       // doc.innerHTML = "";
       // var elem = document.createElement("img");
       // elem.width = 40;
@@ -91,12 +87,16 @@ function getUserInfo(callback) {
       // elem.src = avaterImg;
       // doc.appendChild(elem);
       // doc = document.getElementById("log");
-      // doc.innerHTML = 'sign out';
       var docGitUser = document.getElementById("githubname");
       //docGitUser.innerHTML = Object.values(data)[0];
 
       let doc = document.getElementById("avatar");
-      //doc.innerHTML = 'Sign out'; //HAD TO REMOVE THIS LINE OR THE PROGRAM BROKE.
+      if (doc === null){
+        console.log("Missing element named avatar");
+      }else{
+        doc.innerHTML = 'Sign Out';
+      }
+      
 	  signed = 1;
 
       callback();
@@ -165,7 +165,7 @@ function cloneRepo() {
 
 function signInOrOut() {
   let doc = document.getElementById("avatar");
-  if (doc.innerHTML == 'Sign out'){
+  if (doc.innerHTML === 'Sign Out'){
     $('#avatar').removeAttr('data-toggle');
 
     if ((changes == 1) || (CommitButNoPush == 1)){
