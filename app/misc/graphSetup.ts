@@ -149,7 +149,8 @@ function drawGraph() {
   });
 
   network.on("click", function(callback) {
-    console.log(callback.nodes[0])
+    console.log(abNodes)
+    console.log(callback)
   }, false)
 
   network.on("doubleClick", function(callback) {

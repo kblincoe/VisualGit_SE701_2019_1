@@ -378,12 +378,14 @@ function makeAbsNode(c, column: number) {
 
   if (flag) {
     let id = absNodeId++;
+    // TODO: this is the node
     let title = "Author: " + name + "<br>" + "Number of Commits: " + count;
 
     abNodes.add({
       id: id,
       shape: "circularImage",
       title: title,
+      email: email,
       image: img4User(name),
       physics: false,
       fixed: (id === 1),
@@ -403,6 +405,7 @@ function makeAbsNode(c, column: number) {
           id: id + numOfCommits * (i + 1),
           shape: "box",
           title: branchName,
+          email: email,
           label: shortName,
           physics: false,
           fixed: false,
