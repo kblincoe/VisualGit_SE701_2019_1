@@ -81,10 +81,14 @@ function getUserInfo(callback) {
             I know this is bad, but our hands are tied since the HTTP callback is encapsulated in the octonode module.
             Effectively, if verifying the github account fails, the github module (octonode) returns an 'informative'
             message. In this case, we want to provide 2FA support, hence when the error message is regarding the OTP
-            code, we display the element. Otherwise, we display the error in the modal window.
+            code, we change to personal access token. Otherwise, we display the error in the modal window.
              */
             if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
-                document.getElementById("2fa").style.display = "block";
+                let password = document.getElementById("password");
+                password.value = "";
+                password.placeholder = "personal access token";
+
+                document.getElementById("personalAccessTokenMsg").style.display = "block";
             } else {
                 displayModal(err);
             }
