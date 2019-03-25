@@ -148,6 +148,10 @@ function drawGraph() {
     network.setOptions( { physics: false } );
   });
 
+  network.on("click", function(callback) {
+    console.log(callback.nodes[0])
+  }, false)
+
   network.on("doubleClick", function(callback) {
     if (callback.nodes[0] === undefined) {
       return;
