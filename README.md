@@ -72,9 +72,6 @@ To run the compiler use the following command:
 npm run-script createjs
 ````
 
-### Sass
-[Sass](http://sass-lang.com/) (Syntactically Awesome Style Sheets) is a CSS preprocessor with some handy extra features. All of our Style Sheets are written in Sass (.scss files), which compile into CSS (.css files). Therefore, you will need to a run a Sass-compiler to compile your .scss files into .css files as you make changes, e.g. [node-sass](https://www.npmjs.com/package/node-sass) for Node.
-
 # Features
 
 ### Opening / Cloning repositories
@@ -110,4 +107,3 @@ Visualgit utilises a range of libraries and frameworks, more information on them
  - [nodegit](http://www.nodegit.org/)
  - [Vis.js](http://visjs.org/docs/network/)
  - [TypeScript](https://www.typescriptlang.org/)
- - [Sass](http://sass-lang.com/)
