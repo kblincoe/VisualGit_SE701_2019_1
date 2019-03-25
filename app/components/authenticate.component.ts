@@ -85,11 +85,8 @@ export class AuthenticateComponent {
     let two_factor_div = document.getElementById("2fa");
     let password = document.getElementById("password");
 
-    // @ts-ignore
     two_factor_div.style.display = "none";
-    // @ts-ignore
     password.value = "";
-    // @ts-ignore
     password.placeholder = "personal access token";
   }
 

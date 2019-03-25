@@ -88,13 +88,8 @@ function getUserInfo(callback) {
             code, we display the element. Otherwise, we display the error in the modal window.
              */
             if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
-                console.log("matches");
-                let two_factor_div = document.getElementById("2fa");
-                // @ts-ignore
-                two_factor_div.style.display = "block";
+                document.getElementById("2fa").style.display = "block";
             } else {
-                console.log("dont match");
-                console.log("@" + err + "@");
                 displayModal(err);
             }
         } else {
