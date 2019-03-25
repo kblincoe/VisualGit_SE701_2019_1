@@ -26,7 +26,6 @@ function CommitNoPush(){
 }
 
 function signInHead(callback) {
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	if (signed == 1){
 		if ((changes == 1) || (CommitButNoPush == 1)){
 			$("#modalW2").modal();
@@ -41,42 +40,40 @@ function signInHead(callback) {
 }
 
 function LogInAfterConfirm(callback){
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	getUserInfo(callback);
 }
 
 function ModalSignIn(callback){
-	encryptTemp(document.getElementById("Email1").value, document.getElementById("Password1").value);
 	getUserInfo(callback);
 }
 
 function signInPage(callback) {
-    if (document.getElementById("rememberLogin").checked == true) {
-        encrypt(document.getElementById("username").value, document.getElementById("password").value);
-    }
-
-    getUserInfo(callback);
+  if (document.getElementById("rememberLogin").checked == true) {
+    storeCredentials(document.getElementById("username").value, document.getElementById("password").value);
+  }
+  getUserInfo(callback);
 }
 
 
-function loginWithSaved(callback) {
-  
-    document.getElementById("username").value = getUsername();
-    document.getElementById("password").value = getPassword(); //get decrypted username n password  
-  
+async function loginWithSaved(callback) {
+  const credentials = await readCredentials();
+  if (credentials) {
+    document.getElementById("username").value = credentials.username;
+    document.getElementById("password").value = credentials.password;
   }
+}
   
 
 function getUserInfo(callback) {
-  
-  encryptTemp(document.getElementById("username").value, document.getElementById("password").value);
-
-  cred = Git.Cred.userpassPlaintextNew(getUsernameTemp(), getPasswordTemp());
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  cred = Git.Cred.userpassPlaintextNew(username, password);
 
   client = github.client({
-    username: getUsernameTemp(),
-    password: getPasswordTemp()
+    username: username,
+    password: password
   });
+  
   var ghme = client.me();
   ghme.info(function(err, data, head) {
     if (err) {

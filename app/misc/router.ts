@@ -122,6 +122,5 @@ function disableDiffPanelEditOnHide(){
 } 
 
 function useSaved() {
-  decrypt();
   loginWithSaved(switchToMainPanel);
 }
