@@ -378,7 +378,6 @@ function makeAbsNode(c, column: number) {
 
   if (flag) {
     let id = absNodeId++;
-    // TODO: this is the node
     let title = "Author: " + name + "<br>" + "Number of Commits: " + count;
 
     abNodes.add({

@@ -149,8 +149,18 @@ function drawGraph() {
   });
 
   network.on("click", function(callback) {
-    console.log(abNodes)
-    console.log(callback)
+    if (callback.nodes[0] == undefined) {
+      return;
+    }
+
+    let email = abNodes._data[callback.nodes[0]]["email"];
+
+    if (email.includes("noreply.github.com")) {
+      let username = email.match(new RegExp("[0-9]*\\+*([^@]+)@"))[1];
+      updateModalText("Github Profile: https://github.com/" + username);
+    } else {
+      updateModalText("Email: " + email);
+    }
   }, false)
 
   network.on("doubleClick", function(callback) {
