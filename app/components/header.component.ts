@@ -41,11 +41,11 @@ import { GraphService } from "../services/graph.service";
           </ul>
 
           <ul class="navbar-nav col-md-4 hidden-xs">
-            <li class="upload"><a href="#"><i class="fa fa-upload fa-2x col-md-2" aria-hidden="true" onclick="pushToRemote()" title="Push"></i></a></li>
-            <li class="download"><a href="#"><i class="fa fa-download fa-2x col-md-2" aria-hidden="true" onclick="pullFromRemote()" title="Pull"></i></a></li>
-            <li class="clone"><a href="#"><i class="fa fa-clone fa-2x col-md-2" aria-hidden="true" onclick="cloneFromRemote()" title="Clone"></i></a></li>
-            <li class="eraser"><a href="#"><i class="fa fa-eraser fa-2x col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="fa fa-refresh fa-2x col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
+            <li class="upload"><a href="#"><i class="iconbar fa fa-upload fa-lg col-md-2" aria-hidden="true" onclick="pushToRemote()" title="Push"></i></a></li>
+            <li class="download"><a href="#"><i class="iconbar fa fa-download fa-lg col-md-2" aria-hidden="true" onclick="pullFromRemote()" title="Pull"></i></a></li>
+            <li class="clone"><a href="#"><i class="iconbar fa fa-clone fa-lg col-md-2" aria-hidden="true" onclick="cloneFromRemote()" title="Clone"></i></a></li>
+            <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
+            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
           </ul>
 
           <ul class="navbar-nav navbar-right hidden-xs">
