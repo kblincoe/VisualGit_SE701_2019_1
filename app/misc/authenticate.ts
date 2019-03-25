@@ -83,7 +83,6 @@ function getUserInfo(callback) {
       displayModal(err);
     } else {
       avaterImg = Object.values(data)[2]
-      // let doc = document.getElementById("avater");
       // doc.innerHTML = "";
       // var elem = document.createElement("img");
       // elem.width = 40;
@@ -91,12 +90,16 @@ function getUserInfo(callback) {
       // elem.src = avaterImg;
       // doc.appendChild(elem);
       // doc = document.getElementById("log");
-      // doc.innerHTML = 'sign out';
       var docGitUser = document.getElementById("githubname");
       //docGitUser.innerHTML = Object.values(data)[0];
 
       let doc = document.getElementById("avatar");
-      //doc.innerHTML = 'Sign out'; //HAD TO REMOVE THIS LINE OR THE PROGRAM BROKE.
+      if (doc === null){
+        console.log("Missing element named avatar");
+      }else{
+        doc.innerHTML = 'Sign Out';
+      }
+      
 	  signed = 1;
 
       callback();
@@ -165,7 +168,7 @@ function cloneRepo() {
 
 function signInOrOut() {
   let doc = document.getElementById("avatar");
-  if (doc.innerHTML == 'Sign out'){
+  if (doc.innerHTML === 'Sign Out'){
     $('#avatar').removeAttr('data-toggle');
 
     if ((changes == 1) || (CommitButNoPush == 1)){
