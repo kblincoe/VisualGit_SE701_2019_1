@@ -66,12 +66,7 @@ function addAndCommit() {
   })
 
   .then(function(parent) {
-    let sign;
-    if (getUsernameTemp() !== null && getPasswordTemp !== null) {
-      sign = Git.Signature.now(getUsernameTemp(), getPasswordTemp());
-    } else {
-      sign = Git.Signature.default(repository);
-    }
+    const sign = Git.Signature.default(repository);
     commitMessage = document.getElementById('commit-message-input').value;
     if (readFile.exists(repoFullPath + "/.git/MERGE_HEAD")) {
       let tid = readFile.read(repoFullPath + "/.git/MERGE_HEAD", null);
