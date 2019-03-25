@@ -57,7 +57,7 @@ npm install
 npm start
 ````
 
-If you are a windows user and are getting MSBuild-related errors during the install, try running `npm install --global windows-build-tools`. This will give you the necessary tools to compile the dependencies.
+If you are a windows user and are getting MSBuild-related errors during the install, try running `npm install --global windows-build-tools` in a terminal with **administrator privileges**. This will give you the necessary tools to compile the dependencies.
 
 ### ssh-agent
 As VisualGit utilises SSH for user authentication, ensure you [generate an SSH key for your GitHub account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). If you are not running on Mac, you will also need to set up and run an ssh-agent to access your SSH key at run time without providing your credentials each time.
