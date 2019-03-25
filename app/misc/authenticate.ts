@@ -65,75 +65,65 @@ function loginWithSaved(callback) {
     document.getElementById("password").value = getPassword(); //get decrypted username n password  
   
   }
-  
+
 
 function getUserInfo(callback) {
-  
-  encryptTemp(document.getElementById("username").value, document.getElementById("password").value);
 
-  cred = Git.Cred.userpassPlaintextNew(getUsernameTemp(), getPasswordTemp());
+    encryptTemp(document.getElementById("username").value, document.getElementById("password").value);
 
-  client = github.client({
-    username: getUsernameTemp(),
-    password: getPasswordTemp()
-  });
-  var ghme = client.me();
-  ghme.info(function(err, data, head) {
-    if (err) {
-      displayModal(err);
-    } else {
-      avaterImg = Object.values(data)[2]
-      // doc.innerHTML = "";
-      // var elem = document.createElement("img");
-      // elem.width = 40;
-      // elem.height = 40;
-      // elem.src = avaterImg;
-      // doc.appendChild(elem);
-      // doc = document.getElementById("log");
-      var docGitUser = document.getElementById("githubname");
-      //docGitUser.innerHTML = Object.values(data)[0];
+    cred = Git.Cred.userpassPlaintextNew(getUsernameTemp(), getPasswordTemp());
 
-      let doc = document.getElementById("avatar");
-      if (doc === null){
-        console.log("Missing element named avatar");
-      }else{
-        doc.innerHTML = 'Sign Out';
-      }
-      
-	  signed = 1;
+    client = github.client({
+        username: getUsernameTemp(),
+        password: getPasswordTemp()
+    });
 
-      callback();
-    }
-  });
+    var ghme = client.me();
+    ghme.info(function (err, data, head) {
+        if (err) {
+            /*
+            I know this is bad, but our hands are tied since the HTTP callback is encapsulated in the octonode module.
+            Effectively, if verifying the github account fails, the github module (octonode) returns an 'informative'
+            message. In this case, we want to provide 2FA support, hence when the error message is regarding the OTP
+            code, we display the element. Otherwise, we display the error in the modal window.
+             */
+            if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
+                console.log("matches");
+                let two_factor_div = document.getElementById("2fa");
+                // @ts-ignore
+                two_factor_div.style.display = "block";
+            } else {
+                console.log("dont match");
+                console.log("@" + err + "@");
+                displayModal(err);
+            }
+        } else {
+            avaterImg = Object.values(data)[2];
+            let doc = document.getElementById("avatar");
+            if (doc === null) {
+                console.log("Missing element named avatar");
+            } else {
+                doc.innerHTML = 'Sign Out';
+            }
 
-  ghme.repos(function(err, data, head) {
-    if (err) {
-      return;
-    } else {
-      for (let i = 0; i < data.length; i++) {
-        let rep = Object.values(data)[i];
-        console.log(`Getting repo info from: ${rep['html_url']}`);
-        displayBranch(rep['full_name'], "repo-dropdown", "selectRepo(this)");
-        repoList[rep['full_name']] = rep['html_url'];
-      }
-    }
-  });
+            signed = 1;
 
-  // let scopes = {
-  //   'add_scopes': ['user', 'repo', 'gist'],
-  //   'note': 'admin script'
-  // };
-  //
-  // github.auth.config({
-  //   username: username,
-  //   password: password
-  // }).login(scopes, function (err, id, token) {
-  //   if (err !== null) {
-      // console.log(`Error in authenticate.ts. Attempting to login, the error is: ${err}`);
-  //   }
-  //   aid = id;
-  //   atoken = token;
-  // });
+            callback();
+
+            ghme.repos(function(err, data, head) {
+                if (err) {
+                    return;
+                } else {
+                    for (let i = 0; i < data.length; i++) {
+                        let rep = Object.values(data)[i];
+                        console.log(`Getting repo info from: ${rep['html_url']}`);
+                        displayBranch(rep['full_name'], "repo-dropdown", "selectRepo(this)");
+                        repoList[rep['full_name']] = rep['html_url'];
+                    }
+                }
+            });
+        }
+    });
 }
 
 function selectRepo(ele) {

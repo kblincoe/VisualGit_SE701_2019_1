@@ -27,13 +27,23 @@ import { Component } from "@angular/core";
     </label>
     <br><br>
     <div class="input-group" style="width:280px;">
-      <input id="username" type="text" class="form-control" placeholder="Username or Email" aria-describedby="basic-addon1">
+      <input id="username" type="text" class="form-control" placeholder="username or email" aria-describedby="basic-addon1">
     </div>
     <br>
 
     <div class="input-group" style="width:280px;">
       <input id="password" type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
       <br>    
+    </div>
+
+    <br>
+
+    <div class="input-group" id="2fa" style="width:280px; display: none">
+      <input id="accesscode" type="text" class="form-control" placeholder="two-factor access code" aria-describedby="basic-addon1">
+      <br><br>
+      <p><i>This two step authentication only works with registered 
+        auth apps. If you have only have SMS set up, click <a (click)="switchToPersonalAccessToken()">here</a> 
+      to sign in using personal access code.</i></p>
     </div>
     <br>
     <input id="rememberLogin" type="checkbox"> Remember Login<br/> 
@@ -69,6 +79,18 @@ export class AuthenticateComponent {
 
   createNewAccount(): void {
     window.open("https://github.com/join?", "_blank");
+  }
+
+  switchToPersonalAccessToken() : void {
+    let two_factor_div = document.getElementById("2fa");
+    let password = document.getElementById("password");
+
+    // @ts-ignore
+    two_factor_div.style.display = "none";
+    // @ts-ignore
+    password.value = "";
+    // @ts-ignore
+    password.placeholder = "personal access token";
   }
 
 }
