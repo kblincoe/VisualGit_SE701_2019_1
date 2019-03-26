@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "npm-run-all -p createjs electron:serve",
+    "test": "karma start",
     "electron:serve": "electron . --serve",
     "postinstall": "electron-builder install-app-deps",
     "createjs": "tsc",
@@ -65,6 +66,7 @@
     "electron-builder": "20.39.0",
     "electron-packager": "13.1.1",
     "electron-reload": "^1.4.0",
+    "jasmine": "^3.3.1",
     "typescript": "^3.3.4000",
     "xo": "0.15.0"
   }
