@@ -151,11 +151,7 @@ function setMyMenu() {
 		}, {
 			label: "Mac_Application",
 			submenu: [
-				{
-					label: "Quit", accelerator: "Command+Q", click: function () {
-						app.quit();
-					}
-				}
+				{label: "Quit", accelerator: "Command+Q", click: function () {app.quit();}}
 			]
 		}];
 
