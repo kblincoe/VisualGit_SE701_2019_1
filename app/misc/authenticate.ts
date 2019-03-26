@@ -186,6 +186,7 @@ function signInOrOut() {
       redirectToHomePage();
     }
   }
+  // Clear sign in input fields
   document.getElementById("head-username").value = '';
   document.getElementById("head-password").value = '';
 }
