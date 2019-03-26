@@ -8,6 +8,11 @@ const BrowserWindow = electron.BrowserWindow;
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
+// Add library for triggering hot electron reloads
+require('electron-reload')(__dirname, {
+    electron: require('${__dirname}/../../node_modules/electron')
+});
+
 // prevent window being garbage collected
 let mainWindow;
 
