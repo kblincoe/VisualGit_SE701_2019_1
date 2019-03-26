@@ -637,6 +637,9 @@ function displayModifiedFiles() {
         });
       }
 
+      /**
+       * This function gets lines from the selected file
+       */
       function getCurrentDiff(commit, filePath, callback) {
         commit.getTree().then(function(tree) {
           Git.Diff.treeToWorkdir(repo, tree, null).then(function(diff) {
@@ -649,7 +652,9 @@ function displayModifiedFiles() {
                       let newFilePath = patch.newFile().path();
                       if (newFilePath === filePath) {
                         lines.forEach(function(line) {
-                          callback(String.fromCharCode(line.origin()) + line.content());
+                          callback(String.fromCharCode(line.origin())
+                              + line.newLineno().toString()
+                              + line.content());
                         });
                       }
                     });
@@ -666,10 +671,10 @@ function displayModifiedFiles() {
 
         if (line.charAt(0) === "+") {
           element.style.backgroundColor = "#84db00";
-          line = line.slice(1, line.length);
+          line = " " + line.slice(1, line.length);
         } else if (line.charAt(0) === "-") {
           element.style.backgroundColor = "#ff2448";
-          line = line.slice(1, line.length);
+          line = " - " + line.slice(3, line.length);
         }
 
         element.innerText = line;
