@@ -9,7 +9,8 @@ module.exports = (config) => {
             'karma-typescript',
         ],
         files: [
-            'spec/**/*.spec.ts',
+            {pattern: 'spec/base.spec.ts'},
+            {pattern: 'spec/**/*.spec.ts'},
         ],
         preprocessors: {
             '**/*.ts': 'karma-typescript'
@@ -33,7 +34,11 @@ module.exports = (config) => {
                 noLib: false,
                 preserveConstEnums: true,
                 suppressImplicitAnyIndexErrors: true,
-                strictNullChecks: false
+                strictNullChecks: false,
+                lib: ["ES2015", "DOM"]
+            },
+            bundlerOptions: {
+                entrypoints: /\.spec\.ts$/,
             },
             exclude: ['node_modules', 'app']
         }
