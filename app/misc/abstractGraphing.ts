@@ -4,7 +4,7 @@ function processAbstract(commits: nodegit.Commit[]) {
   sortCommits(commits);
   populateAbstract();
 }
-
+// HERE IS A MODIFICATION???
 function populateAbstract() {
   // reset variables for idempotency, shouldn't be needed when a class is created instead
   nodeId = 1;
