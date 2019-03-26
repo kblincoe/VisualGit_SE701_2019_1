@@ -4,6 +4,8 @@ let gray = "#5b6969";
 
 function collpaseSignPanel() {
   $('#nav-collapse1').collapse('hide');
+  document.getElementById("head-username").value = '';
+  document.getElementById("head-password").value = '';
 }
 
 function switchToClonePanel(){
@@ -80,6 +82,8 @@ function hideDiffPanel() {
 
 function hideAuthenticatePanel() {
   document.getElementById("authenticate").style.zIndex = "-20";
+  document.getElementById("auth-username").value = '';
+  document.getElementById("auth-password").value = '';
 }
 
 function displayAuthenticatePanel() {
