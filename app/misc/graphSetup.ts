@@ -157,7 +157,8 @@ function drawGraph() {
 
     if (email.includes("noreply.github.com")) {
       let username = email.match(new RegExp("[0-9]*\\+*([^@]+)@"))[1];
-      updateModalText("Github Profile: <a onClick=\"window.open(\'https://github.com/" + username + "\')\">https://github.com/" + username + "</a>");
+      updateModalText("Github Profile: <a onClick=\"window.open(\'https://github.com/" + username + "\')\">https://github.com/" + username + "</a>" +
+        "<br/><i><small>Note: this user has not made their email public</small></i>");
     } else {
       updateModalText("Email: <a onClick=\"window.open(\'mailto:" + email + "\')\">" + email + "</a>");
     }
