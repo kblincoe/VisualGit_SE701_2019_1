@@ -186,6 +186,8 @@ function signInOrOut() {
       redirectToHomePage();
     }
   }
+  document.getElementById("head-username").value = '';
+  document.getElementById("head-password").value = '';
 }
 
 function redirectToHomePage() {
