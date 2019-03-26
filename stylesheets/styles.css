@@ -303,6 +303,22 @@ body .add-repository-panel .add-repository-body {
   padding-left: 110px;
 }
 
+body .flex-container-col {
+  display: flex;
+  flex-direction: column;
+}
+
+body .flex-container-row {
+  display: flex;
+  flex-direction: row;
+}
+
+body .flex-empty-space {
+  display: flex;
+  flex-grow: 1;
+  max-width: 22%;
+}
+
 body .add-repository-panel .back-button {
   float: left;
   position: absolute;
@@ -378,13 +394,7 @@ body .add-repository-panel .left {
   height: 100%;
 }
 
-body .add-repository-panel .right {
-  float: left;
-  width: 50%;
-  height: 100%;
-}
-
-body .add-repository-panel .right .button {
+body .add-repository-panel .button {
   height: 100%;
 }
 
