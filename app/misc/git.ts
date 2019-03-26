@@ -221,8 +221,6 @@ function pullFromRemote() {
   })
   .then(function(oid) {
     return Git.AnnotatedCommit.lookup(repository, oid);
-  }, function(err) {
-    console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
   })
   .then(function(annotated) {
     Git.Merge.merge(repository, annotated, null, {
@@ -245,6 +243,9 @@ function pullFromRemote() {
       updateModalText("Successfully pulled from remote branch " + branch + ", and your repo is up to date now!");
       refreshAll(repository);
     }
+  }, function(err) {
+    updateModalText(`${err} Failed to pull from remote`);
+    console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
   });
 //   .then(function(updatedRepository) {
 //     refreshAll(updatedRepository);
