@@ -15,6 +15,10 @@ let modifiedFiles;
 let warnbool;
 var CommitButNoPush = 0;
 
+function createNewAccount(): void {
+  window.open("https://github.com/join?", "_blank");
+}
+
 function cloneFromRemote(){
   switchToClonePanel();
 }

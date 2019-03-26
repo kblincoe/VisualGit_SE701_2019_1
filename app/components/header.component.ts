@@ -40,12 +40,13 @@ import { GraphService } from "../services/graph.service";
             </li>
           </ul>
 
-          <ul class="navbar-nav col-md-4 hidden-xs">
+          <ul class="navbar-nav col-md-5 hidden-xs">
             <li class="upload"><a href="#"><i class="iconbar fa fa-upload fa-lg col-md-2" aria-hidden="true" onclick="pushToRemote()" title="Push"></i></a></li>
             <li class="download"><a href="#"><i class="iconbar fa fa-download fa-lg col-md-2" aria-hidden="true" onclick="pullFromRemote()" title="Pull"></i></a></li>
             <li class="clone"><a href="#"><i class="iconbar fa fa-clone fa-lg col-md-2" aria-hidden="true" onclick="cloneFromRemote()" title="Clone"></i></a></li>
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
+            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>
+            <li class="newaccount"><a href="#"><i class="iconbar fa fa-user fa-lg col-md-2" aria-hidden="true" onclick="createNewAccount()" title="NewAccount"></i></a></li>
           </ul>
 
           <ul class="navbar-nav navbar-right hidden-xs">
@@ -105,6 +106,7 @@ import { GraphService } from "../services/graph.service";
             <li class="clone"onclick="cloneFromRemote()"><a href="#">&nbsp;&nbsp;clone</a></li>
             <li class="clean" onclick="cleanRepo()"><a href="#">&nbsp;&nbsp;clean</a></li>
             <li class="sync" onclick="requestLinkModal()"><a href="#">&nbsp;&nbsp;sync</a></li>
+            <li class="newaccount" onclick="createNewAccount()"><a href="#">&nbsp;&nbsp;new account</a></li>
           </ul>
         </div>
       </div>
@@ -286,6 +288,10 @@ export class HeaderComponent   {
 
   WarningSignIn(): void {
     redirectToHomePage();
+  }
+
+  createNewAccount(): void {
+    window.open("https://github.com/join?", "_blank");
   }
 
 }
