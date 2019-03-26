@@ -157,9 +157,9 @@ function drawGraph() {
 
     if (email.includes("noreply.github.com")) {
       let username = email.match(new RegExp("[0-9]*\\+*([^@]+)@"))[1];
-      updateModalText("Github Profile: https://github.com/" + username);
+      updateModalText("Github Profile: <a onClick=\"window.open(\'https://github.com/" + username + "\')\">https://github.com/" + username + "</a>");
     } else {
-      updateModalText("Email: " + email);
+      updateModalText("Email: <a onClick=\"window.open(\'mailto:" + email + "\')\">" + email + "</a>");
     }
   }, false)
 
