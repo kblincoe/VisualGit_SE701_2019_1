@@ -61,12 +61,19 @@
     "zone.js": "0.6.12"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.3.12",
+    "@types/karma": "^3.0.2",
     "devtron": "1.1.0",
     "electron": "4.1.0",
     "electron-builder": "20.39.0",
     "electron-packager": "13.1.1",
     "electron-reload": "^1.4.0",
     "jasmine": "^3.3.1",
+    "karma": "^4.0.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-electron": "^6.0.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-typescript": "^4.0.0",
     "typescript": "^3.3.4000",
     "xo": "0.15.0"
   }
