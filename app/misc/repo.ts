@@ -18,6 +18,7 @@ let modal;
 let span;
 
 let progressBar;
+let isErrorOpeningRepo;
 
 
 function downloadRepository() {
@@ -58,7 +59,9 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
       function(response) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
-            setCloneStatistics(`${repoUser}/${repoName}`, data.size);
+            if(!isErrorOpeningRepo) {
+              setCloneStatistics(`${repoUser}/${repoName}`, data.size);
+            }
           }); 
         };
       }
@@ -86,6 +89,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   console.log("Cloning into " + fullLocalPath);
   let repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
   .then(function(repository) {
+    isErrorOpeningRepo = false;
     console.log("Repo successfully cloned");
     refreshAll(repository);
     updateModalText("Clone Successful, repository saved under: " + fullLocalPath);
@@ -97,6 +101,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   function(err) {
     updateModalText("Clone Failed - " + err);
     console.log(`Error in repo.ts. Attempting to clone repo, the error is: ${err}`);
+    isErrorOpeningRepo = true;
   });
 }
 
@@ -133,6 +138,7 @@ function openRepository() {
   function(err) {
     updateModalText("Opening Failed - " + err);
     console.log(`Error in repo.ts. Attempting to open repo, the error is: ${err}`);
+    isErrorOpeningRepo = true;
   });
 }
 
@@ -364,18 +370,18 @@ function displayModal(text) {
 }
 
 function updateModalText(text) {
-  document.getElementById("modal-text-box").innerHTML = text;
+  document.getElementById("modal-text-box")!.innerHTML = text;
   $('#modal').modal('show');
 }
 
 function setCloneStatistics(repoName: string, repoSize: number) {
-  displayModal(`<div class="clone-stats">
+  updateModalText(`<div class="clone-stats">
     Cloning ${repoName} (${repoSize} kB)
     <div class="download-speed" id="download-speed">
       0 kB/s
     </div>
     <div id="download-percentage"></div>
-  </div>`); 
+  </div>`);
   progressBar = new ProgressBar.Line('#download-percentage', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -395,6 +401,7 @@ function setCloneStatistics(repoName: string, repoSize: number) {
       },
       autoStyleContainer: false
     },
+    // Changes colour from a starting colour to a final colour
     from: {color: '#39C0BA' },
     to: {color: '#154744' },
     step: (state, bar) => {
@@ -405,13 +412,14 @@ function setCloneStatistics(repoName: string, repoSize: number) {
 }
 
 function updateDownloadPercentage(percentage: number) {
-  progressBar.animate((percentage / 100));
-  
+  if(progressBar) {
+    progressBar.animate((percentage / 100));
+  }
 }
 
 function updateDownloadSpeed(speed: number) {
   const speedRounded = Math.round(speed);
-  if(!isNaN(speedRounded)) {
+  if(!isNaN(speedRounded) && document.getElementById("download-speed")) {
     document.getElementById("download-speed")!.innerHTML = `${speedRounded} kB/s`;
   }
 }
