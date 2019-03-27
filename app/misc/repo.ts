@@ -1,5 +1,6 @@
 import { parse } from 'path';
 import fetch from 'node-fetch';
+const NetworkSpeed = require('network-speed');
 
 let Git = require("nodegit");
 let $ = require('jQuery');
@@ -38,33 +39,42 @@ function downloadRepository() {
 function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
   
+
+ 
+  
   // Get user host of the repo and the name of the repo from the url
   const urlParts = cloneURL.split('/');
   const repoUser = urlParts[3];
   const repoName = parse(urlParts[4]).name;
 
+
+
   // Get the size of the repo in KB by making an api call
   fetch(`https://api.github.com/repos/${repoUser}/${repoName}`)
-  .then(
-    function(response) {
-      if (response.status === 200) {  // OK
-        response.json().then(function(data) {
-          console.log(data.size);
-        }); 
-      };
-    }
-  )
-  .catch(function(err) {
-    console.log('Fetch Error :-S', err);
-  });
+    .then(
+      function(response) {
+        if (response.status === 200) {  // OK
+          response.json().then(function(data) {
+            setCloneStatistics(`${repoUser}/${repoName}`, data.size);
+          }); 
+        };
+      }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
 
-  displayModal("Cloning Repository...");
   options = {
     fetchOpts: {
       callbacks: {
         certificateCheck: function() { return 1; },
         credentials: function() {
           return cred;
+        },
+        transferProgress(stats) {
+          const progress = (100 * (stats.receivedObjects() + stats.indexedObjects())) / (stats.totalObjects() * 2);
+          updateDownloadPercentage(progress);
+          getNetworkDownloadSpeed();
         }
       }
     }
@@ -354,3 +364,36 @@ function updateModalText(text) {
   document.getElementById("modal-text-box").innerHTML = text;
   $('#modal').modal('show');
 }
+
+function setCloneStatistics(repoName: string, repoSize: number) {
+  displayModal(`<div class="clone-stats">
+    Cloning ${repoName} (${repoSize} kB)
+    <div id="download-speed">
+      0 kB/s
+    </div>
+    <div id="download-percentage">
+      0%
+    </div>
+  </div>`); 
+}
+
+function updateDownloadPercentage(percentage: number) {
+  document.getElementById("download-percentage")!.innerHTML = `${percentage.toFixed(2)}%`;
+  
+}
+
+function updateDownloadSpeed(speed: number) {
+  const speedRounded = Math.round(speed);
+  if(!isNaN(speedRounded)) {
+    document.getElementById("download-speed")!.innerHTML = `${speedRounded} kB/s`;
+  }
+}
+
+async function getNetworkDownloadSpeed() {
+  var testNetworkSpeed = new NetworkSpeed();
+ 
+  var baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
+  var fileSize = 500000;
+  var speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSize);
+  updateDownloadSpeed(speed.kbps);
+}  
