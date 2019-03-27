@@ -9,7 +9,6 @@ module.exports = (config) => {
             'karma-typescript',
         ],
         files: [
-            {pattern: 'spec/base.spec.ts'},
             {pattern: 'spec/**/*.spec.ts'},
         ],
         preprocessors: {
