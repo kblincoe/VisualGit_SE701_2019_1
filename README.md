@@ -72,6 +72,9 @@ To run the compiler use the following command:
 npm run-script createjs
 ````
 
+###Angular2
+[Angular](https://angular.io/) is a framework that combines declarative templates, dependency injections, end to end tooling, and integrated best practices. The original source code was written using AngularJS and then reworked to use Angular2 instead, which was a complete rewrite of the former. As a result, note that the source code still retains conventions and code fragments from AngularJS in some places.
+
 # Features
 
 ### Opening / Cloning repositories
