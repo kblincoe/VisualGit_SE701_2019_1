@@ -10,7 +10,7 @@ assignees: ''
 **Description**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Acceptance Criteria**
+**Acceptance criteria**
 A clear and concise description of what you want to happen.
 
 **Pointers / Solutions**
