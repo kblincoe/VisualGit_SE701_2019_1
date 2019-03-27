@@ -295,26 +295,35 @@ function createBranch() {
   let branchName = document.getElementById("branchName").value;
   let repos;
   console.log(`Creating branch: ${branchName}`);
-  Git.Repository.open(repoFullPath)
-  .then(function(repo) {
-    // Create a new branch on head
-    repos = repo;
-    addCommand("git branch " + branchName);
-    return repo.getHeadCommit()
-    .then(function(commit) {
-      return repo.createBranch(
-        branchName,
-        commit,
-        0,
-        repo.defaultSignature(),
-        "Created new-branch on HEAD");
-    }, function(err) {
-      console.log(`Error in git.ts. Attempting to create a branch, the error is: ${err}`);
+
+  // Check if there's a repo open
+  if (repoFullPath == null) {
+    displayModal(`No repository has been found. Please open or clone a repository and try again.`);
+  } else {
+    Git.Repository.open(repoFullPath)
+        .then(function(repo) {
+
+          // Create a new branch on head
+          repos = repo;
+          addCommand("git branch " + branchName);
+          return repo.getHeadCommit()
+              .then(function(commit) {
+                return repo.createBranch(
+                    branchName,
+                    commit,
+                    0,
+                    repo.defaultSignature(),
+                    "Created new-branch on HEAD");
+              }, function(err) {
+                console.log(`Error in git.ts. Attempting to create a branch, the error is: ${err}`);
+              });
+        }).done(function() {
+      refreshAll(repos);
+      console.log("Branch successfully created.");
     });
-  }).done(function() {
-    refreshAll(repos);
-    console.log("Branch successfully created.");
-  });
+  }
+
+  // Clear branch creation text field
   document.getElementById("branchName").value = "";
 }
 
