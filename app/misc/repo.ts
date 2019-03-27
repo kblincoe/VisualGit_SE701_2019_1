@@ -1,6 +1,7 @@
 import { parse } from 'path';
 import fetch from 'node-fetch';
 const NetworkSpeed = require('network-speed');
+const ProgressBar = require('progressbar.js');
 
 let Git = require("nodegit");
 let $ = require('jQuery');
@@ -15,6 +16,8 @@ let checkFile = require("fs");
 let repoCurrentBranch = "master";
 let modal;
 let span;
+
+let progressBar;
 
 
 function downloadRepository() {
@@ -368,17 +371,41 @@ function updateModalText(text) {
 function setCloneStatistics(repoName: string, repoSize: number) {
   displayModal(`<div class="clone-stats">
     Cloning ${repoName} (${repoSize} kB)
-    <div id="download-speed">
+    <div class="download-speed" id="download-speed">
       0 kB/s
     </div>
-    <div id="download-percentage">
-      0%
-    </div>
+    <div id="download-percentage"></div>
   </div>`); 
+  progressBar = new ProgressBar.Line('#download-percentage', {
+    strokeWidth: 4,
+    easing: 'easeInOut',
+    color: '#39C0BA',
+    trailColor: '#eee',
+    trailWidth: 1,
+    svgStyle: {width: '100%', height: '100%'},
+    text: {
+      style: {
+        color: '#999',
+        position: 'absolute',
+        right: '5%',
+        bottom: '5px',
+        padding: 0,
+        margin: 0,
+        transform: null
+      },
+      autoStyleContainer: false
+    },
+    from: {color: '#39C0BA' },
+    to: {color: '#154744' },
+    step: (state, bar) => {
+      bar.path.setAttribute('stroke', state.color);
+      bar.setText(`${(bar.value() * 100).toFixed(2)}%`);
+    }
+  });
 }
 
 function updateDownloadPercentage(percentage: number) {
-  document.getElementById("download-percentage")!.innerHTML = `${percentage.toFixed(2)}%`;
+  progressBar.animate((percentage / 100));
   
 }
 
@@ -390,10 +417,9 @@ function updateDownloadSpeed(speed: number) {
 }
 
 async function getNetworkDownloadSpeed() {
-  var testNetworkSpeed = new NetworkSpeed();
- 
-  var baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
-  var fileSize = 500000;
-  var speed = await testNetworkSpeed.checkDownloadSpeed(baseUrl, fileSize);
+  const networkSpeed = new NetworkSpeed();
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
+  const fileSize = 500000;
+  const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
 }  
