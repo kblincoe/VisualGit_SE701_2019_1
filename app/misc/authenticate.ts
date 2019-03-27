@@ -63,13 +63,15 @@ async function loginWithSaved(callback) {
   }
 }
   
-// Sign user in to GitHub
+/**
+ * This function reads the input fields for signing in and attempts to sign 
+ * the user in to their GitHub account.
+ */
 function getUserInfo(callback) {
   var userid = "auth-username";
   var passid = "auth-password";  
 
-  // Check which panel is currently visible to determine which form the user
-  // is using to sign in 
+  // Determine which form the user is using to sign in 
   if (document.getElementById("auth-username").value == '' && document.getElementById("auth-password").value == '') {
     userid = "head-username";
     passid = "head-password";
