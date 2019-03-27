@@ -11,12 +11,12 @@ import { Component } from "@angular/core";
     </label>
     <br><br>
     <div class="input-group" style="width:280px;">
-      <input id="username" type="text" class="form-control" placeholder="Username or Email" aria-describedby="basic-addon1">
+      <input id="auth-username" type="text" class="form-control" placeholder="Username or Email" aria-describedby="basic-addon1">
     </div>
     <br>
 
     <div class="input-group" style="width:280px;">
-      <input id="password" type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
+      <input id="auth-password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
       <br>    
     </div>
     <br>
