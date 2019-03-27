@@ -2,7 +2,6 @@ import { parse } from 'path';
 import fetch from 'node-fetch';
 const NetworkSpeed = require('network-speed');
 const ProgressBar = require('progressbar.js');
-
 let Git = require("nodegit");
 let $ = require('jQuery');
 let repoFullPath;
@@ -43,16 +42,10 @@ function downloadRepository() {
 function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
   
-
- 
-  
   // Get user host of the repo and the name of the repo from the url
   const urlParts = cloneURL.split('/');
   const repoUser = urlParts[3];
   const repoName = parse(urlParts[4]).name;
-
-
-
   // Get the size of the repo in KB by making an api call
   fetch(`https://api.github.com/repos/${repoUser}/${repoName}`)
     .then(
@@ -77,7 +70,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
         credentials: function() {
           return cred;
         },
-        transferProgress(stats) {
+        transferProgress(stats) { // During clone update network speed and download percent
           const progress = (100 * (stats.receivedObjects() + stats.indexedObjects())) / (stats.totalObjects() * 2);
           updateDownloadPercentage(progress);
           getNetworkDownloadSpeed();
@@ -405,15 +398,15 @@ function setCloneStatistics(repoName: string, repoSize: number) {
     from: {color: '#39C0BA' },
     to: {color: '#154744' },
     step: (state, bar) => {
-      bar.path.setAttribute('stroke', state.color);
-      bar.setText(`${(bar.value() * 100).toFixed(2)}%`);
+      bar.path.setAttribute('stroke', state.color); // Colour transition
+      bar.setText(`${(bar.value() * 100).toFixed(2)}%`); // Percentage Label
     }
   });
 }
 
 function updateDownloadPercentage(percentage: number) {
   if(progressBar) {
-    progressBar.animate((percentage / 100));
+    progressBar.animate((percentage / 100)); // Supply a number between 0 and 1
   }
 }
 
@@ -424,6 +417,9 @@ function updateDownloadSpeed(speed: number) {
   }
 }
 
+/**
+ * Estimates users download speed by pinging a standard httpbin site
+ */
 async function getNetworkDownloadSpeed() {
   const networkSpeed = new NetworkSpeed();
   const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
