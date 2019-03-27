@@ -62,11 +62,24 @@ async function loginWithSaved(callback) {
     document.getElementById("password").value = credentials.password;
   }
 }
-
-
+  
+/**
+ * This function reads the input fields for signing in and attempts to sign 
+ * the user in to their GitHub account.
+ */
 function getUserInfo(callback) {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
+  var userid = "auth-username";
+  var passid = "auth-password";  
+
+  // Determine which form the user is using to sign in 
+  if (document.getElementById("auth-username").value == '' && document.getElementById("auth-password").value == '') {
+    userid = "head-username";
+    passid = "head-password";
+  }
+
+  const username = document.getElementById(userid).value;
+  const password = document.getElementById(passid).value;
+  
   cred = Git.Cred.userpassPlaintextNew(username, password);
 
     client = github.client({
@@ -84,7 +97,7 @@ function getUserInfo(callback) {
             code, we change to personal access token. Otherwise, we display the error in the modal window.
              */
             if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
-                let password = document.getElementById("password");
+                let password = document.getElementById(passid);
                 password.value = "";
                 password.placeholder = "personal access token";
 
@@ -163,6 +176,9 @@ function signInOrOut() {
       redirectToHomePage();
     }
   }
+  // Clear sign in input fields
+  document.getElementById("head-username").value = '';
+  document.getElementById("head-password").value = '';
 }
 
 function redirectToHomePage() {

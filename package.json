@@ -8,10 +8,11 @@
     "atom-shell": "1.2.3"
   },
   "scripts": {
-    "start": "electron index.js",
-    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
-    "postinstall": "electron-builder install-app-deps && tsc",
-    "createjs": "tsc"
+    "start": "npm-run-all -p createjs electron:serve",
+    "electron:serve": "electron . --serve",
+    "postinstall": "electron-builder install-app-deps",
+    "createjs": "tsc",
+    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all"
   },
   "keywords": [
     "VisualGit",
@@ -46,8 +47,8 @@
     "jquery-contextmenu": "2.4.2",
     "keytar": "^4.4.1",
     "material-letter-icons": "^1.0.8",
-    "node-sass": "4.11.0",
     "nodegit": "0.24.1",
+    "npm-run-all": "^4.1.5",
     "octonode": "^0.9.5",
     "opn": "4.0.2",
     "reflect-metadata": "0.1.3",
@@ -63,6 +64,7 @@
     "electron": "4.1.0",
     "electron-builder": "20.39.0",
     "electron-packager": "13.1.1",
+    "electron-reload": "^1.4.0",
     "typescript": "^3.3.4000",
     "xo": "0.15.0"
   }

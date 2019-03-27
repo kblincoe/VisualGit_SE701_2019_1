@@ -72,8 +72,8 @@ To run the compiler use the following command:
 npm run-script createjs
 ````
 
-### Sass
-[Sass](http://sass-lang.com/) (Syntactically Awesome Style Sheets) is a CSS preprocessor with some handy extra features. All of our Style Sheets are written in Sass (.scss files), which compile into CSS (.css files). Therefore, you will need to a run a Sass-compiler to compile your .scss files into .css files as you make changes, e.g. [node-sass](https://www.npmjs.com/package/node-sass) for Node.
+###Angular2
+[Angular](https://angular.io/) is a framework that combines declarative templates, dependency injections, end to end tooling, and integrated best practices. The original source code was written using AngularJS and then reworked to use Angular2 instead, which was a complete rewrite of the former. As a result, note that the source code still retains conventions and code fragments from AngularJS in some places.
 
 # Features
 
@@ -110,4 +110,3 @@ Visualgit utilises a range of libraries and frameworks, more information on them
  - [nodegit](http://www.nodegit.org/)
  - [Vis.js](http://visjs.org/docs/network/)
  - [TypeScript](https://www.typescriptlang.org/)
- - [Sass](http://sass-lang.com/)
