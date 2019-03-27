@@ -13,20 +13,15 @@ let modal;
 let span;
 
 function downloadRepository() {
-  let fullLocalPath;
-  // Full path is determined by either handwritten directory or selected by file browser
-  if (document.getElementById("repoSave").value != null || document.getElementById("repoSave").value != "") {
-    let localPath = document.getElementById("repoSave").value;
-    fullLocalPath = require("path").join(__dirname, localPath);
-  } else {
-    fullLocalPath = document.getElementById("dirPickerSaveNew").files[0].path;
-  }
+  // Full path is always in repoSave
+  let localPath = document.getElementById("repoSave").value;
+
   let cloneURL = document.getElementById("repoClone").value;
 
   if (!cloneURL || cloneURL.length === 0) {
       updateModalText("Clone Failed - Empty URL Given");
   } else {
-      downloadFunc(cloneURL, fullLocalPath);
+      downloadFunc(cloneURL, localPath);
   }
 
 }
@@ -294,7 +289,9 @@ function updateLocalPath() {
   let text = document.getElementById("repoClone").value;
   let splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
-    document.getElementById("repoSave").value = splitText[splitText.length - 2];
+    // Calculate full path by joining working dir + repo name
+    let fullLocalPath = require("path").join(__dirname, splitText[splitText.length - 2]);
+    document.getElementById("repoSave").value = fullLocalPath;
   }
 }
 

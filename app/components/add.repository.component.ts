@@ -12,25 +12,32 @@ import { Component } from "@angular/core";
             <div class="title">
               <h1 class="clone-title">Clone from Internet</h1>
             </div>
-            <div class="flex-container-row">
-              <div class="flex-empty-space"></div>
-            <input type="text" oninput="updateLocalPath()" name="repositoryRemote" size="50" id="repoClone" placeholder="https://github.com/user/repository.git"/>
-            <button type="button" class="button-clone" id="cloneButton" onclick="selectSave()">Clone</button>
-            </div>
           </div>
-  
-          <div class="block flex-container-row">
-            <div class="left">
-              <p>File location to save to</p>
+
+          <form style="max-width: 700px;">
+            <div class="form-group">
+              <div class="input-group input-group-lg">
+                <input style="width: 700px;" type="text" class="form-control" oninput="updateLocalPath()" name="repositoryRemote" id="repoClone" placeholder="https://github.com/user/repository.git"/>
+              </div>
             </div>
-            <div>
-              <input type="text" name="repositoryLocal" size="50" id="repoSave"/>
-  
-              <button class="button-clone" (click)="selectSave()">Save</button>
-              <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="addRepository();" style="display: none;" webkitdirectory />
+    
+            <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="repoSave" readonly/>
+                  <div class="input-group-btn">
+                    <button class="btn" type="button" (click)="selectDirOnly()">Browse</button>
+                  </div>
+                </div>
+                <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="updateDir()" style="display: none;" webkitdirectory />
             </div>
-          </div>
+
+            <div class="form-group">
+              <button class="btn btn-primary btn-lg" type="button" id="cloneButton" (click)="selectSave()">Clone</button>
+            </div>
+          </form>
         </div>
+
+
 
         <div id="open-local-repository" class="open-local-repository">
           <div class="title">
@@ -64,11 +71,15 @@ export class AddRepositoryComponent {
   selectSave(): void {
     if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value == "") {
       // If no directory specified, launch file browser
-      document.getElementById("dirPickerSaveNew").click();
+      displayModal("Invalid clone destination");
     } else {
       // If directory is specified, continue as normal
       this.addRepository();
     }
+  }
+
+  selectDirOnly(): void {
+    document.getElementById("dirPickerSaveNew").click();
   }
 
   //Add function that determines if directory written or not
@@ -80,6 +91,10 @@ export class AddRepositoryComponent {
       // If directory is specified, continue as normal
       this.openRepository();
     }
+  }
+
+  updateDir(): void {
+    document.getElementById("repoSave").value = document.getElementById("dirPickerSaveNew").files[0].path;
   }
 
   openRepository(): void {
