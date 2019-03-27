@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 
-
 @Component({
   selector: "user-auth",
   template: `
@@ -16,8 +15,11 @@ import { Component } from "@angular/core";
     <br>
 
     <div class="input-group" style="width:280px;">
-      <input id="auth-password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-      <br>    
+      <input id="auth-password" type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
+      <br><br>
+      <p id="personalAccessTokenMsg" style="display: none;"><i>Your account has Two-Factor Authentication enabled.
+        Please enter you personal access token, if you don't know
+        how to setup a personal access token click <a (click)="personalAccessTokenHelp()">here</a></i></p>   
     </div>
     <br>
     <input id="rememberLogin" type="checkbox"> Remember Login<br/> 
@@ -47,6 +49,7 @@ import { Component } from "@angular/core";
 })
 
 export class AuthenticateComponent {
+
   switchToMainPanel(): void {
     signInPage(switchToAddRepositoryPanel);
   }
@@ -55,4 +58,7 @@ export class AuthenticateComponent {
     window.open("https://github.com/join?", "_blank");
   }
 
+  personalAccessTokenHelp() : void {
+    window.open("https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line");
+  }
 }
