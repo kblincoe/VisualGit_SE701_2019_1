@@ -1,3 +1,6 @@
+import { parse } from 'path';
+import fetch from 'node-fetch';
+
 let Git = require("nodegit");
 let $ = require('jQuery');
 let repoFullPath;
@@ -11,6 +14,7 @@ let checkFile = require("fs");
 let repoCurrentBranch = "master";
 let modal;
 let span;
+
 
 function downloadRepository() {
   let fullLocalPath;
@@ -31,11 +35,30 @@ function downloadRepository() {
 
 }
 
-function downloadFunc(cloneURL, fullLocalPath) {
+function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
+  
+  // Get user host of the repo and the name of the repo from the url
+  const urlParts = cloneURL.split('/');
+  const repoUser = urlParts[3];
+  const repoName = parse(urlParts[4]).name;
+
+  // Get the size of the repo in KB by making an api call
+  fetch(`https://api.github.com/repos/${repoUser}/${repoName}`)
+  .then(
+    function(response) {
+      if (response.status === 200) {  // OK
+        response.json().then(function(data) {
+          console.log(data.size);
+        }); 
+      };
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+  });
 
   displayModal("Cloning Repository...");
-
   options = {
     fetchOpts: {
       callbacks: {
