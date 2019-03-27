@@ -15,7 +15,6 @@ let span;
 function downloadRepository() {
   // Full path is always in repoSave
   let localPath = document.getElementById("repoSave").value;
-
   let cloneURL = document.getElementById("repoClone").value;
 
   if (!cloneURL || cloneURL.length === 0) {

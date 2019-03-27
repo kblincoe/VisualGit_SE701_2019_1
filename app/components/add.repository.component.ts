@@ -44,16 +44,17 @@ import { Component } from "@angular/core";
             <h1 class="open-local-repo">Open Local Repository</h1>
           </div>
 
-          <div class="block flex-container-row">
-            <div class="left">
-              <p>Location of existing repository</p>
-            </div>
-            <div>
-              <input type="text" name="repositoryLocal" size="50" id="repoOpen"/>
-              <button class="button-open" (click)="selectDirectory()">Open</button>
+          <form style="max-width: 700px;">
+            <div class="form-group">
+              <div class="input-group input-group-lg">
+                <input type="text" class="form-control" name="repositoryLocal" id="repoOpen"/>
+                <div class="input-group-btn">
+                  <button class="btn btn-primary" type="button" (click)="selectDirectory()">Browse and Open</button>
+                </div>
+              </div>
               <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;" webkitdirectory />
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
