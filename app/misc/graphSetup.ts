@@ -148,6 +148,22 @@ function drawGraph() {
     network.setOptions( { physics: false } );
   });
 
+  network.on("click", function(callback) {
+    if (callback.nodes[0] == undefined) {
+      return;
+    }
+
+    let email = abNodes._data[callback.nodes[0]]["email"];
+
+    if (email.includes("noreply.github.com")) {
+      let username = email.match(new RegExp("[0-9]*\\+*([^@]+)@"))[1];
+      updateModalText("Github Profile: <a onClick=\"window.open(\'https://github.com/" + username + "\')\">https://github.com/" + username + "</a>" +
+        "<br/><i><small>Note: this user has not made their email public</small></i>");
+    } else {
+      updateModalText("Email: <a onClick=\"window.open(\'mailto:" + email + "\')\">" + email + "</a>");
+    }
+  }, false)
+
   network.on("doubleClick", function(callback) {
     if (callback.nodes[0] === undefined) {
       return;

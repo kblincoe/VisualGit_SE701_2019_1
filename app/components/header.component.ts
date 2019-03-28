@@ -57,12 +57,12 @@ import { GraphService } from "../services/graph.service";
           <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse1">
             <form class="navbar-form navbar-right form-inline" role="form">
               <div class="form-group">
-                <label class="sr-only" for="Email">User name</label>
-                <input type="text" class="form-control" id="Email1" placeholder="Username or Email" autofocus required style="width: 206px !important"/>
+                <label class="sr-only" for="Username or Email">User name</label>
+                <input type="text" class="form-control" id="head-username" placeholder="Username or Email" autofocus required style="width: 206px !important"/>
               </div>
               <div class="form-group">
                 <label class="sr-only" for="Password">Password</label>
-                <input type="password" class="form-control" id="Password1" placeholder="Password" required />
+                <input type="password" class="form-control" id="head-password" placeholder="Password" required />
               </div>
               <button type="submit" class="btn btn-success" (click)="switchToMainPanel()">Sign in</button>
             </form>

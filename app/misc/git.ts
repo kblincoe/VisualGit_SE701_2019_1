@@ -14,6 +14,7 @@ let theirCommit = null;
 let modifiedFiles;
 let warnbool;
 var CommitButNoPush = 0;
+let _previousId = "";
 
 function cloneFromRemote(){
   switchToClonePanel();
@@ -526,7 +527,8 @@ function displayModifiedFiles() {
           filePanelMessage.parentNode.removeChild(filePanelMessage);
         }
       }
-      modifiedFiles.forEach(displayModifiedFile);
+      modifiedFiles.forEach((f, i) => displayModifiedFile(f, i));
+
 
       // Add modified file to array of modified files 'modifiedFiles'
       function addModifiedFile(file) {
@@ -569,8 +571,9 @@ function displayModifiedFiles() {
 		return 'Hi';
 	}
 
-      function displayModifiedFile(file) {
+      function displayModifiedFile(file, index) {
         let filePath = document.createElement("p");
+        filePath.id = `file-path-id-${index}`;
         filePath.className = "file-path";
         filePath.innerHTML = file.filePath;
         let fileElement = document.createElement("div");
@@ -602,8 +605,15 @@ function displayModifiedFiles() {
         document.getElementById("files-changed").appendChild(fileElement);
 
         fileElement.onclick = function() {
-          let doc = document.getElementById("diff-panel");
-          if (doc.style.width === '0px' || doc.style.width === '') {
+          let doc = document.getElementById(`file-path-id-${index}`);
+
+          if (_previousId !== doc.innerHTML){
+            hideDiffPanel();
+          }
+
+
+          let diff_panel = document.getElementById("diff-panel");
+          if ((diff_panel.style.width === '0px' || diff_panel.style.width === '') && !checkbox.checked) {
             displayDiffPanel();
             document.getElementById("diff-panel-body").innerHTML = "";
 
@@ -615,6 +625,7 @@ function displayModifiedFiles() {
           } else {
             hideDiffPanel();
           }
+          _previousId = doc.innerHTML;
         };
       }
 
