@@ -9,13 +9,17 @@ You can get a summary of our project by reading our [cool poster](https://github
 
 npm (Node Package Manager) is used to manage VisualGit's dependencies, therefore it is required to install and run VisualGit.
 
-python2, versions of python3 do not work
+Python 2.x is required, Python 3.x is unsupported by NodeGit.
 
 Follow the installation instructions below:
 
-#### Centos-based systems
+#### RHEL-based systems
 ````
 sudo yum install npm
+````
+Or on more modern RHEL-based systems (i.e. Fedora 27+)
+````
+sudo dnf install npm
 ````
 
 #### Debian-based systems
@@ -42,12 +46,12 @@ _Please note you must clone this to a location **without** any spaces in the pat
 
 #### SSH
 ````
-git clone git@github.com:ElliotWhiley/VisualGit.git
+git clone git@github.com:kblincoe/VisualGit_SE701_2019_1.git
 ````
 
 #### HTTPS
 ````
-git clone https://github.com/ElliotWhiley/VisualGit.git
+git clone https://github.com/kblincoe/VisualGit_SE701_2019_1.git
 ````
 then...
 
@@ -58,9 +62,6 @@ npm start
 ````
 
 If you are a windows user and are getting MSBuild-related errors during the install, try running `npm install --global windows-build-tools` in a terminal with **administrator privileges**. This will give you the necessary tools to compile the dependencies.
-
-### ssh-agent
-As VisualGit utilises SSH for user authentication, ensure you [generate an SSH key for your GitHub account](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/). If you are not running on Mac, you will also need to set up and run an ssh-agent to access your SSH key at run time without providing your credentials each time.
 
 # Development
 
@@ -81,7 +82,7 @@ npm run-script createjs
 Repositories can be added by two methods; either by cloning the remotely hosted repository or opening it from the local file system. This is achieved using the add repository button in the top left which will update the screen to the add repository view.
 
 #### Clone
-Cloning with SSH is recommended as there is not yet any method for entering user credentials in VisualGit. This means that if you clone using HTTPS, you will still be able to see local changes and commit locally but not push.
+Currently, VisualGit only supports cloning via. HTTPS. HTTPS clones are authenticated using the same username/password that you use to log into VisualGit. 2FA OTP entry is unsupported, so you will have to use a Personal Access Token to log into VisualGit. While SSH cloning is technically supported, no authentication methods are supported and thus there is no way to push back to the repo if you clone using SSH.
 
 #### Open local repository
 Currently, when you clone a repository, it is saved to a directory under `./VisualGit/`. This means that when you open a repository which is saved locally, you can simply enter the name of the directory relative to the VisualGit directory. Other save locations are not currently supported but it is planned in future work.
@@ -96,7 +97,6 @@ This is used to allow users to see the different types of changes easily and onc
 
 ### Pushing & Pulling from remote
 The pulling and pushing currently works for changes which are made on master and origin/master by syncing these up. When the pull button is clicked, any changes on the remote repository will be added to the local repository and the graph will be updated. When pushing, the same process applies. The changes on master will be pushed to the remote repository.
-
 
 # Contributing
 We are open to pull requests with new features or improvements.
