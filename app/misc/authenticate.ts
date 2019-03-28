@@ -19,32 +19,32 @@ var changes = 0;
 
 //Called then user pushes to sign out even if they have commited changes but not pushed; prompts a confirmation modal
 
-function CommitNoPush() {
-  if (CommitButNoPush == 1) {
-    $("#modalW2").modal();
-  }
+function CommitNoPush(){
+	if (CommitButNoPush == 1){
+		$("#modalW2").modal();
+	}
 }
 
 function signInHead(callback) {
-  if (signed == 1) {
-    if ((changes == 1) || (CommitButNoPush == 1)) {
-      $("#modalW2").modal();
-    }
-    else {
-      getUserInfo(callback);
-    }
-  }
-  else {
-    getUserInfo(callback);
-  }
+	if (signed == 1){
+		if ((changes == 1) || (CommitButNoPush == 1)){
+			$("#modalW2").modal();
+		}
+		else {
+			getUserInfo(callback);
+		}
+	}
+	else{
+	  getUserInfo(callback);
+	}
 }
 
-function LogInAfterConfirm(callback) {
-  getUserInfo(callback);
+function LogInAfterConfirm(callback){
+	getUserInfo(callback);
 }
 
-function ModalSignIn(callback) {
-  getUserInfo(callback);
+function ModalSignIn(callback){
+	getUserInfo(callback);
 }
 
 function signInPage(callback) {
@@ -62,14 +62,14 @@ async function loginWithSaved(callback) {
     document.getElementById("password").value = credentials.password;
   }
 }
-
+  
 /**
  * This function reads the input fields for signing in and attempts to sign 
  * the user in to their GitHub account.
  */
 function getUserInfo(callback) {
   var userid = "auth-username";
-  var passid = "auth-password";
+  var passid = "auth-password";  
 
   // Determine which form the user is using to sign in 
   if (document.getElementById("auth-username").value == '' && document.getElementById("auth-password").value == '') {
@@ -79,64 +79,64 @@ function getUserInfo(callback) {
 
   const username = document.getElementById(userid).value;
   const password = document.getElementById(passid).value;
-
+  
   cred = Git.Cred.userpassPlaintextNew(username, password);
 
-  client = github.client({
-    username: username,
-    password: password
-  });
+    client = github.client({
+        username: username,
+        password: password
+    });
 
-  var ghme = client.me();
-  ghme.info(function (err, data, head) {
-    if (err) {
-      /*
-      I know this is bad, but our hands are tied since the HTTP callback is encapsulated in the octonode module.
-      Effectively, if verifying the github account fails, the github module (octonode) returns an 'informative'
-      message. In this case, we want to provide 2FA support, hence when the error message is regarding the OTP
-      code, we change to personal access token. Otherwise, we display the error in the modal window.
-       */
-      if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
-        let password = document.getElementById(passid);
-        password.value = "";
-        password.placeholder = "personal access token";
-
-        document.getElementById("personalAccessTokenMsg").style.display = "block";
-      } else {
-        displayModal(err);
-      }
-    } else {
-      avaterImg = Object.values(data)[2];
-      let doc = document.getElementById("avatar");
-      if (doc === null) {
-        console.log("Missing element named avatar");
-      } else {
-        doc.innerHTML = 'Sign Out';
-      }
-
-      signed = 1;
-
-      callback();
-
-      ghme.repos(function (err, data, head) {
+    var ghme = client.me();
+    ghme.info(function (err, data, head) {
         if (err) {
-          return;
-        } else {
-          if (data.length > 0) {
-            let ul = document.getElementById("repo-dropdown");
-            ul = ul.removeChild(document.getElementById("empty-message"));
-          }
+            /*
+            I know this is bad, but our hands are tied since the HTTP callback is encapsulated in the octonode module.
+            Effectively, if verifying the github account fails, the github module (octonode) returns an 'informative'
+            message. In this case, we want to provide 2FA support, hence when the error message is regarding the OTP
+            code, we change to personal access token. Otherwise, we display the error in the modal window.
+             */
+            if (err.toString() === "Error: Must specify two-factor authentication OTP code.") {
+                let password = document.getElementById(passid);
+                password.value = "";
+                password.placeholder = "personal access token";
 
-          for (let i = 0; i < data.length; i++) {
-            let rep = Object.values(data)[i];
-            console.log(`Getting repo info from: ${rep['html_url']}`);
-            displayBranch(rep['full_name'], "repo-dropdown", "selectRepo(this)");
-            repoList[rep['full_name']] = rep['html_url'];
-          }
+                document.getElementById("personalAccessTokenMsg").style.display = "block";
+            } else {
+                displayModal(err);
+            }
+        } else {
+            avaterImg = Object.values(data)[2];
+            let doc = document.getElementById("avatar");
+            if (doc === null) {
+                console.log("Missing element named avatar");
+            } else {
+                doc.innerHTML = 'Sign Out';
+            }
+
+            signed = 1;
+
+            callback();
+
+            ghme.repos(function(err, data, head) {
+                if (err) {
+                    return;
+                } else {
+					if (data.length > 0){
+						let ul = document.getElementById("repo-dropdown");
+						ul = ul.removeChild(document.getElementById("empty-message"));
+					}
+					
+                    for (let i = 0; i < data.length; i++) {
+                        let rep = Object.values(data)[i];
+                        console.log(`Getting repo info from: ${rep['html_url']}`);
+                        displayBranch(rep['full_name'], "repo-dropdown", "selectRepo(this)");
+                        repoList[rep['full_name']] = rep['html_url'];
+                    }
+                }
+            });
         }
-      });
-    }
-  });
+    });
 }
 
 function selectRepo(ele) {
@@ -171,11 +171,11 @@ function cloneRepo() {
 
 function signInOrOut() {
   let doc = document.getElementById("avatar");
-  if (doc.innerHTML === 'Sign Out') {
+  if (doc.innerHTML === 'Sign Out'){
     $('#avatar').removeAttr('data-toggle');
 
-    if ((changes == 1) || (CommitButNoPush == 1)) {
-      $("#modalW2").modal();
+    if ((changes == 1) || (CommitButNoPush == 1)){
+			$("#modalW2").modal();
     }
     else {
       redirectToHomePage();
