@@ -122,11 +122,11 @@ function getUserInfo(callback) {
                 if (err) {
                     return;
                 } else {
-					if (data.length > 0){
-						let ul = document.getElementById("repo-dropdown");
-						ul = ul.removeChild(document.getElementById("empty-message"));
-					}
-					
+		    if (data.length > 0){
+			let ul = document.getElementById("repo-dropdown");
+			ul = ul.removeChild(document.getElementById("empty-message"));
+    		    }
+		
                     for (let i = 0; i < data.length; i++) {
                         let rep = Object.values(data)[i];
                         console.log(`Getting repo info from: ${rep['html_url']}`);
