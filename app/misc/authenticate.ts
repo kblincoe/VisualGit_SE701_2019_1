@@ -91,22 +91,26 @@ function getUserInfo(callback) {
       //docGitUser.innerHTML = Object.values(data)[0];
 
       let doc = document.getElementById("avatar");
-      if (doc === null){
+      if (doc === null) {
         console.log("Missing element named avatar");
-      }else{
+      } else {
         doc.innerHTML = 'Sign Out';
       }
-      
-	  signed = 1;
+
+      signed = 1;
 
       callback();
     }
   });
 
-  ghme.repos(function(err, data, head) {
+  ghme.repos(function (err, data, head) {
     if (err) {
       return;
     } else {
+      if (data.length > 0){
+        let ul = document.getElementById("repo-dropdown");
+        ul = ul.removeChild(document.getElementById("empty-message"));
+      }
       for (let i = 0; i < data.length; i++) {
         let rep = Object.values(data)[i];
         console.log(`Getting repo info from: ${rep['html_url']}`);

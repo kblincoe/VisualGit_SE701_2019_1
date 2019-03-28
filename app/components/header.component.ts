@@ -240,6 +240,9 @@ import { GraphService } from "../services/graph.service";
       <div class="modal-dialog">
         <div class="modal-content">
           <ul class="list-group"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
+            <li class="list-group-item" id="empty-message">
+              You have no repositories to view. You may not be logged in.
+            </li>
           </ul>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary disabled" id="cloneButton" onclick="cloneRepo()">Clone</button>
