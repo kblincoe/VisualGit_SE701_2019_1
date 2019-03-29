@@ -6,7 +6,7 @@ import { Component } from "@angular/core";
   <div class="authenticate" id="authenticate">
   <form role="form" style="text-align:center; margin-top:100px">
     <label>
-      <h1>VisualGit</h1>
+        <h1><img src="./assets/VisualGit_Logo.png" class="auth-logo"> VisualGit</h1>
     </label>
     <br><br>
     <div class="input-group" style="width:280px;">
@@ -15,7 +15,7 @@ import { Component } from "@angular/core";
     <br>
 
     <div class="input-group" style="width:280px;">
-      <input id="auth-password" type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
+      <input id="auth-password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
       <br><br>
       <p id="personalAccessTokenMsg" style="display: none;"><i>Your account has Two-Factor Authentication enabled.
         Please enter you personal access token, if you don't know
