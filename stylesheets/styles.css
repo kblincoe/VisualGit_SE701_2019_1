@@ -11,6 +11,10 @@ ul{
   outline: 0;
 }
 
+.auth-logo {
+  height: 40px;
+}
+
 .add-repository-button {
   position: relative;
   z-index: 2;
@@ -56,9 +60,6 @@ ul{
   width: 100px;
 }
 
-.auth-logo{
-  height: 40px;
-}
 
 @media screen and (max-width: 767px) {
     .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
@@ -436,6 +437,18 @@ body .footer .git-command {
 
 .file-deleted {
   background-color: #ff2448;
+}
+
+#download-percentage {
+  margin: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 96%;
+  height: 8px;
+}
+
+.download-speed {
+  color: #999;
 }
 
 .input-group .form-control:first-child,

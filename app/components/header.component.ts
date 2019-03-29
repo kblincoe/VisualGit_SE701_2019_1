@@ -281,7 +281,7 @@ export class HeaderComponent   {
   }
 
   switchToMainPanel(): void {
-    signInHead(collpaseSignPanel);
+    signInHead(collapseSignPanel);
   }
 
   WarningSignIn(): void {
