@@ -57,6 +57,22 @@ import { Component } from '@angular/core';
             </div>
           </form>
         </div>
+
+        <div id="create-local-resitory" class="create-local-resitory">
+          <div class="title">
+            <h1 class="create-local-title">Create New Local Repository</h1>
+          </div>
+          <div class="block">
+            <div class="left">
+              <p>Directory of new Repository</p>
+            </div>
+            <div class="right">
+              <input type="text" name="repositoryLocal" size="50" id="repoOpen"/>
+              <button class="button-open" (click)="selectDirectory()">Open</button>
+              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;" webkitdirectory />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   `,
