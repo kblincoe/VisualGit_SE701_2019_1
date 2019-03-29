@@ -253,9 +253,10 @@ function openRepository(fullLocalPath: string, localPath: string) {
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
       const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
     }
-    refreshAll(repository);
-    console.log('Repo successfully opened');
-    updateModalText('Repository successfully opened');
+    refreshAll(repository, () => {
+      console.log('Repo successfully opened');
+      updateModalText('Repository successfully opened');
+    });
   },
   function(err) {
     updateModalText('Opening Failed - ' + err);
@@ -280,7 +281,7 @@ function addBranchestoNode(thisB: string) {
   }
 }
 
-function refreshAll(repository) {
+function refreshAll(repository, cb?: () => void) {
   let branch;
   bname = [];
   repository.getCurrentBranch()
@@ -326,7 +327,7 @@ function refreshAll(repository) {
   })
   .then(function() {
     console.log('Updating the graph and the labels');
-    drawGraph();
+    drawGraph(cb);
     document.getElementById('repo-name').innerHTML = repoLocalPath;
     document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
   });

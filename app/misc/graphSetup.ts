@@ -14,7 +14,7 @@ let fromNode = null;
 let toNode;
 
 
-function drawGraph() {
+function drawGraph(cb?: () => void) {
 
 
   bsNodes = new vis.DataSet([]);
@@ -150,10 +150,6 @@ function drawGraph() {
 
   network = new vis.Network(container, bsData, options);
 
-  getAllCommits(function(commits) {
-    processGraph(commits);
-  });
-
   network.on('stabilizationIterationsDone', function() {
     network.setOptions( { physics: false } );
   });
@@ -268,5 +264,9 @@ function drawGraph() {
   //     top: callback.pointer.DOM.y
   //  });
   //   }
+  });
+
+  getAllCommits(function(commits) {
+    processGraph(commits, cb);
   });
 }
