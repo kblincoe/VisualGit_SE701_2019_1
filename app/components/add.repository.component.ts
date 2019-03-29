@@ -62,15 +62,14 @@ import { Component } from '@angular/core';
           <div class="title">
             <h1 class="create-local-title">Create New Local Repository</h1>
           </div>
-          <div class="block">
-            <div class="left">
-              <p>Directory of new Repository</p>
-            </div>
-            <div class="right">
-              <input type="text" name="repositoryLocal" size="50" id="repoOpen"/>
-              <button class="button-open" (click)="selectDirectory()">Open</button>
-              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;" webkitdirectory />
-            </div>
+          <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSave" readonly/>
+                <div class="input-group-btn">
+                  <button class="btn" type="button" (click)="selectDirOnly()">Browse</button>
+                </div>
+              </div>
+              <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="updateDir()" style="display: none;" webkitdirectory />
           </div>
         </div>
       </div>
@@ -114,9 +113,24 @@ export class AddRepositoryComponent {
   updateDir(): void {
     updateCustomPath(document.getElementById('dirPickerSaveNew').files[0].path);
   }
+  //There is quite a bit of dupe code 
+  selectNewRepoDirectory(): void {
+    if (document.getElementById("newRepoOpen").value == null || document.getElementById("newRepoOpen").value == "") {
+      // If no directory specified, launch file browser
+      document.getElementById("dirPickerOpenNewLocal").click();
+    } else {
+      // If directory is specified, continue as normal
+      this.initRepository();
+    }
+  }
 
   openRepository(): void {
     openLocalRepository();
+    switchToMainPanel();
+  }
+
+  initRepository():void{
+
     switchToMainPanel();
   }
 

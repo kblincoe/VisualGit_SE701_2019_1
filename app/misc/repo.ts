@@ -172,8 +172,16 @@ function openLocalRepository() {
   openRepository(fullLocalPath, localPath);
 }
 
-function openRepository(fullLocalPath: string, localPath: string) {
   // Open a reponsitory for which we have the file path for
+function initRepo(fullLocalPath){
+  Git.Repository.init(fullLocalPath, 0).then(function (repository){
+    console.log("Init called");
+    openRepository(fullLocalPath,fullLocalPath);
+  });
+}
+
+function openRepository(fullLocalPath: string, localPath: string) {
+ 
   console.log(`Trying to open repository at ${fullLocalPath}`);
   saveRecentRepository(fullLocalPath);
   displayModal('Opening Local Repository...');
