@@ -5,4 +5,5 @@ function addCommand(command) {
   gitCommand.innerHTML = command;
   let footer = document.getElementById("footer");
   footer.appendChild(gitCommand);
+  gitCommand.scrollIntoView();
 }

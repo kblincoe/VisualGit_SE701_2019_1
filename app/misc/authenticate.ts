@@ -49,7 +49,7 @@ function ModalSignIn(callback){
 
 function signInPage(callback) {
   if (document.getElementById("rememberLogin").checked == true) {
-    storeCredentials(document.getElementById("username").value, document.getElementById("password").value);
+    storeCredentials(document.getElementById("auth-username").value, document.getElementById("auth-password").value);
   }
   getUserInfo(callback);
 }
@@ -58,8 +58,8 @@ function signInPage(callback) {
 async function loginWithSaved(callback) {
   const credentials = await readCredentials();
   if (credentials) {
-    document.getElementById("username").value = credentials.username;
-    document.getElementById("password").value = credentials.password;
+    document.getElementById("auth-username").value = credentials.username;
+    document.getElementById("auth-password").value = credentials.password;
   }
 }
   

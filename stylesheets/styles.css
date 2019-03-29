@@ -343,33 +343,6 @@ body .add-repository-panel p {
   margin-right: 20px;
 }
 
-body .add-repository-panel input {
-  display: inline-block;
-  margin: 15px 30px;
-  border-radius: 10px;
-  border: 0;
-  height: 10px;
-  size: 50;
-  padding: 10px;
-}
-
-body .add-repository-panel .button-clone, body .add-repository-panel .button-open {
-  display: inline-block;
-  height: 30px;
-  border-radius: 10px;
-  border: 0;
-  padding: 0 15px;
-  margin: 15px 40px;
-  margin-left: 10px;
-  background-color: #39c0ba;
-  color: #fff;
-  float: right;
-}
-
-body .add-repository-panel .button-clone:hover, body .add-repository-panel .button-open:hover {
-  opacity: 0.8;
-}
-
 body .add-repository-panel .title {
   width: 100%;
 }
@@ -432,4 +405,16 @@ body .footer .git-command {
 
 .file-deleted {
   background-color: #ff2448;
+}
+
+#download-percentage {
+  margin: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 96%;
+  height: 8px;
+}
+
+.download-speed {
+  color: #999;
 }

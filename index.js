@@ -112,34 +112,64 @@ function setMyMenu() {
 					enabled: false
 				},
 				{
-					label: 'Github Homepage',
-					click() {
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701');
+					label: 'GitHub Homepage',
+					click () { 
+						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1'); 
 					}
 				},
 				{
 					label: 'Features',
-					click() {
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701#features');
-					}
+					submenu: [
+						{
+							label: 'Opening/Cloning Repositories',
+							click () { 
+								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories'); 
+							}
+						},
+						{
+							label: 'Adding and Committing',
+							click () { 
+								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Adding-&-Committing'); 
+							}
+						},
+						{
+							label: 'Pushing and Pulling from Remote',
+							click () { 
+								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Pushing-&-Pulling-from-Remote'); 
+							}
+						},
+						{
+							label: 'Complete List of Features',
+							click () { 
+								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Features'); 
+							}
+						}
+						
+					]	
 				},
 				{
-					label: 'Report Bugs or Request new Features',
-					click() {
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701/issues');
+					label: 'Report Bugs or Request New Features',
+					click () { 
+						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/issues'); 
 					}
 				},
 				{
 					label: 'Offline Support',
-					click() {
-						require('electron').shell.openItem(__dirname + '/README.pdf');
+					click () { 
+						require('electron').shell.openItem(__dirname + '/README.pdf');   
 					}
+				},
+				{
+					label: 'Learn More',
+					click () { 
+						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki'); 
+					}  
 				},
 				{type: 'separator'},
 				{
-					label: 'Learn More ... ',
-					click() {
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701#help');
+					label: 'More Info on External Libraries',
+					click () { 
+						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help'); 
 					}
 				}
 			]
