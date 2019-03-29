@@ -2,8 +2,10 @@ import { parse } from 'path';
 import fetch from 'node-fetch';
 const NetworkSpeed = require('network-speed');
 const ProgressBar = require('progressbar.js');
+const recentsFile = 'recents.json';
 let Git = require("nodegit");
 let $ = require('jQuery');
+let jsonfile = require('jsonfile');
 let repoFullPath;
 let repoLocalPath;
 let bname = {};
@@ -36,7 +38,29 @@ function downloadRepository() {
   } else {
       downloadFunc(cloneURL, fullLocalPath);
   }
+}
 
+function getRecentRepositories(): Array<String> {
+  let objRead = jsonfile.readFileSync(recentsFile);
+  if (objRead.recents == null) {
+    return new Array<String>();
+  } else {
+    return objRead.recents;
+  }
+}
+
+function saveRecentRepository(path: String) {
+  let recentsArray = getRecentRepositories();
+  if (recentsArray.length > 10) {
+    // Max length of 10
+    recentsArray.shift()
+  }
+  // Append new path and write back to JSON
+  recentsArray.push(path);
+  let obj = {
+    recents: recentsArray
+  }
+  jsonfile.writeFileSync(recentsFile);
 }
 
 function downloadFunc(cloneURL: string, fullLocalPath) {
