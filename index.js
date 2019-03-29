@@ -121,7 +121,7 @@ function setMyMenu() {
 					label: 'Features',
 					submenu: [
 						{
-							label: 'Opening/Cloning repositories',
+							label: 'Opening/Cloning Repositories',
 							click () { 
 								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories'); 
 							}
@@ -160,14 +160,14 @@ function setMyMenu() {
 					}
 				},
 				{
-					label: 'Learn More ...',
+					label: 'Learn More',
 					click () { 
 						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki'); 
 					}  
 				},
 				{type: 'separator'},
 				{
-					label: 'More Info on External Libraries ... ',
+					label: 'More Info on External Libraries',
 					click () { 
 						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help'); 
 					}
