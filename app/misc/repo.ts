@@ -294,19 +294,6 @@ function updateLocalPath() {
   }
 }
 
-function updateCustomPath(userPath: String) {
-  let text = document.getElementById("repoClone").value;
-  let splitText = text.split(/\.|:|\//);
-  if (splitText.length >= 2) {
-    // Calculate full path by joining working dir + repo name
-    let fullLocalPath = require("path").join(userPath, splitText[splitText.length - 2]);
-    document.getElementById("repoSave").value = fullLocalPath;
-  } else {
-    // Couldn't compute path
-    document.getElementById("repoSave").value = userPath;
-  }
-}
-
 // function initModal() {
 //   modal = document.getElementById("modal");
 //   btn = document.getElementById("new-repo-button");

@@ -95,7 +95,7 @@ export class AddRepositoryComponent {
   }
 
   updateDir(): void {
-    updateCustomPath(document.getElementById("dirPickerSaveNew").files[0].path);
+    document.getElementById("repoSave").value = document.getElementById("dirPickerSaveNew").files[0].path;
   }
 
   openRepository(): void {
