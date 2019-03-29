@@ -363,8 +363,11 @@ function displayModal(text) {
 }
 
 function updateModalText(text) {
-  document.getElementById("modal-text-box")!.innerHTML = text;
-  $('#modal').modal('show');
+  const modal = document.getElementById("modal-text-box");
+  if(modal) {
+    modal.innerHTML = text;
+    $('#modal').modal('show');
+  }
 }
 
 function setCloneStatistics(repoName: string, repoSize: number) {
@@ -422,8 +425,9 @@ function updateDownloadSpeed(speed: number) {
  */
 async function getNetworkDownloadSpeed() {
   const networkSpeed = new NetworkSpeed();
-  const baseUrl = 'http://eu.httpbin.org/stream-bytes/50000000';
-  const fileSize = 500000;
+  // Retrieve 250kB binaries from server host, same as speedtest https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000'; 
+  const fileSize = 250000;  // Size of the file retrived from the website, for calcs
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
 }  
