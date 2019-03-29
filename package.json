@@ -47,10 +47,13 @@
     "jquery-contextmenu": "2.4.2",
     "keytar": "^4.4.1",
     "material-letter-icons": "^1.0.8",
+    "network-speed": "^2.0.0",
+    "node-fetch": "^2.3.0",
     "nodegit": "0.24.1",
     "npm-run-all": "^4.1.5",
     "octonode": "^0.9.5",
     "opn": "4.0.2",
+    "progressbar.js": "^1.0.1",
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.27",
@@ -60,6 +63,7 @@
     "zone.js": "0.6.12"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.1.7",
     "devtron": "1.1.0",
     "electron": "4.1.0",
     "electron-builder": "20.39.0",

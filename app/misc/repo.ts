@@ -1,3 +1,7 @@
+import { parse } from 'path';
+import fetch from 'node-fetch';
+const NetworkSpeed = require('network-speed');
+const ProgressBar = require('progressbar.js');
 let Git = require("nodegit");
 let $ = require('jQuery');
 let repoFullPath;
@@ -11,6 +15,10 @@ let checkFile = require("fs");
 let repoCurrentBranch = "master";
 let modal;
 let span;
+
+let progressBar;
+let isErrorOpeningRepo;
+
 
 function downloadRepository() {
   let fullLocalPath;
@@ -31,10 +39,29 @@ function downloadRepository() {
 
 }
 
-function downloadFunc(cloneURL, fullLocalPath) {
+function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
-
-  displayModal("Cloning Repository...");
+  
+  // Get user host of the repo and the name of the repo from the url
+  const urlParts = cloneURL.split('/');
+  const repoUser = urlParts[3];
+  const repoName = parse(urlParts[4]).name;
+  // Get the size of the repo in KB by making an api call
+  fetch(`https://api.github.com/repos/${repoUser}/${repoName}`)
+    .then(
+      function(response) {
+        if (response.status === 200) {  // OK
+          response.json().then(function(data) {
+            if(!isErrorOpeningRepo) {
+              setCloneStatistics(`${repoUser}/${repoName}`, data.size);
+            }
+          }); 
+        };
+      }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
 
   options = {
     fetchOpts: {
@@ -42,6 +69,11 @@ function downloadFunc(cloneURL, fullLocalPath) {
         certificateCheck: function() { return 1; },
         credentials: function() {
           return cred;
+        },
+        transferProgress(stats) { // During clone update network speed and download percent
+          const progress = (100 * (stats.receivedObjects() + stats.indexedObjects())) / (stats.totalObjects() * 2);
+          updateDownloadPercentage(progress);
+          getNetworkDownloadSpeed();
         }
       }
     }
@@ -50,6 +82,7 @@ function downloadFunc(cloneURL, fullLocalPath) {
   console.log("Cloning into " + fullLocalPath);
   let repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
   .then(function(repository) {
+    isErrorOpeningRepo = false;
     console.log("Repo successfully cloned");
     refreshAll(repository);
     updateModalText("Clone Successful, repository saved under: " + fullLocalPath);
@@ -61,6 +94,7 @@ function downloadFunc(cloneURL, fullLocalPath) {
   function(err) {
     updateModalText("Clone Failed - " + err);
     console.log(`Error in repo.ts. Attempting to clone repo, the error is: ${err}`);
+    isErrorOpeningRepo = true;
   });
 }
 
@@ -97,6 +131,7 @@ function openRepository() {
   function(err) {
     updateModalText("Opening Failed - " + err);
     console.log(`Error in repo.ts. Attempting to open repo, the error is: ${err}`);
+    isErrorOpeningRepo = true;
   });
 }
 
@@ -328,6 +363,71 @@ function displayModal(text) {
 }
 
 function updateModalText(text) {
-  document.getElementById("modal-text-box").innerHTML = text;
-  $('#modal').modal('show');
+  const modal = document.getElementById("modal-text-box");
+  if(modal) {
+    modal.innerHTML = text;
+    $('#modal').modal('show');
+  }
 }
+
+function setCloneStatistics(repoName: string, repoSize: number) {
+  updateModalText(`<div class="clone-stats">
+    Cloning ${repoName} (${repoSize} kB)
+    <div class="download-speed" id="download-speed">
+      0 kB/s
+    </div>
+    <div id="download-percentage"></div>
+  </div>`);
+  progressBar = new ProgressBar.Line('#download-percentage', {
+    strokeWidth: 4,
+    easing: 'easeInOut',
+    color: '#39C0BA',
+    trailColor: '#eee',
+    trailWidth: 1,
+    svgStyle: {width: '100%', height: '100%'},
+    text: {
+      style: {
+        color: '#999',
+        position: 'absolute',
+        right: '5%',
+        bottom: '5px',
+        padding: 0,
+        margin: 0,
+        transform: null
+      },
+      autoStyleContainer: false
+    },
+    // Changes colour from a starting colour to a final colour
+    from: {color: '#39C0BA' },
+    to: {color: '#154744' },
+    step: (state, bar) => {
+      bar.path.setAttribute('stroke', state.color); // Colour transition
+      bar.setText(`${(bar.value() * 100).toFixed(2)}%`); // Percentage Label
+    }
+  });
+}
+
+function updateDownloadPercentage(percentage: number) {
+  if(progressBar) {
+    progressBar.animate((percentage / 100)); // Supply a number between 0 and 1
+  }
+}
+
+function updateDownloadSpeed(speed: number) {
+  const speedRounded = Math.round(speed);
+  if(!isNaN(speedRounded) && document.getElementById("download-speed")) {
+    document.getElementById("download-speed")!.innerHTML = `${speedRounded} kB/s`;
+  }
+}
+
+/**
+ * Estimates users download speed by pinging a standard httpbin site
+ */
+async function getNetworkDownloadSpeed() {
+  const networkSpeed = new NetworkSpeed();
+  // Retrieve 250kB binaries from server host, same as speedtest https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000'; 
+  const fileSize = 250000;  // Size of the file retrived from the website, for calcs
+  const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
+  updateDownloadSpeed(speed.kbps);
+}  

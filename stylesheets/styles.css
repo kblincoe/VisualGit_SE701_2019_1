@@ -433,3 +433,15 @@ body .footer .git-command {
 .file-deleted {
   background-color: #ff2448;
 }
+
+#download-percentage {
+  margin: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 96%;
+  height: 8px;
+}
+
+.download-speed {
+  color: #999;
+}
