@@ -81,7 +81,7 @@ import { GraphService } from "../services/graph.service";
                 &nbsp;&nbsp;branch
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
+              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
                     <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
