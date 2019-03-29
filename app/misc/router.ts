@@ -2,7 +2,7 @@ let cred;
 let blue = "#39c0ba";
 let gray = "#5b6969";
 
-function collpaseSignPanel() {
+function collapseSignPanel() {
   $('#nav-collapse1').collapse('hide');
   // Clear sign in input fields
   document.getElementById("head-username").value = '';
