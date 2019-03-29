@@ -5,7 +5,6 @@ import { Component } from "@angular/core";
   template: `
     <div class="add-repository-panel" id="add-repository-panel">
       <img src="./assets/Back.svg" (click)="returnToMainPanel()" class="back-button">
-
       <div class="add-repository-body flex-container-col">
         <div>
           <div class="clone-body flex-container-col">
@@ -13,14 +12,12 @@ import { Component } from "@angular/core";
               <h1 class="clone-title">Clone from Internet</h1>
             </div>
           </div>
-
           <form style="max-width: 700px;">
             <div class="form-group">
               <div class="input-group input-group-lg">
                 <input style="width: 700px;" type="text" class="form-control" oninput="updateLocalPath()" name="repositoryRemote" id="repoClone" placeholder="https://github.com/user/repository.git"/>
               </div>
             </div>
-    
             <div class="form-group">
                 <div class="input-group">
                   <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="repoSave" readonly/>
@@ -30,20 +27,15 @@ import { Component } from "@angular/core";
                 </div>
                 <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="updateDir()" style="display: none;" webkitdirectory />
             </div>
-
             <div class="form-group">
               <button class="btn btn-primary btn-lg" type="button" id="cloneButton" (click)="selectSave()">Clone</button>
             </div>
           </form>
         </div>
-
-
-
         <div id="open-local-repository" class="open-local-repository">
           <div class="title">
             <h1 class="open-local-repo">Open Local Repository</h1>
           </div>
-
           <form style="max-width: 700px;">
             <div class="form-group">
               <div class="input-group input-group-lg">
@@ -71,7 +63,7 @@ export class AddRepositoryComponent {
   //Add function that determines if directory written or not
   selectSave(): void {
     if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value == "") {
-      // If no directory specified, launch file browser
+      // If no directory specified, display error
       displayModal("Invalid clone destination");
     } else {
       // If directory is specified, continue as normal
@@ -95,7 +87,7 @@ export class AddRepositoryComponent {
   }
 
   updateDir(): void {
-    document.getElementById("repoSave").value = document.getElementById("dirPickerSaveNew").files[0].path;
+    updateCustomPath(document.getElementById("dirPickerSaveNew").files[0].path);
   }
 
   openRepository(): void {
