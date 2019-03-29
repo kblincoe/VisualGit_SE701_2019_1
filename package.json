@@ -12,7 +12,8 @@
     "electron:serve": "electron . --serve",
     "postinstall": "electron-builder install-app-deps",
     "createjs": "tsc",
-    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all"
+    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
+    "tslint": "tslint app/**/*.ts"
   },
   "keywords": [
     "VisualGit",
