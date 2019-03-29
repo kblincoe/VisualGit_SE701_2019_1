@@ -445,3 +445,50 @@ body .footer .git-command {
 .download-speed {
   color: #999;
 }
+
+.account_group {
+  display: inline-flex;
+  float: right;
+  padding-left: 8px;
+  padding-top: 7px;
+}
+
+#github_account {
+  display: none;
+}
+
+#github_avatar {
+  alignment: right;
+  vertical-align: center;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+}
+
+#github_name {
+  padding-top: 5px;
+  color: #A9A9A9;
+  text-transform: capitalize;
+}
+
+#signOut {
+  padding-top: 9px;
+  padding-right: 16px;
+  color: #A9A9A9;
+  alignment: left;
+  font-size: x-large;
+  text-decoration: none;
+}
+
+#signOut:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.divider {
+  color: #575757;
+  font-size: large;
+  padding-top: 6px;
+  padding-left: 6px;
+  padding-right: 4px;
+}

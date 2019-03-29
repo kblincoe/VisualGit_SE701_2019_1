@@ -47,12 +47,16 @@ import { GraphService } from "../services/graph.service";
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
             <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
           </ul>
-
-          <ul class="navbar-nav navbar-right hidden-xs">
-            <li>
-              <label id="githubname" style="color:white"></label>
-              <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
-            </li>
+          
+          <ul id="github_account" class="navbar-nav navbar-right hidden-xs">
+            <li class="account_group"><img id="github_avatar" src=""></li>
+            <li class="account_group"><p id="github_name"></p></li>
+            <li class="account_group"><p class="divider">|</p></li>
+            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt" onclick="signInOrOut()"></a></li>
+          </ul>
+          
+          <ul id="sign_in" class="navbar-nav navbar-right hidden-xs">
+            <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
           </ul>
           <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse1">
             <form class="navbar-form navbar-right form-inline" role="form">
