@@ -1,13 +1,13 @@
-let Git = require('nodegit');
-let $ = require('jQuery');
+import Git = require('nodegit');
+import $ = require('jQuery');
 let repoFullPath;
 let repoLocalPath;
 let bname = {};
 let branchCommit = [];
 let remoteName = {};
 let localBranches = [];
-let readFile = require('fs-sync');
-let checkFile = require('fs');
+import readFile = require('fs-sync');
+import checkFile = require('fs');
 let repoCurrentBranch = 'master';
 let modal;
 let span;
@@ -16,12 +16,12 @@ function downloadRepository() {
   let fullLocalPath;
   // Full path is determined by either handwritten directory or selected by file browser
   if (document.getElementById('repoSave').value !== null || document.getElementById('repoSave').value !== '') {
-    let localPath = document.getElementById('repoSave').value;
+    const localPath = document.getElementById('repoSave').value;
     fullLocalPath = require('path').join(__dirname, localPath);
   } else {
     fullLocalPath = document.getElementById('dirPickerSaveNew').files[0].path;
   }
-  let cloneURL = document.getElementById('repoClone').value;
+  const cloneURL = document.getElementById('repoClone').value;
 
   if (!cloneURL || cloneURL.length === 0) {
       updateModalText('Clone Failed - Empty URL Given');
