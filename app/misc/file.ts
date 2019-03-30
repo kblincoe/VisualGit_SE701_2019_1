@@ -30,7 +30,7 @@ function readFromFile(filePath) {
 function generateFileContent(){
     let doc = document.getElementById('diff-panel-body');
     let children = doc.childNodes;
-    
+
     let content = '';
     children.forEach(function(child) {
         content += child.textContent + '\n';

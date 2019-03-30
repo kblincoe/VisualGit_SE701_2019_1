@@ -67,12 +67,12 @@ function downloadFunc(cloneURL, fullLocalPath) {
 function openRepository() {
   // Full path is determined by either handwritten directory or selected by file browser
   if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
-    let localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
-    let fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
+    const localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
+    const fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
     document.getElementById('repoOpen').value = fullLocalPath;
     document.getElementById('repoOpen').text = fullLocalPath;
   } else {
-    let localPath = document.getElementById('repoOpen').value;
+    const localPath = document.getElementById('repoOpen').value;
     let fullLocalPath;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
@@ -88,7 +88,7 @@ function openRepository() {
     repoFullPath = fullLocalPath;
     repoLocalPath = localPath;
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
-      let tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
+      const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
     }
     refreshAll(repository);
     console.log('Repo successfully opened');
@@ -101,12 +101,12 @@ function openRepository() {
 }
 
 function addBranchestoNode(thisB: string) {
-  let elem = document.getElementById('otherBranches');
+  const elem = document.getElementById('otherBranches');
   elem.innerHTML = '';
   for (let i = 0; i < localBranches.length; i++) {
     if (localBranches[i] !== thisB) {
-      let li = document.createElement('li');
-      let a = document.createElement('a');
+      const li = document.createElement('li');
+      const a = document.createElement('a');
       a.appendChild(document.createTextNode(localBranches[i]));
       a.setAttribute('tabindex', '0');
       a.setAttribute('href', '#');
@@ -133,7 +133,7 @@ function refreshAll(repository) {
     let count = 0;
     clearBranchElement();
     for (let i = 0; i < branchList.length; i++) {
-      let bp = branchList[i].name().split('/');
+      const bp = branchList[i].name().split('/');
       Git.Reference.nameToId(repository, branchList[i].name()).then(function(oid) {
         // Use oid
         if (branchList[i].isRemote()) {
@@ -178,7 +178,7 @@ function getAllBranches() {
   .then(function(branchList) {
     clearBranchElement();
     for (let i = 0; i < branchList.length; i++) {
-      let bp = branchList[i].split('/');
+      const bp = branchList[i].split('/');
       if (bp[1] !== 'remotes') {
         displayBranch(bp[bp.length - 1], 'branch-dropdown', 'checkoutLocalBranch(this)');
       }
@@ -194,22 +194,22 @@ function getOtherBranches() {
   let list;
   let repos;
   Git.Repository.open(repoFullPath)
-  .then((repo) => {
+  .then(function(repo) {
     repos = repo;
     return repo.getReferenceNames(Git.Reference.TYPE.LISTALL);
   })
-  .then((branchList) => {
+  .then(function(branchList) {
     clearMergeElement();
     list = branchList;
   })
-  .then(() => {
+  .then(function() {
     return repos.getCurrentBranch();
   })
-  .then((ref) => {
-    let name = ref.name().split('/');
+  .then(function(ref) {
+    const name = ref.name().split('/');
     clearBranchElement();
     for (let i = 0; i < list.length; i++) {
-      let bp = list[i].split('/');
+      const bp = list[i].split('/');
       if (bp[1] !== 'remotes' && bp[bp.length - 1] !== name[name.length - 1]) {
         displayBranch(bp[bp.length - 1], 'merge-dropdown', 'mergeLocalBranches(this)');
       }
@@ -218,21 +218,21 @@ function getOtherBranches() {
 }
 
 function clearMergeElement() {
-  let ul = document.getElementById('merge-dropdown');
+  const ul = document.getElementById('merge-dropdown');
   ul.innerHTML = '';
 }
 
 function clearBranchElement() {
-  let ul = document.getElementById('branch-dropdown');
-  let li = document.getElementById('create-branch');
+  const ul = document.getElementById('branch-dropdown');
+  const li = document.getElementById('create-branch');
   ul.innerHTML = '';
   ul.appendChild(li);
 }
 
 function displayBranch(name, id, onclick) {
-  let ul = document.getElementById(id);
-  let li = document.createElement('li');
-  let a = document.createElement('a');
+  const ul = document.getElementById(id);
+  const li = document.createElement('li');
+  const a = document.createElement('a');
   a.setAttribute('href', '#');
   a.setAttribute('class', 'list-group-item');
   a.setAttribute('onclick', onclick);
@@ -282,17 +282,17 @@ function checkoutRemoteBranch(element) {
   })
   .then(function(code) {
     repos.mergeBranches(bn, 'origin/' + bn)
-    .then(() => {
+    .then(function() {
         refreshAll(repos);
         console.log('Pull successful');
     });
-  }, (err) => {
+  }, function(err) {
     console.log(`Error in repo.ts. Attempting to checkout remote branch, the error is: ${err}`);
   });
 }
 
 function updateLocalPath() {
-  let text = document.getElementById('repoClone').value;
+  const text = document.getElementById('repoClone').value;
   const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     document.getElementById('repoSave').value = splitText[splitText.length - 2];

@@ -232,7 +232,7 @@ function sortBasicGraph() {
   for (let i = 0; i < idList.length; i++) {
     bsNodes.update({id: idList[i], y: i * spacingY});
     if (idList[i] in branchIds) {
-      bsNodes.update({id: branchIds[idList[i]], y: (i + 0.7) * spacingY}),
+      bsNodes.update({id: branchIds[idList[i]], y: (i + 0.7) * spacingY});
     }
   }
 }
@@ -258,7 +258,7 @@ function makeBranchColor() {
     } else {
       bDict[oid] = [cid];
     }
-    let parents = commit.oid.parents();
+    const parents = commit.oid.parents();
 
     for (let i = 0; i < parents.length; i++) {
       for (let j = 0; j < commitHistory.length; j++) {
@@ -274,16 +274,16 @@ function makeBranchColor() {
 }
 
 function makeBasicNode(c, column: number) {
-  let reference;
-  let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
-  let email = stringer.split('%')[1];
+  const reference;
+  const name = getName(c.author().toString());
+  const stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  const email = stringer.split('%')[1];
   let flag = true;
   let count = 1;
   let id;
-  let colors1 = JSON.stringify(bDict[c.toString()]);
+  const colors1 = JSON.stringify(bDict[c.toString()]);
   for (let i = 0; i < basicList.length; i++) {
-    let colors2 = JSON.stringify(basicList[i]['colors']);
+    const colors2 = JSON.stringify(basicList[i]['colors']);
     if (colors1 === colors2) {
       flag = false;
       id = basicList[i]['id'];
@@ -310,7 +310,7 @@ function makeBasicNode(c, column: number) {
       y: (id - 1) * spacingY,
     });
 
-    let shaList = [];
+    const shaList = [];
     shaList.push(c.toString());
 
     basicList.push({
@@ -327,8 +327,8 @@ function makeBasicNode(c, column: number) {
 
   if (c.toString() in bname) {
     for (let i = 0; i < bname[c.toString()].length; i++) {
-      let branchName = bname[c.toString()][i];
-      let bp = branchName.name().split('/');
+      const branchName = bname[c.toString()][i];
+      const bp = branchName.name().split('/');
       let shortName = bp[bp.length - 1];
       if (branchName.isHead()) {
         shortName = '*' + shortName;
@@ -355,16 +355,16 @@ function makeBasicNode(c, column: number) {
 }
 
 function makeAbsNode(c, column: number) {
-  let reference;
-  let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
-  let email = stringer.split('%')[1];
+  const reference;
+  const name = getName(c.author().toString());
+  const stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  const email = stringer.split('%')[1];
   let flag = true;
   let count = 1;
   if (c.parents().length === 1) {
-    let cp = c.parents()[0].toString();
+    const cp = c.parents()[0].toString();
     for (let i = 0; i < abstractList.length; i++) {
-      let index = abstractList[i]['sha'].indexOf(cp);
+      const index = abstractList[i]['sha'].indexOf(cp);
       if (index > -1 && abstractList[i]['email'] === email && abstractList[i]['column'] === column && !(c.toString() in bname)) {
         flag = false;
         abstractList[i]['count'] += 1;
@@ -377,8 +377,8 @@ function makeAbsNode(c, column: number) {
   }
 
   if (flag) {
-    let id = absNodeId++;
-    let title = 'Author: ' + name + '<br>' + 'Number of Commits: ' + count;
+    const id = absNodeId++;
+    const title = 'Author: ' + name + '<br>' + 'Number of Commits: ' + count;
 
     abNodes.add({
       id: id,
@@ -394,8 +394,8 @@ function makeAbsNode(c, column: number) {
 
     if (c.toString() in bname) {
       for (let i = 0; i < bname[c.toString()].length; i++) {
-        let branchName = bname[c.toString()][i];
-        let bp = branchName.name().split('/');
+        const branchName = bname[c.toString()][i];
+        const bp = branchName.name().split('/');
         let shortName = bp[bp.length - 1];
         if (branchName.isHead()) {
           shortName = '*' + shortName;
@@ -436,12 +436,12 @@ function makeAbsNode(c, column: number) {
 }
 
 function makeNode(c, column: number) {
-  let id = nodeId++;
-  let reference;
-  let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
-  let email = stringer.split('%')[1];
-  let title = 'Author: ' + name + '<br>' + 'Message: ' + c.message();
+  const id = nodeId++;
+  const reference;
+  const name = getName(c.author().toString());
+  const stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  const email = stringer.split('%')[1];
+  const title = 'Author: ' + name + '<br>' + 'Message: ' + c.message();
   let flag = false;
   nodes.add({
     id: id,
@@ -456,8 +456,8 @@ function makeNode(c, column: number) {
 
   if (c.toString() in bname) {
     for (let i = 0; i < bname[c.toString()].length; i++) {
-      let branchName = bname[c.toString()][i];
-      let bp = branchName.name().split('/');
+      const branchName = bname[c.toString()][i];
+      const bp = branchName.name().split('/');
       let shortName = bp[bp.length - 1];
       if (branchName.isHead()) {
         shortName = '*' + shortName;
@@ -493,8 +493,8 @@ function makeNode(c, column: number) {
 }
 
 function makeEdge(sha: string, parentSha: string) {
-  let fromNode = getNodeId(parentSha.toString());
-  let toNode = getNodeId(sha);
+  const fromNode = getNodeId(parentSha.toString());
+  const toNode = getNodeId(sha);
 
   edges.add({
     from: fromNode,
@@ -504,7 +504,7 @@ function makeEdge(sha: string, parentSha: string) {
 
 function getNodeId(sha: string) {
   for (let i = 0; i < commitList.length; i++) {
-    let c = commitList[i];
+    const c = commitList[i];
     if (c['sha'] === sha) {
       return c['id'];
     }
@@ -512,7 +512,7 @@ function getNodeId(sha: string) {
 }
 
 function reCenter() {
-  let moveOptions = {
+  const moveOptions = {
     offset: {x: -150, y: 200},
     scale: 1,
     animation: {

@@ -4,7 +4,7 @@ function changeColor(color) {
   // let scheme = new cs;
   // scheme.from_hue(0)
   //     .scheme('mono')
-  //     .variation('soft');
+  //     .letiation('soft');
   // let colors = scheme.colors();
   console.log(`Color changed to ${color}`);
   let head = document.getElementsByClassName('navbar');
@@ -53,28 +53,28 @@ function changeColor(color) {
     before = 'white';
   }
   else if (color === 'pink') {
-    for (var i = 0; i < head.length; i++) {
+    for (let i = 0; i < head.length; i++) {
       head[i].className = 'navbar navbar-pink';
     }
 
-    for (var i = 0; i < headButton.length; i++) {
+    for (let i = 0; i < headButton.length; i++) {
       if (before === 'default') {
         headButton[i].classList.remove('btn-inverse');
       }
       headButton[i].classList.add('btn-default');
     }
 
-    for (var i = 0; i < fa.length; i++) {
+    for (let i = 0; i < fa.length; i++) {
       fa[i].setAttribute('style', 'color:white');
     }
 
     fp.setAttribute('style', 'background-color: #FFC2C2');
 
-    for (var i = 0; i < p.length; i++) {
+    for (let i = 0; i < p.length; i++) {
       p[i].style.color = '#767676'; 
     }
 
-    for (var i = 0; i < h1.length; i++) {
+    for (let i = 0; i < h1.length; i++) {
       h1[i].style.color = '#FFA3A3'; 
     }
 
@@ -88,28 +88,28 @@ function changeColor(color) {
     before = 'pink';
   }
   else if (color === 'blue') {
-    for (var i = 0; i < head.length; i++) {
+    for (let i = 0; i < head.length; i++) {
       head[i].className = 'navbar navbar-blue';
     }
 
-    for (var i = 0; i < headButton.length; i++) {
+    for (let i = 0; i < headButton.length; i++) {
       if (before === 'default') {
         headButton[i].classList.remove('btn-inverse');
       }
       headButton[i].classList.add('btn-default');
     }
 
-    for (var i = 0; i < fa.length; i++) {
+    for (let i = 0; i < fa.length; i++) {
       fa[i].setAttribute('style', 'color:white');
     }
 
     fp.setAttribute('style', 'background-color: #9DD2FE');
     
-    for (var i = 0; i < p.length; i++) {
+    for (let i = 0; i < p.length; i++) {
       p[i].style.color = '#767676';
     }
 
-    for (var i = 0; i < h1.length; i++) {
+    for (let i = 0; i < h1.length; i++) {
       h1[i].style.color = '#4EAFFE';
     }
 
@@ -123,27 +123,27 @@ function changeColor(color) {
     before = 'blue';
   }
   else if (color === 'navy') {
-    for (var i = 0; i < head.length; i++) {
+    for (let i = 0; i < head.length; i++) {
       head[i].className = 'navbar navbar-navy';
     }
 
-    for (var i = 0; i < headButton.length; i++) {
+    for (let i = 0; i < headButton.length; i++) {
       if (before === 'default') {
         headButton[i].classList.remove('btn-inverse');
       }
       headButton[i].classList.add('btn-default');
     }
 
-    for (var i = 0; i < fa.length; i++) {
+    for (let i = 0; i < fa.length; i++) {
       fa[i].setAttribute('style', 'color:white');
     }
 
     fp.setAttribute('style', 'background-color: #0066FF');
-    for (var i = 0; i < p.length; i++) {
+    for (let i = 0; i < p.length; i++) {
       p[i].style.color = 'white';
     }
 
-    for (var i = 0; i < h1.length; i++) {
+    for (let i = 0; i < h1.length; i++) {
       h1[i].style.color = '#001C83';
     }
 
@@ -158,26 +158,26 @@ function changeColor(color) {
     before = 'navy';
   }
   else if (color === 'green') {
-    for (var i = 0; i < head.length; i++) {
+    for (let i = 0; i < head.length; i++) {
         head[i].className = 'navbar navbar-green';
       }
-    for (var i = 0; i < headButton.length; i++) {
+    for (let i = 0; i < headButton.length; i++) {
       if (before === 'default') {
         headButton[i].classList.remove('btn-inverse');
       }
       headButton[i].classList.add('btn-default');
     }
 
-    for (var i = 0; i < fa.length; i++) {
+    for (let i = 0; i < fa.length; i++) {
       fa[i].setAttribute('style', 'color:white');
     }
 
     fp.setAttribute('style', 'background-color: #5CD65C');
-    for (var i = 0; i < p.length; i++) {
+    for (let i = 0; i < p.length; i++) {
       p[i].style.color = 'white';
     }
 
-    for (var i = 0; i < h1.length; i++) {
+    for (let i = 0; i < h1.length; i++) {
       h1[i].style.color = '#00990d';
     }
 

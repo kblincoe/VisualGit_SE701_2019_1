@@ -13,7 +13,7 @@ let filesToAdd = [];
 let theirCommit = null;
 let modifiedFiles;
 let warnbool;
-var CommitButNoPush = 0;
+let CommitButNoPush = 0;
 
 function cloneFromRemote(){
   switchToClonePanel();
@@ -358,7 +358,7 @@ function mergeCommits(from) {
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repos = repo;
-    //return repos.getCommit(fromSha);
+    // return repos.getCommit(fromSha);
     addCommand('git merge ' + from);
     return Git.Reference.nameToId(repos, 'refs/heads/' + from);
   })
@@ -631,7 +631,7 @@ function displayModifiedFiles() {
       }
 
       function printFileDiff(filePath) {
-        repo.getHeadCommit().then((commit) => {
+        repo.getHeadCommit().then(function(commit) {
           getCurrentDiff(commit, filePath, function(line) {
             formatLine(line);
           });
@@ -710,7 +710,7 @@ function calculateModification(status) {
 function deleteFile(filePath: string) {
   let newFilePath = filePath.replace(/\\/gi, '/');
   if (fs.existsSync(newFilePath)) {
-    fs.unlink(newFilePath, (err) => {
+    fs.unlink(newFilePath, function(err) {
       if (err) {
         alert('An error occurred updating the file' + err.message);
         console.log(`Error in git.ts. Attempting to delete file, the error is: ${err}`);
@@ -733,7 +733,7 @@ function cleanRepo() {
     repo.getStatus().then(function(arrayStatusFiles) {
       arrayStatusFiles.forEach(deleteUntrackedFiles);
 
-      //Gets NEW/untracked files and deletes them
+      // Gets NEW/untracked files and deletes them
       function deleteUntrackedFiles(file) {
         let filePath = repoFullPath + '\\' + file.path();
         let modification = calculateModification(file);

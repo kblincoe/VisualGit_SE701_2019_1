@@ -5,13 +5,13 @@ let imageCount = 0;
 let githubAvatarUrl = require('github-avatar-url');
 
 function getName(author: string) {
-  let name = author.split('<')[0];
+  const name = author.split('<')[0];
   return name;
 }
 
 function img4User(name: string) {
   let pic;
-  let first = name.trim().charAt(0).toUpperCase();
+  const first = name.trim().charAt(0).toUpperCase();
   pic =  'node_modules/material-letter-icons/dist/png/' + first + '.png';
   return pic;
 }
@@ -23,7 +23,7 @@ function imageForUser(name: string, email: string, callback) {
       console.log(`Avatar obtained from: ${avatarURL}`);
       pic = avatarURL;
     } else {
-      let first = name.trim().charAt(0).toUpperCase();
+      const first = name.trim().charAt(0).toUpperCase();
       pic =  'node_modules/material-letter-icons/dist/png/' + first + '.png';
     }
     callback(pic);
