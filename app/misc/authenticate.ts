@@ -106,22 +106,19 @@ function getUserInfo(callback) {
                 displayModal(err);
             }
         } else {
-            avaterImg = Object.values(data)[2];
-            let doc = document.getElementById("avatar");
-            if (doc === null) {
-                console.log("Missing element named avatar");
-            } else {
-                doc.innerHTML = 'Sign Out';
-            }
-
+            setAccountInfo(data);
             signed = 1;
-
             callback();
 
             ghme.repos(function(err, data, head) {
                 if (err) {
                     return;
                 } else {
+		    if (data.length > 0){
+			let ul = document.getElementById("repo-dropdown");
+			ul = ul.removeChild(document.getElementById("empty-message"));
+    		    }
+		
                     for (let i = 0; i < data.length; i++) {
                         let rep = Object.values(data)[i];
                         console.log(`Getting repo info from: ${rep['html_url']}`);
@@ -188,4 +185,20 @@ function redirectToHomePage() {
   changes = 0;
   CommitButNoPush = 0;
   //LogInAfterConfirm();
+}
+
+function setAccountInfo(data) {
+    if (data != null) {
+        // As were logged in, we display account instead of sign in button
+        let account_group = document.getElementById("github_account");
+        let sign_in = document.getElementById("sign_in");
+        account_group.style.display = "block";
+        sign_in.style.display = "none";
+
+        // Populate elements with account data from GitHub callback
+        let avatar = document.getElementById("github_avatar");
+        let name = document.getElementById("github_name");
+        avatar.src = data.avatar_url;
+        name.innerText = data.login;
+    }
 }

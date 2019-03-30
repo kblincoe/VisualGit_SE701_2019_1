@@ -343,33 +343,6 @@ body .add-repository-panel p {
   margin-right: 20px;
 }
 
-body .add-repository-panel input {
-  display: inline-block;
-  margin: 15px 30px;
-  border-radius: 10px;
-  border: 0;
-  height: 10px;
-  size: 50;
-  padding: 10px;
-}
-
-body .add-repository-panel .button-clone, body .add-repository-panel .button-open {
-  display: inline-block;
-  height: 30px;
-  border-radius: 10px;
-  border: 0;
-  padding: 0 15px;
-  margin: 15px 40px;
-  margin-left: 10px;
-  background-color: #39c0ba;
-  color: #fff;
-  float: right;
-}
-
-body .add-repository-panel .button-clone:hover, body .add-repository-panel .button-open:hover {
-  opacity: 0.8;
-}
-
 body .add-repository-panel .title {
   width: 100%;
 }
@@ -444,4 +417,51 @@ body .footer .git-command {
 
 .download-speed {
   color: #999;
+}
+
+.account_group {
+  display: inline-flex;
+  float: right;
+  padding-left: 8px;
+  padding-top: 7px;
+}
+
+#github_account {
+  display: none;
+}
+
+#github_avatar {
+  alignment: right;
+  vertical-align: center;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+}
+
+#github_name {
+  padding-top: 5px;
+  color: #A9A9A9;
+  text-transform: capitalize;
+}
+
+#signOut {
+  padding-top: 9px;
+  padding-right: 16px;
+  color: #A9A9A9;
+  alignment: left;
+  font-size: x-large;
+  text-decoration: none;
+}
+
+#signOut:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.divider {
+  color: #575757;
+  font-size: large;
+  padding-top: 6px;
+  padding-left: 6px;
+  padding-right: 4px;
 }
