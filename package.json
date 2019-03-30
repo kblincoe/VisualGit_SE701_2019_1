@@ -12,7 +12,9 @@
     "electron:serve": "electron . --serve",
     "postinstall": "electron-builder install-app-deps",
     "createjs": "tsc",
-    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all"
+    "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
+    "lint": "tslint -q app/**/*.ts && echo linter completed with no linting errors",
+    "lintAllSeverities": "tslint app/**/*.ts"
   },
   "keywords": [
     "VisualGit",
@@ -69,6 +71,7 @@
     "electron-builder": "20.39.0",
     "electron-packager": "13.1.1",
     "electron-reload": "^1.4.0",
+    "tslint": "^5.14.0",
     "typescript": "^3.3.4000",
     "xo": "0.15.0"
   }
