@@ -154,7 +154,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
 
 function initRepo(){
   let fullLocalPath;
-  // Full path is determined by either handwritten directory or selected by file browser
+  // Refactor all this mess
   if (document.getElementById("newRepoSaveLocal").value == null || document.getElementById("newRepoSaveLocal").value == "") {
     let localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
     fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
@@ -172,7 +172,19 @@ function initRepo(){
   Git.Repository.init(fullLocalPath, 0).then(function (repository){
     console.log("Init called");
     openRepository(fullLocalPath,fullLocalPath);
+    queryGitignore(['Java', 'maven'], function (gitignore) {
+      const fs = require('fs');
+      fs.appendFile(fullLocalPath + "/.gitignore", gitignore, function (err: any) {
+        if (err) {
+          return console.log(err);
+        }
+
+        console.log(".gitignore created");
+      }); 
+    })
   });
+
+
 }
 
 function openRepository(fullLocalPath: string, localPath: string) {
