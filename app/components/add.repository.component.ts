@@ -19,14 +19,14 @@ import { Component } from "@angular/core";
             <button type="button" class="button-clone" id="cloneButton" onclick="selectSave()">Clone</button>
             </div>
           </div>
-  
+
           <div class="block flex-container-row">
             <div class="left">
               <p>File location to save to</p>
             </div>
             <div>
               <input type="text" name="repositoryLocal" size="50" id="repoSave"/>
-  
+
               <button class="button-clone" (click)="selectSave()">Save</button>
               <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="addRepository();" style="display: none;"
               webkitdirectory />
@@ -53,7 +53,7 @@ import { Component } from "@angular/core";
         </div>
       </div>
     </div>
-  `
+  `,
 })
 
 export class AddRepositoryComponent {
@@ -63,7 +63,7 @@ export class AddRepositoryComponent {
     switchToMainPanel();
   }
 
-  //Add function that determines if directory written or not
+  // Add function that determines if directory written or not
   selectSave(): void {
     if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value == "") {
       // If no directory specified, launch file browser
@@ -74,7 +74,7 @@ export class AddRepositoryComponent {
     }
   }
 
-  //Add function that determines if directory written or not
+  // Add function that determines if directory written or not
   selectDirectory(): void {
     if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
       // If no directory specified, launch file browser
