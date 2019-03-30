@@ -589,7 +589,11 @@ function displayModifiedFiles() {
         }
       }
 
-      function Confirmation() {
+      // chrome requires returnValue to be set for events, otherwise the modal
+      // will show but default is not prevented, and window will reload/close
+      function confirmationModal(event) {
+        event.preventDefault();
+        event.returnValue = "";
         if (hasChanges()) {
           $("#modalWarnNotCommittedExit").modal();
         } else if (hasUnpushedCommits()) {
@@ -602,8 +606,8 @@ function displayModifiedFiles() {
         filePath.id = `file-path-id-${index}`;
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
-        const fileElement = document.createElement("div");
-        window.onbeforeunload = Confirmation;
+        let fileElement = document.createElement("div");
+        window.onbeforeunload = confirmationModal;
         changes = true;
         // Set how the file has been modified
         if (file.fileModification === 'NEW') {
