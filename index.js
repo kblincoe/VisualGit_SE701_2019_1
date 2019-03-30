@@ -55,6 +55,51 @@ function setMyMenu() {
 			]
 		},
 		{
+			label: 'Tools',
+			submenu: [
+				{
+					label: 'Git',
+					submenu: [
+						{
+							label: 'Push',
+							click() {
+								var focusedWindow = BrowserWindow.getFocusedWindow();
+								focusedWindow.webContents.send('push-to-remote');
+							},
+						},
+						{
+							label: 'Pull',
+							click() {
+								var focusedWindow = BrowserWindow.getFocusedWindow();
+								focusedWindow.webContents.send('pull-from-remote');
+							},
+						},
+						{
+							label: 'Clone',
+							click() {
+								var focusedWindow = BrowserWindow.getFocusedWindow();
+								focusedWindow.webContents.send('clone-from-remote');
+							},
+						},
+						{
+							label: 'Clean',
+							click() {
+								var focusedWindow = BrowserWindow.getFocusedWindow();
+								focusedWindow.webContents.send('clean-repo');
+							},
+						},
+						{
+							label: 'Sync',
+							click() {
+								var focusedWindow = BrowserWindow.getFocusedWindow();
+								focusedWindow.webContents.send('request-link-modal');
+							}
+						},
+					],
+				},
+			]
+		},
+		{
 			label: 'Style',
 			submenu: [
 				{
