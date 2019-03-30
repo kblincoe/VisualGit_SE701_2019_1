@@ -85,7 +85,7 @@ import { GraphService } from "../services/graph.service";
                 &nbsp;&nbsp;branch
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
+              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
                     <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
@@ -243,7 +243,16 @@ import { GraphService } from "../services/graph.service";
     <div id="repo-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Repositories</h4>
+          </div>
           <ul class="list-group"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
+            <li class="list-group-item" id="empty-message">
+              You have no repositories to view. You may not be logged in.
+            </li>
           </ul>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary disabled" id="cloneButton" onclick="cloneRepo()">Clone</button>
