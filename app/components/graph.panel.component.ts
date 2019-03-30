@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "graph-panel",
+  selector: 'graph-panel',
   template: `
   <div class="graph-panel" id="graph-panel">
     <div class="network" id="my-network">
@@ -51,18 +51,18 @@ import { Component } from "@angular/core";
       </div><!-- /.modal-dialog -->
     </div>
   </div>
-  `
+  `,
 })
 
 export class GraphPanelComponent {
   mergeBranches(): void {
-    let p1 = document.getElementById('fromMerge').innerHTML;
+    const p1 = document.getElementById('fromMerge').innerHTML;
     mergeCommits(p1);
   }
 
   rebaseBranches(): void {
-    let p1 = document.getElementById('fromRebase').innerHTML;
-    let p2 = document.getElementById('toRebase').innerHTML;
+    const p1 = document.getElementById('fromRebase').innerHTML;
+    const p2 = document.getElementById('toRebase').innerHTML;
     rebaseCommits(p1, p2);
   }
 }

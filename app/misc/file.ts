@@ -1,20 +1,20 @@
 let fileLocation;
 
 function readFromFile(filePath) {
-    fileLocation = require("path").join(repoFullPath, filePath);
+    fileLocation = require('path').join(repoFullPath, filePath);
 
-    let lineReader = require("readline").createInterface({
-      input: fs.createReadStream(fileLocation)
+    let lineReader = require('readline').createInterface({
+      input: fs.createReadStream(fileLocation),
     });
 
-    let doc = document.getElementById("diff-panel-body");
-    lineReader.on("line", function (line) {
-      appendLineToDoc(doc,line);
+    let doc = document.getElementById('diff-panel-body');
+    lineReader.on('line', function (line) {
+      appendLineToDoc(doc, line);
     });
   }
 
-  function appendLineToDoc(doc,line){
-    let element = document.createElement("div");
+  function appendLineToDoc(doc, line){
+    let element = document.createElement('div');
     element.textContent = line;
     doc.appendChild(element);
   }
@@ -28,18 +28,18 @@ function readFromFile(filePath) {
 }
 
 function generateFileContent(){
-    let doc = document.getElementById("diff-panel-body");
+    let doc = document.getElementById('diff-panel-body');
     let children = doc.childNodes;
     
-    let content = "";
-    children.forEach(function (child) {
-        content += child.textContent + "\n";
+    let content = '';
+    children.forEach(function(child) {
+        content += child.textContent + '\n';
     });
     return content;
 }
 
 function saveSuccess(){
-    displayModal("File saved!");
+    displayModal('File saved!');
 }
 
 function cancelEdit(){

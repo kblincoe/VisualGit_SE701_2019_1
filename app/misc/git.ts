@@ -43,7 +43,7 @@ function addAndCommit() {
     if (filesToStage.length > 0) {
       return index.addAll(filesToStage);
     } else {
-      //If no files checked, then throw error to stop empty commits
+      // If no files checked, then throw error to stop empty commits
       throw new Error('No files selected to commit.');
     }
   })
@@ -69,7 +69,7 @@ function addAndCommit() {
     const sign = Git.Signature.default(repository);
     commitMessage = document.getElementById('commit-message-input').value;
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
-      let tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
+      const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
       return repository.createCommit('HEAD', sign, sign, commitMessage, oid, [parent.id().toString(), tid.trim()]);
     } else {
       return repository.createCommit('HEAD', sign, sign, commitMessage, oid, [parent]);
@@ -77,8 +77,8 @@ function addAndCommit() {
   })
   .then(function(oid) {
     theirCommit = null;
-	changes = 0;
-	CommitButNoPush = 1;
+    changes = 0;
+    CommitButNoPush = 1;
     console.log(`Commit successful:  + ${oid.tostrS()}`);
     hideDiffPanel();
     clearModifiedFilesList();
@@ -92,7 +92,7 @@ function addAndCommit() {
   }, function(err) {
     console.log(`Error in git.ts. Attempting to commit, the error is: ${err}`);
     // Added error thrown for if files not selected
-    if (err.message == 'No files selected to commit.') {
+    if (err.message === 'No files selected to commit.') {
       displayModal(err.message);
     } else {
       updateModalText('No repository has been cloned yet. Please clone a repository and try again.');
@@ -102,11 +102,11 @@ function addAndCommit() {
 
 // Clear all modified files from the left file panel
 function clearModifiedFilesList() {
-  let filePanel = document.getElementById('files-changed');
+  const filePanel = document.getElementById('files-changed');
   while (filePanel.firstChild) {
     filePanel.removeChild(filePanel.firstChild);
   }
-  let filesChangedMessage = document.createElement('p');
+  const filesChangedMessage = document.createElement('p');
   filesChangedMessage.className = 'modified-files-message';
   filesChangedMessage.id = 'modified-files-message';
   filesChangedMessage.innerHTML = 'Your modified files will appear here';
@@ -136,8 +136,8 @@ function getAllCommits(callback) {
   //   history.start();
   // });
   let repos;
-  let allCommits = [];
-  let aclist = [];
+  const allCommits = [];
+  const aclist = [];
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repos = repo;
@@ -154,7 +154,7 @@ function getAllCommits(callback) {
         if (!refs[count].isRemote()) {
           repos.getReferenceCommit(refs[count])
           .then(function(commit) {
-            let history = commit.history(Git.Revwalk.SORT.Time);
+            const history = commit.history(Git.Revwalk.SORT.Time);
             history.on('end', function(commits) {
               for (let i = 0; i < commits.length; i++) {
                 if (aclist.indexOf(commits[i].toString()) < 0) {
@@ -182,12 +182,12 @@ function getAllCommits(callback) {
 }
 
 function PullBuffer(){
-	if ((changes == 1) || (CommitButNoPush == 1)){
-		$('#modalW3').modal();
-	}
-	else {
-		pullFromRemote();
-	}
+  if ((changes === 1) || (CommitButNoPush === 1)){
+    $('#modalW3').modal();
+  }
+  else {
+    pullFromRemote();
+  }
 }
 
 function pullFromRemote() {
@@ -210,8 +210,8 @@ function pullFromRemote() {
         },
         certificateCheck: function() {
           return 1;
-        }
-      }
+        },
+      },
     });
   })
   // Now that we're finished fetching, go ahead and merge our local branch
@@ -261,7 +261,7 @@ function pushToRemote() {
   let branch = document.getElementById('branch-name').innerText;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
-    console.log('Pushing changes to remote...')
+    console.log('Pushing changes to remote...');
     displayModal('Pushing changes to remote...');
     addCommand('git push -u origin ' + branch);
     repo.getRemotes()
@@ -280,8 +280,8 @@ function pushToRemote() {
         );
       })
       .then(function() {
-		    CommitButNoPush = 0;
-		    window.onbeforeunload = Confirmed;
+        CommitButNoPush = 0;
+        window.onbeforeunload = Confirmed;
         console.log('Push successful');
         updateModalText('Push successful');
         refreshAll(repo);
@@ -291,7 +291,7 @@ function pushToRemote() {
 }
 
 function createBranch() {
-  let branchName = document.getElementById('branchName').value;
+  const branchName = document.getElementById('branchName').value;
   let repos;
   console.log(`Creating branch: ${branchName}`);
   Git.Repository.open(repoFullPath)
@@ -318,7 +318,7 @@ function createBranch() {
 }
 
 function mergeLocalBranches(element) {
-  let bn = element.innerHTML;
+  const bn = element.innerHTML;
   let fromBranch;
   let repos;
   Git.Repository.open(repoFullPath)
@@ -354,7 +354,7 @@ function mergeLocalBranches(element) {
 
 function mergeCommits(from) {
   let repos;
-  let index;
+  const index;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repos = repo;
@@ -415,9 +415,9 @@ function rebaseCommits(from: string, to: string) {
 }
 
 function rebaseInMenu(from: string, to: string) {
-  let p1 = document.getElementById('fromRebase');
-  let p2 = document.getElementById('toRebase');
-  let p3 = document.getElementById('rebaseModalBody');
+  const p1 = document.getElementById('fromRebase');
+  const p2 = document.getElementById('toRebase');
+  const p3 = document.getElementById('rebaseModalBody');
   p1.innerHTML = from;
   p2.innerHTML = to;
   p3.innerHTML = 'Do you want to rebase branch ' + from + ' to ' + to + ' ?';
@@ -425,8 +425,8 @@ function rebaseInMenu(from: string, to: string) {
 }
 
 function mergeInMenu(from: string) {
-  let p1 = document.getElementById('fromMerge');
-  let p3 = document.getElementById('mergeModalBody');
+  const p1 = document.getElementById('fromMerge');
+  const p3 = document.getElementById('mergeModalBody');
   p1.innerHTML = from;
   p3.innerHTML = 'Do you want to merge branch ' + from + ' to HEAD ?';
   $('#mergeModal').modal('show');
@@ -491,25 +491,26 @@ function revertCommit(name: string) {
 
 // Makes a modal for confirmation pop up instead of actually exiting application for confirmation.
 function ExitBeforePush(){
-	$('#modalW').modal();
+  $('#modalW').modal();
 }
 
 function Confirmed(){
-
+  // Block is empty so console log was added to appease linter
+  console.log('Confirmed')
 }
 
 // makes the onbeforeunload function nothing so the window actually closes; then closes it.
 function Close(){
-	window.onbeforeunload = Confirmed;
-	window.close();
+  window.onbeforeunload = Confirmed;
+  window.close();
 
 }
 
 
 
 function Reload(){
-	window.onbeforeunload = Confirmed;
-	location.reload();
+  window.onbeforeunload = Confirmed;
+  location.reload();
 }
 
 function displayModifiedFiles() {
@@ -542,7 +543,7 @@ function displayModifiedFiles() {
         let modification = calculateModification(file);
         modifiedFiles.push({
             filePath: path,
-            fileModification: modification
+            fileModification: modification,
           });
       }
 
@@ -564,18 +565,18 @@ function displayModifiedFiles() {
         }
       }
 
-	  function Confirmation(){
-		  $('#modalW').modal();
-		  return 'Hi';
-	  }
+    function Confirmation(){
+      $('#modalW').modal();
+      return 'Hi';
+    }
 
       function displayModifiedFile(file) {
         let filePath = document.createElement('p');
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
         let fileElement = document.createElement('div');
-		window.onbeforeunload = Confirmation;
-		changes = 1;
+        window.onbeforeunload = Confirmation;
+        changes = 1;
         // Set how the file has been modified
         if (file.fileModification === 'NEW') {
           fileElement.className = 'file file-created';
@@ -718,7 +719,7 @@ function deleteFile(filePath: string) {
       console.log('File successfully deleted');
     });
   } else {
-    alert('This file doesn't exist, cannot delete');
+    alert('This file doesn\'t exist, cannot delete');
   }
 }
 
@@ -726,7 +727,7 @@ function cleanRepo() {
   let fileCount = 0;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
-    console.log('Removing untracked files...')
+    console.log('Removing untracked files...');
     displayModal('Removing untracked files...');
     addCommand('git clean -f');
     repo.getStatus().then(function(arrayStatusFiles) {
@@ -736,7 +737,7 @@ function cleanRepo() {
       function deleteUntrackedFiles(file) {
         let filePath = repoFullPath + '\\' + file.path();
         let modification = calculateModification(file);
-        if(modification === 'NEW') {
+        if (modification === 'NEW') {
           console.log(`Deleting file: ${filePath}`);
           deleteFile(filePath);
           console.log('DELETION SUCCESSFUL');
@@ -747,10 +748,10 @@ function cleanRepo() {
     })
     .then(function() {
       console.log('Cleanup successful');
-      if(fileCount !== 0) {
+      if (fileCount !== 0) {
         updateModalText('Cleanup successful. Removed ' + fileCount + ' files.');
       } else {
-        updateModalText('Nothing to remove.')
+        updateModalText('Nothing to remove.');
       }
       refreshAll(repo);
     });
@@ -762,7 +763,7 @@ function cleanRepo() {
 }
 
 /**
- * This method is called when the sync button is pressed, and causes the fetch-modal 
+ * This method is called when the sync button is pressed, and causes the fetch-modal
  * to appear on the screen.
  */
 function requestLinkModal() {
@@ -770,7 +771,7 @@ function requestLinkModal() {
 }
 
 /**
- * This method is called when a valid URL is given via the fetch-modal, and runs the 
+ * This method is called when a valid URL is given via the fetch-modal, and runs the
  * series of git commands which fetch and merge from an upstream repository.
  */
 function fetchFromOrigin() {
@@ -783,7 +784,7 @@ function fetchFromOrigin() {
       addCommand('git remote add upstream ' + upstreamRepoPath);
       addCommand('git fetch upstream');
       addCommand('git merge upstrean/master');
-      console.log('Fetch successful')
+      console.log('Fetch successful');
       updateModalText('Synchronisation Successful');
       refreshAll(repo);
     },
@@ -792,6 +793,6 @@ function fetchFromOrigin() {
       displayModal('Please select a valid repository');
     });
   } else {
-    displayModal('No Path Found.')
+    displayModal('No Path Found.');
   }
 }

@@ -17,22 +17,22 @@ function drawGraph() {
   edges = new vis.DataSet([]);
 
   // create a network
-  let container = document.getElementById('my-network');
+  const container = document.getElementById('my-network');
   container.innerHTML = '';
 
-  let bsData = {
+  const bsData = {
     nodes: bsNodes,
-    edges: bsEdges
+    edges: bsEdges,
   }
 
   let abData = {
     nodes: abNodes,
-    edges: abEdges
-  }
+    edges: abEdges,
+  };
 
   let data = {
     nodes: nodes,
-    edges: edges
+    edges: edges,
   };
 
   options = {
@@ -45,7 +45,7 @@ function drawGraph() {
       arrows: {
         to: {
           enabled: true,
-          scaleFactor: 0.6
+          scaleFactor: 0.6,
         },
         middle: false,
         from: false,
@@ -59,7 +59,7 @@ function drawGraph() {
         enabled: true,
         type: 'cubicBezier',
         // forceDirection: 'horizontal',
-        roundness: 0.5
+        roundness: 0.5,
       },
       width: 3,
     },
@@ -76,7 +76,7 @@ function drawGraph() {
       keyboard: {
         enabled: false,
         speed: {x: 10, y: 10, zoom: 0.02},
-        bindToWindow: true
+        bindToWindow: true,
       },
       multiselect: false,
       navigationButtons: false,
@@ -107,12 +107,12 @@ function drawGraph() {
           border: '#39c0ba',
           highlight: {
             background: '#07f968',
-            border: '#3c3c3c'
-          }
+            border: '#3c3c3c',
+          },
         },
         borderWidth: 2,
         borderWidthSelected: 2,
-      }
+      },
     },
 
     nodes: {
@@ -123,11 +123,11 @@ function drawGraph() {
         background: '#FFF',
         highlight: {
           border: '#FF0',
-          background: '#FFF'
+          background: '#FFF',
         },
         hover: {
           border: '#F00',
-          background: '#FFF'
+          background: '#FFF',
         },
       },
       shadow: true,

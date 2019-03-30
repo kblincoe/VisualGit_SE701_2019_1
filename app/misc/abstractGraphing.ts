@@ -1,4 +1,4 @@
-let vis = require("vis");
+let vis = require('vis');
 
 function processAbstract(commits: nodegit.Commit[]) {
   sortCommits(commits);
@@ -35,7 +35,7 @@ function populateAbstract() {
     } else if (parents.length === 1) {
       let parent = parents[0];
       let parentId = getNodeId(parent.toString());
-      let parentColumn = commitList[parentId - 1]["column"];
+      let parentColumn = commitList[parentId - 1]['column'];
       if (parentCount[parent] === 1) {
         // first child
         nodeColumn = parentColumn;
@@ -44,13 +44,13 @@ function populateAbstract() {
       }
     } else {
       let desiredColumn: number = -1;
-      let desiredParent: string = "";
+      let desiredParent: string = '';
       let freeableColumns: number[] = [];
 
       for (let j = 0; j < parents.length; j++) {
         let parent: string = parents[j];
         let parentId = getNodeId(parent.toString());
-        let proposedColumn = commitList[parentId - 1]["column"];
+        let proposedColumn = commitList[parentId - 1]['column'];
 
         if (desiredColumn === -1 || desiredColumn > proposedColumn) {
           desiredColumn = proposedColumn;
@@ -96,20 +96,20 @@ function addEdges(c) {
 }
 
 function getEmail(c) {
-  let stringer = c.author().toString().replace(/</, "%").replace(/>/, "%");
-  let email = stringer.split("%")[1];
+  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  let email = stringer.split('%')[1];
   return email;
 }
 
 function makeAbsNode(c, column: number, count:number) {
   let id = nodeId++;
-  let name = "Node " + id;
+  let name = 'Node ' + id;
   let reference;
   let email = getEmail(c);
-  let title = "Author: " + email + "<br>" + "Number of Commits: " + count;
+  let title = 'Author: ' + email + '<br>' + 'Number of Commits: ' + count;
   nodes.add({
     id: id,
-    shape: "circularImage",
+    shape: 'circularImage',
     title: title,
     image: imageForUser(email),
     physics: false,
@@ -133,6 +133,6 @@ function makeEdge(sha: string, parentSha: string) {
 
   edges.add({
     from: fromNode,
-    to: toNode
+    to: toNode,
   });
 }

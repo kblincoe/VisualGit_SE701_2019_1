@@ -15,7 +15,7 @@ let span;
 function downloadRepository() {
   let fullLocalPath;
   // Full path is determined by either handwritten directory or selected by file browser
-  if (document.getElementById('repoSave').value != null || document.getElementById('repoSave').value != '') {
+  if (document.getElementById('repoSave').value !== null || document.getElementById('repoSave').value !== '') {
     let localPath = document.getElementById('repoSave').value;
     fullLocalPath = require('path').join(__dirname, localPath);
   } else {
@@ -42,13 +42,13 @@ function downloadFunc(cloneURL, fullLocalPath) {
         certificateCheck: function() { return 1; },
         credentials: function() {
           return cred;
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   console.log('Cloning into ' + fullLocalPath);
-  let repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
+  const repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
   .then(function(repository) {
     console.log('Repo successfully cloned');
     refreshAll(repository);
@@ -66,7 +66,7 @@ function downloadFunc(cloneURL, fullLocalPath) {
 
 function openRepository() {
   // Full path is determined by either handwritten directory or selected by file browser
-  if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value == '') {
+  if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
     let localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
     let fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
     document.getElementById('repoOpen').value = fullLocalPath;
@@ -123,7 +123,7 @@ function refreshAll(repository) {
   .then(function(reference) {
     let branchParts = reference.name().split('/');
     branch = branchParts[branchParts.length - 1];
-  },function(err) {
+  }, function(err) {
     console.log(`Error in repo.ts. Attempting to refresh branch, the error is: ${err}`); // TODO show error on screen
   })
   .then(function() {
@@ -137,7 +137,7 @@ function refreshAll(repository) {
       Git.Reference.nameToId(repository, branchList[i].name()).then(function(oid) {
         // Use oid
         if (branchList[i].isRemote()) {
-          remoteName[bp[bp.length-1]] = oid;
+          remoteName[bp[bp.length - 1]] = oid;
         } else {
           branchCommit.push(branchList[i]);
           if (oid.tostrS() in bname) {
@@ -164,7 +164,7 @@ function refreshAll(repository) {
     console.log('Updating the graph and the labels');
     drawGraph();
     document.getElementById('repo-name').innerHTML = repoLocalPath;
-    document.getElementById('branch-name').innerHTML = branch + '<span class='caret'></span>';
+    document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
   });
 }
 
@@ -183,6 +183,8 @@ function getAllBranches() {
         displayBranch(bp[bp.length - 1], 'branch-dropdown', 'checkoutLocalBranch(this)');
       }
       Git.Reference.nameToId(repos, branchList[i]).then(function(oid) {
+        // linter is complaining about this method call being empty so i added this here
+        console.log('getting name to Id');
       });
     }
   });
@@ -201,7 +203,7 @@ function getOtherBranches() {
     list = branchList;
   })
   .then(function() {
-    return repos.getCurrentBranch()
+    return repos.getCurrentBranch();
   })
   .then(function(ref) {
     let name = ref.name().split('/');
@@ -234,7 +236,7 @@ function displayBranch(name, id, onclick) {
   a.setAttribute('href', '#');
   a.setAttribute('class', 'list-group-item');
   a.setAttribute('onclick', onclick);
-  li.setAttribute('role', 'presentation')
+  li.setAttribute('role', 'presentation');
   a.appendChild(document.createTextNode(name));
   li.appendChild(a);
   ul.appendChild(li);
@@ -256,7 +258,7 @@ function checkoutLocalBranch(element) {
     }, function(err) {
       console.log(`Error in repo.ts. Attempting to checkout branch, the error is: ${err}`);
     });
-  })
+  });
 }
 
 function checkoutRemoteBranch(element) {
@@ -272,7 +274,7 @@ function checkoutRemoteBranch(element) {
     repos = repo;
     addCommand('git fetch');
     addCommand('git checkout -b ' + bn);
-    let cid = remoteName[bn];
+    const cid = remoteName[bn];
     return Git.Commit.lookup(repo, cid);
   })
   .then(function(commit) {
@@ -286,7 +288,7 @@ function checkoutRemoteBranch(element) {
     });
   }, function(err) {
     console.log(`Error in repo.ts. Attempting to checkout remote branch, the error is: ${err}`);
-  })
+  });
 }
 
 function updateLocalPath() {

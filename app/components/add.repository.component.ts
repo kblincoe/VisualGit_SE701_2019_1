@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "add-repository-panel",
+  selector: 'add-repository-panel',
   template: `
     <div class="add-repository-panel" id="add-repository-panel">
       <img src="./assets/Back.svg" (click)="returnToMainPanel()" class="back-button">
@@ -65,9 +65,9 @@ export class AddRepositoryComponent {
 
   // Add function that determines if directory written or not
   selectSave(): void {
-    if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value === "") {
+    if (document.getElementById('repoSave').value == null || document.getElementById('repoSave').value === '') {
       // If no directory specified, launch file browser
-      document.getElementById("dirPickerSaveNew").click();
+      document.getElementById('dirPickerSaveNew').click();
     } else {
       // If directory is specified, continue as normal
       this.addRepository();
@@ -76,9 +76,9 @@ export class AddRepositoryComponent {
 
   // Add function that determines if directory written or not
   selectDirectory(): void {
-    if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
+    if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value === '') {
       // If no directory specified, launch file browser
-      document.getElementById("dirPickerOpenLocal").click();
+      document.getElementById('dirPickerOpenLocal').click();
     } else {
       // If directory is specified, continue as normal
       this.openRepository();

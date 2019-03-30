@@ -33,7 +33,7 @@ function switchToAddRepositoryPanel() {
 function wait(ms){
    var start = new Date().getTime();
    var end = start;
-   while(end < start + ms) {
+   while (end < start + ms) {
      end = new Date().getTime();
   }
 }
@@ -127,7 +127,7 @@ function enableSaveCancelButton() {
 function disableDiffPanelEditOnHide(){
   let doc = document.getElementById('diff-panel-body');
   doc.contentEditable = 'false';
-} 
+}
 
 function useSaved() {
   loginWithSaved(switchToMainPanel);
