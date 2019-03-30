@@ -47,12 +47,16 @@ import { GraphService } from "../services/graph.service";
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
             <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
           </ul>
-
-          <ul class="navbar-nav navbar-right hidden-xs">
-            <li>
-              <label id="githubname" style="color:white"></label>
-              <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
-            </li>
+          
+          <ul id="github_account" class="navbar-nav navbar-right hidden-xs">
+            <li class="account_group"><img id="github_avatar" src=""></li>
+            <li class="account_group"><p id="github_name"></p></li>
+            <li class="account_group"><p class="divider">|</p></li>
+            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt" onclick="signInOrOut()"></a></li>
+          </ul>
+          
+          <ul id="sign_in" class="navbar-nav navbar-right hidden-xs">
+            <a class="btn btn-default btn-outline btn-circle"  id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
           </ul>
           <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse1">
             <form class="navbar-form navbar-right form-inline" role="form">
@@ -81,7 +85,7 @@ import { GraphService } from "../services/graph.service";
                 &nbsp;&nbsp;branch
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
+              <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
                     <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
@@ -239,7 +243,16 @@ import { GraphService } from "../services/graph.service";
     <div id="repo-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Repositories</h4>
+          </div>
           <ul class="list-group"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
+            <li class="list-group-item" id="empty-message">
+              You have no repositories to view. You may not be logged in.
+            </li>
           </ul>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary disabled" id="cloneButton" onclick="cloneRepo()">Clone</button>
@@ -281,7 +294,7 @@ export class HeaderComponent   {
   }
 
   switchToMainPanel(): void {
-    signInHead(collpaseSignPanel);
+    signInHead(collapseSignPanel);
   }
 
   WarningSignIn(): void {

@@ -11,6 +11,10 @@ ul{
   outline: 0;
 }
 
+.auth-logo {
+  height: 40px;
+}
+
 .add-repository-button {
   position: relative;
   z-index: 2;
@@ -55,6 +59,7 @@ ul{
 #Password1 {
   width: 100px;
 }
+
 
 @media screen and (max-width: 767px) {
     .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
@@ -343,33 +348,6 @@ body .add-repository-panel p {
   margin-right: 20px;
 }
 
-body .add-repository-panel input {
-  display: inline-block;
-  margin: 15px 30px;
-  border-radius: 10px;
-  border: 0;
-  height: 10px;
-  size: 50;
-  padding: 10px;
-}
-
-body .add-repository-panel .button-clone, body .add-repository-panel .button-open {
-  display: inline-block;
-  height: 30px;
-  border-radius: 10px;
-  border: 0;
-  padding: 0 15px;
-  margin: 15px 40px;
-  margin-left: 10px;
-  background-color: #39c0ba;
-  color: #fff;
-  float: right;
-}
-
-body .add-repository-panel .button-clone:hover, body .add-repository-panel .button-open:hover {
-  opacity: 0.8;
-}
-
 body .add-repository-panel .title {
   width: 100%;
 }
@@ -432,4 +410,83 @@ body .footer .git-command {
 
 .file-deleted {
   background-color: #ff2448;
+}
+
+#download-percentage {
+  margin: 20px;
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 96%;
+  height: 8px;
+}
+
+.download-speed {
+  color: #999;
+}
+
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn,
+.input-group-btn:first-child > .btn-group > .btn,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+  border-radius: 4px;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group > .btn,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child),
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+  border-radius: 4px;
+}
+
+.account_group {
+  display: inline-flex;
+  float: right;
+  padding-left: 8px;
+  padding-top: 7px;
+}
+
+#github_account {
+  display: none;
+}
+
+#github_avatar {
+  alignment: right;
+  vertical-align: center;
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+}
+
+#github_name {
+  padding-top: 5px;
+  color: #A9A9A9;
+  text-transform: capitalize;
+}
+
+#signOut {
+  padding-top: 9px;
+  padding-right: 16px;
+  color: #A9A9A9;
+  alignment: left;
+  font-size: x-large;
+  text-decoration: none;
+}
+
+#signOut:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.divider {
+  color: #575757;
+  font-size: large;
+  padding-top: 6px;
+  padding-left: 6px;
+  padding-right: 4px;
 }
