@@ -642,12 +642,15 @@ function displayModifiedFiles() {
 
       function printFileDiff(filePath) {
         repo.getHeadCommit().then(function(commit) {
-          getCurrentDiff(commit, filePath, function(line) {
-            formatLine(line);
+          getCurrentDiff(commit, filePath, function(changeType, lineno, line) {
+            formatLine(changeType, lineno, line);
           });
         });
       }
 
+      /**
+       * This function gets lines from the selected file
+       */
       function getCurrentDiff(commit, filePath, callback) {
         commit.getTree().then(function(tree) {
           Git.Diff.treeToWorkdir(repo, tree, null).then(function(diff) {
@@ -660,7 +663,9 @@ function displayModifiedFiles() {
                       let newFilePath = patch.newFile().path();
                       if (newFilePath === filePath) {
                         lines.forEach(function(line) {
-                          callback(String.fromCharCode(line.origin()) + line.content());
+                          callback(String.fromCharCode(line.origin()),
+                              line.newLineno().toString(),
+                              line.content());
                         });
                       }
                     });
@@ -672,19 +677,35 @@ function displayModifiedFiles() {
         });
       }
 
-      function formatLine(line) {
+      function formatLine(changeType, lineno, line) {
         let element = document.createElement("div");
 
-        if (line.charAt(0) === "+") {
+        if (changeType === "+") {
           element.style.backgroundColor = "#84db00";
-          line = line.slice(1, line.length);
-        } else if (line.charAt(0) === "-") {
+          line = formatSpaces(lineno.toString().length, " " + lineno) + line;
+        } else if (changeType.charAt(0) === "-") {
           element.style.backgroundColor = "#ff2448";
-          line = line.slice(1, line.length);
+          line = formatSpaces(1, " -") + line;
+        } else if (changeType === "<" || changeType === ">") {
+          line = "";
+        } else {
+          line = formatSpaces(lineno.toString().length, " " + lineno) + line;
         }
 
         element.innerText = line;
         document.getElementById("diff-panel-body").appendChild(element);
+      }
+
+      /**
+       * Adds varying amount of spaces between line number and code depending on size
+       * of line number.
+       */
+      function formatSpaces(sizeOfLineNumber, line) {
+        var defaultSpaces = 8;
+        for (var i = 0; i < defaultSpaces - sizeOfLineNumber; i++) {
+          line = line + " "
+        }
+        return line;
       }
 
       function formatNewFileLine(text) {
