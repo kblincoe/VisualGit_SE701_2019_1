@@ -264,7 +264,7 @@ function displayBranch(name, id, onclick) {
   a.setAttribute("href", "#");
   a.setAttribute("class", "list-group-item");
   a.setAttribute("onclick", onclick);
-  li.setAttribute("role", "presentation")
+  li.setAttribute("role", "presentation");
   a.appendChild(document.createTextNode(name));
   li.appendChild(a);
   ul.appendChild(li);
