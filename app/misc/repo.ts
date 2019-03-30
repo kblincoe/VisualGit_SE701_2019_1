@@ -72,7 +72,8 @@ function populateRecents(): void {
     list.removeChild(list.firstChild);
   }
 
-  getRecentRepositories().forEach(element => {
+  // Reverse so we have newly accessed first
+  getRecentRepositories().reverse().forEach(element => {
     let entry = document.createElement("a");
     entry.href = "#";
     entry.addEventListener("click", () => {
