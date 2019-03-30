@@ -1,7 +1,7 @@
-import * as nodegit from "git";
+import * as nodegit from 'git';
 
-let vis = require("vis");
-let github1 = require("octonode");
+let vis = require('vis');
+let github1 = require('octonode');
 let nodeId = 1;
 let absNodeId = 1;
 let basicNodeId = 1;
@@ -91,7 +91,7 @@ function populateCommits() {
     } else if (parents.length === 1) {
       let parent = parents[0];
       let parentId = getNodeId(parent.toString());
-      let parentColumn = commitList[parentId - 1]["column"];
+      let parentColumn = commitList[parentId - 1]['column'];
       if (parentCount[parent] === 1) {
         // first child
         nodeColumn = parentColumn;
@@ -100,12 +100,12 @@ function populateCommits() {
       }
     } else {
       let desiredColumn: number = -1;
-      let desiredParent: string = "";
+      let desiredParent: string = '';
       let freeableColumns: number[] = [];
       for (let j = 0; j < parents.length; j++) {
         let parent: string = parents[j];
         let parentId = getNodeId(parent.toString());
-        let proposedColumn = commitList[parentId - 1]["column"];
+        let proposedColumn = commitList[parentId - 1]['column'];
 
         if (desiredColumn === -1 || desiredColumn > proposedColumn) {
           desiredColumn = proposedColumn;
@@ -276,8 +276,8 @@ function makeBranchColor() {
 function makeBasicNode(c, column: number) {
   let reference;
   let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, "%").replace(/>/, "%");
-  let email = stringer.split("%")[1];
+  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  let email = stringer.split('%')[1];
   let flag = true;
   let count = 1;
   let id;
@@ -289,7 +289,7 @@ function makeBasicNode(c, column: number) {
       id = basicList[i]['id'];
       basicList[i]['count'] += 1;
       count = basicList[i]['count'];
-      bsNodes.update({id: i+1, title: "Number of Commits: " + count});
+      bsNodes.update({id: i+1, title: 'Number of Commits: ' + count});
       basicList[i]['sha'].push(c.toString());
       basicList[i]['parents'] = basicList[i]['parents'].concat(c.parents());
       break;
@@ -298,10 +298,10 @@ function makeBasicNode(c, column: number) {
 
   if (flag) {
     id = basicNodeId++;
-    let title = "Number of Commits: " + count;
+    let title = 'Number of Commits: ' + count;
     bsNodes.add({
       id: id,
-      shape: "circularImage",
+      shape: 'circularImage',
       title: title,
       image: img4User(name),
       physics: false,
@@ -328,14 +328,14 @@ function makeBasicNode(c, column: number) {
   if (c.toString() in bname) {
     for (let i = 0; i < bname[c.toString()].length; i++) {
       let branchName = bname[c.toString()][i];
-      let bp = branchName.name().split("/");
+      let bp = branchName.name().split('/');
       let shortName = bp[bp.length - 1];
       if (branchName.isHead()) {
-        shortName = "*" + shortName;
+        shortName = '*' + shortName;
       }
       bsNodes.add({
         id: id + numOfCommits * (i + 1),
-        shape: "box",
+        shape: 'box',
         title: branchName,
         label: shortName,
         physics: false,
@@ -357,8 +357,8 @@ function makeBasicNode(c, column: number) {
 function makeAbsNode(c, column: number) {
   let reference;
   let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, "%").replace(/>/, "%");
-  let email = stringer.split("%")[1];
+  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  let email = stringer.split('%')[1];
   let flag = true;
   let count = 1;
   if (c.parents().length === 1) {
@@ -370,7 +370,7 @@ function makeAbsNode(c, column: number) {
         abstractList[i]['count'] += 1;
         count = abstractList[i]['count'];
         abstractList[i]['sha'].push(c.toString());
-        abNodes.update({id: i+1, title: "Author: " + name + "<br>" + "Number of Commits: " + count});
+        abNodes.update({id: i+1, title: 'Author: ' + name + '<br>' + 'Number of Commits: ' + count});
         break;
       }
     }
@@ -378,11 +378,11 @@ function makeAbsNode(c, column: number) {
 
   if (flag) {
     let id = absNodeId++;
-    let title = "Author: " + name + "<br>" + "Number of Commits: " + count;
+    let title = 'Author: ' + name + '<br>' + 'Number of Commits: ' + count;
 
     abNodes.add({
       id: id,
-      shape: "circularImage",
+      shape: 'circularImage',
       title: title,
       email: email,
       image: img4User(name),
@@ -395,14 +395,14 @@ function makeAbsNode(c, column: number) {
     if (c.toString() in bname) {
       for (let i = 0; i < bname[c.toString()].length; i++) {
         let branchName = bname[c.toString()][i];
-        let bp = branchName.name().split("/");
+        let bp = branchName.name().split('/');
         let shortName = bp[bp.length - 1];
         if (branchName.isHead()) {
-          shortName = "*" + shortName;
+          shortName = '*' + shortName;
         }
         abNodes.add({
           id: id + numOfCommits * (i + 1),
-          shape: "box",
+          shape: 'box',
           title: branchName,
           email: email,
           label: shortName,
@@ -439,13 +439,13 @@ function makeNode(c, column: number) {
   let id = nodeId++;
   let reference;
   let name = getName(c.author().toString());
-  let stringer = c.author().toString().replace(/</, "%").replace(/>/, "%");
-  let email = stringer.split("%")[1];
-  let title = "Author: " + name + "<br>" + "Message: " + c.message();
+  let stringer = c.author().toString().replace(/</, '%').replace(/>/, '%');
+  let email = stringer.split('%')[1];
+  let title = 'Author: ' + name + '<br>' + 'Message: ' + c.message();
   let flag = false;
   nodes.add({
     id: id,
-    shape: "circularImage",
+    shape: 'circularImage',
     title: title,
     image: img4User(name),
     physics: false,
@@ -457,14 +457,14 @@ function makeNode(c, column: number) {
   if (c.toString() in bname) {
     for (let i = 0; i < bname[c.toString()].length; i++) {
       let branchName = bname[c.toString()][i];
-      let bp = branchName.name().split("/");
+      let bp = branchName.name().split('/');
       let shortName = bp[bp.length - 1];
       if (branchName.isHead()) {
-        shortName = "*" + shortName;
+        shortName = '*' + shortName;
       }
       nodes.add({
         id: id + numOfCommits * (i + 1),
-        shape: "box",
+        shape: 'box',
         title: branchName,
         label: shortName,
         physics: false,
@@ -505,8 +505,8 @@ function makeEdge(sha: string, parentSha: string) {
 function getNodeId(sha: string) {
   for (let i = 0; i < commitList.length; i++) {
     let c = commitList[i];
-    if (c["sha"] === sha) {
-      return c["id"];
+    if (c['sha'] === sha) {
+      return c['id'];
     }
   }
 }
@@ -517,9 +517,9 @@ function reCenter() {
     scale: 1,
     animation: {
       duration: 1000,
-      easingFunction: "easeInOutQuad",
+      easingFunction: 'easeInOutQuad',
     }
   };
 
-  network.focus(commitList[commitList.length - 1]["id"], moveOptions);
+  network.focus(commitList[commitList.length - 1]['id'], moveOptions);
 }

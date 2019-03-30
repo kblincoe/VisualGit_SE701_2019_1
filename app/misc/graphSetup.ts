@@ -1,5 +1,5 @@
-let vis = require("vis");
-let $ = require("jquery");
+let vis = require('vis');
+let $ = require('jquery');
 let options, bsNodes, bsEdges, abNodes, abEdges, nodes, edges, network;
 let startP, secP = null, fromNode = null, toNode;
 
@@ -17,7 +17,7 @@ function drawGraph() {
   edges = new vis.DataSet([]);
 
   // create a network
-  let container = document.getElementById("my-network");
+  let container = document.getElementById('my-network');
   container.innerHTML = '';
 
   let bsData = {
@@ -50,15 +50,15 @@ function drawGraph() {
         middle: false,
         from: false,
       },
-      color: "#39c0ba",
+      color: '#39c0ba',
       hoverWidth: 0,
       physics: false,
       selectionWidth: 0,
       shadow: true,
       smooth: {
         enabled: true,
-        type: "cubicBezier",
-        // forceDirection: "horizontal",
+        type: 'cubicBezier',
+        // forceDirection: 'horizontal',
         roundness: 0.5
       },
       width: 3,
@@ -100,14 +100,14 @@ function drawGraph() {
       deleteNode: true,
       deleteEdge: true,
       controlNodeStyle: {
-        shape: "dot",
+        shape: 'dot',
         size: 6,
         color: {
-          background: "#39c0ba",
-          border: "#39c0ba",
+          background: '#39c0ba',
+          border: '#39c0ba',
           highlight: {
-            background: "#07f968",
-            border: "#3c3c3c"
+            background: '#07f968',
+            border: '#3c3c3c'
           }
         },
         borderWidth: 2,
@@ -119,15 +119,15 @@ function drawGraph() {
       borderWidth: 8,
       borderWidthSelected: 8,
       color: {
-        border: "#39c0ba",
-        background: "#FFF",
+        border: '#39c0ba',
+        background: '#FFF',
         highlight: {
-          border: "#FF0",
-          background: "#FFF"
+          border: '#FF0',
+          background: '#FFF'
         },
         hover: {
-          border: "#F00",
-          background: "#FFF"
+          border: '#F00',
+          background: '#FFF'
         },
       },
       shadow: true,
@@ -144,27 +144,27 @@ function drawGraph() {
     processGraph(commits);
   });
 
-  network.on("stabilizationIterationsDone", function () {
+  network.on('stabilizationIterationsDone', function () {
     network.setOptions( { physics: false } );
   });
 
-  network.on("click", function(callback) {
+  network.on('click', function(callback) {
     if (callback.nodes[0] == undefined) {
       return;
     }
 
-    let email = abNodes._data[callback.nodes[0]]["email"];
+    let email = abNodes._data[callback.nodes[0]]['email'];
 
-    if (email.includes("noreply.github.com")) {
-      let username = email.match(new RegExp("[0-9]*\\+*([^@]+)@"))[1];
-      updateModalText("Github Profile: <a onClick=\"window.open(\'https://github.com/" + username + "\')\">https://github.com/" + username + "</a>" +
-        "<br/><i><small>Note: this user has not made their email public</small></i>");
+    if (email.includes('noreply.github.com')) {
+      let username = email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
+      updateModalText('Github Profile: <a onClick=\'window.open(\'https://github.com/' + username + '\')\'>https://github.com/' + username + '</a>' +
+        '<br/><i><small>Note: this user has not made their email public</small></i>');
     } else {
-      updateModalText("Email: <a onClick=\"window.open(\'mailto:" + email + "\')\">" + email + "</a>");
+      updateModalText('Email: <a onClick=\'window.open(\'mailto:' + email + '\')\'>' + email + '</a>');
     }
   }, false)
 
-  network.on("doubleClick", function(callback) {
+  network.on('doubleClick', function(callback) {
     if (callback.nodes[0] === undefined) {
       return;
     } else {
@@ -176,21 +176,21 @@ function drawGraph() {
       scale: 1,
       animation: {
         duration: 1000,
-        easingFunction: "easeInOutQuad",
+        easingFunction: 'easeInOutQuad',
       }
     };
 
     network.focus(callback.nodes[0], moveOptions);
   }, false);
 
-  let flag = "basic";
+  let flag = 'basic';
 
-  network.on("zoom", function(callback) {
+  network.on('zoom', function(callback) {
     let moveOptions = {
       scale: 1,
       animation: {
         duration: 1000,
-        easingFunction: "easeInOutQuad",
+        easingFunction: 'easeInOutQuad',
       }
     };
 
@@ -225,7 +225,7 @@ function drawGraph() {
     secP = cb.pointer.DOM;
   }, false);
 
-  network.on("animationFinished", function() {
+  network.on('animationFinished', function() {
     if (fromNode !== null && secP !== null) {
       let toNode = network.getNodeAt(secP);
 
@@ -251,8 +251,8 @@ function drawGraph() {
   //   if (toNode !== undefined) {
   //     network.selectNodes([toNode], [false]);
   //     addBranchestoNode(nodes.get(toNode)['label']);
-  //     $("#branchOptions").css({
-  //     display: "block",
+  //     $('#branchOptions').css({
+  //     display: 'block',
   //     left: callback.pointer.DOM.x,
   //     top: callback.pointer.DOM.y
   //  });

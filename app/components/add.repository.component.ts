@@ -58,13 +58,13 @@ import { Component } from "@angular/core";
 
 export class AddRepositoryComponent {
 
-  private addRepository(): void {
+  addRepository(): void {
     downloadRepository();
     switchToMainPanel();
   }
 
   // Add function that determines if directory written or not
-  private selectSave(): void {
+  selectSave(): void {
     if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value === "") {
       // If no directory specified, launch file browser
       document.getElementById("dirPickerSaveNew").click();
@@ -75,7 +75,7 @@ export class AddRepositoryComponent {
   }
 
   // Add function that determines if directory written or not
-  private selectDirectory(): void {
+  selectDirectory(): void {
     if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
       // If no directory specified, launch file browser
       document.getElementById("dirPickerOpenLocal").click();
@@ -85,12 +85,12 @@ export class AddRepositoryComponent {
     }
   }
 
-  private openRepository(): void {
+  openRepository(): void {
     openRepository();
     switchToMainPanel();
   }
 
-  private returnToMainPanel(): void {
+  returnToMainPanel(): void {
     switchToMainPanel();
   }
 }
