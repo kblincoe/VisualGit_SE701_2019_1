@@ -4,17 +4,18 @@
 // import * as nodegit from 'git';
 // import NodeGit, { Status } from 'nodegit';
 
-let Git = require('nodegit');
-let repo;
+import Git = require('nodegit');
+const repo;
 
-let github = require('octonode');
-let aid, atoken;
+import github = require('octonode');
+const aid;
+const atoken;
 let client;
 let avaterImg;
-let repoList = {};
+const repoList = {};
 let url;
-var signed = 0;
-var changes = 0;
+let signed = 0;
+let changes = 0;
 
 
 // Called then user pushes to sign out even if they have commited changes but not pushed; prompts a confirmation modal
@@ -68,8 +69,8 @@ async function loginWithSaved(callback) {
  * the user in to their GitHub account.
  */
 function getUserInfo(callback) {
-  var userid = 'auth-username';
-  var passid = 'auth-password';
+  let userid = 'auth-username';
+  let passid = 'auth-password';
 
   // Determine which form the user is using to sign in
   if (document.getElementById('auth-username').value === '' && document.getElementById('auth-password').value === '') {
@@ -87,23 +88,23 @@ function getUserInfo(callback) {
     password: password,
   });
 
-  let ghme = client.me();
+  const ghme = client.me();
   ghme.info(function(err, data, head) {
     if (err) {
       displayModal(err);
     } else {
       avaterImg = Object.values(data)[2];
       // doc.innerHTML = '';
-      // var elem = document.createElement('img');
+      // let elem = document.createElement('img');
       // elem.width = 40;
       // elem.height = 40;
       // elem.src = avaterImg;
       // doc.appendChild(elem);
       // doc = document.getElementById('log');
-      let docGitUser = document.getElementById('githubname');
-      //docGitUser.innerHTML = Object.values(data)[0];
+      const docGitUser = document.getElementById('githubname');
+      // docGitUser.innerHTML = Object.values(data)[0];
 
-      let doc = document.getElementById('avatar');
+      const doc = document.getElementById('avatar');
       if (doc === null){
         console.log('Missing element named avatar');
       }else{
@@ -121,7 +122,7 @@ function getUserInfo(callback) {
       return;
     } else {
       for (let i = 0; i < data.length; i++) {
-        let rep = Object.values(data)[i];
+        const rep = Object.values(data)[i];
         console.log(`Getting repo info from: ${rep['html_url']}`);
         displayBranch(rep['full_name'], 'repo-dropdown', 'selectRepo(this)');
         repoList[rep['full_name']] = rep['html_url'];
@@ -155,12 +156,13 @@ function selectRepo(ele) {
 
 function cloneRepo() {
   if (url === null) {
-    updateModalText('Web URL for repo could not be found. Try cloning by providing the repo\'s web URL directly in the \'Add repository\' window');
+    updateModalText(
+      'Web URL for repo could not be found. Try cloning by providing the repo\'s web URL directly in the \'Add repository\' window');
     return;
   }
 
   console.log(`Cloning repo from: ${url}`);
-  let splitUrl = url.split('/');
+  const splitUrl = url.split('/');
   let local;
   if (splitUrl.length >= 2) {
     local = splitUrl[splitUrl.length - 1];
@@ -177,7 +179,7 @@ function cloneRepo() {
 }
 
 function signInOrOut() {
-  let doc = document.getElementById('avatar');
+  const doc = document.getElementById('avatar');
   if (doc.innerHTML === 'Sign Out'){
     $('#avatar').removeAttr('data-toggle');
 

@@ -1,26 +1,26 @@
 import * as nodegit from 'git';
 
-const vis = require('vis');
-const github1 = require('octonode');
+import github1 = require('octonode');
+import vis = require('vis');
 let nodeId = 1;
 let absNodeId = 1;
 let basicNodeId = 1;
 const abstractList = [];
 const basicList = [];
-let bDict = {};
+const bDict = {};
 let commitHistory = [];
 let commitList = [];
 const spacingY = 100;
 const spacingX = 80;
 let parentCount = {};
 let columns: boolean[] = [];
-let edgeDic = {};
+const edgeDic = {};
 const abstractCount = 0;
 const basicCount = 0;
 let numOfCommits = 0;
-let githubUsername = require('github-username');
+import githubUsername = require('github-username');
 const avatarUrls = {};
-let branchIds = {};
+const branchIds = {};
 
 function processGraph(commits: nodegit.Commit[]) {
   commitHistory = [];
@@ -39,7 +39,7 @@ function sortCommits(commits) {
     } else {
       let count = 0;
       for (let i = 0; i < parents.length; i++) {
-        let psha = parents[i].toString();
+        const psha = parents[i].toString();
         for (let j = 0; j < commitHistory.length; j++) {
           if (commitHistory[j].toString() === psha) {
             count++;
@@ -89,9 +89,9 @@ function populateCommits() {
       columns[0] = true;
       nodeColumn = 0;
     } else if (parents.length === 1) {
-      let parent = parents[0];
-      let parentId = getNodeId(parent.toString());
-      let parentColumn = commitList[parentId - 1]['column'];
+      const parent = parents[0];
+      const parentId = getNodeId(parent.toString());
+      const parentColumn = commitList[parentId - 1]['column'];
       if (parentCount[parent] === 1) {
         // first child
         nodeColumn = parentColumn;
@@ -101,11 +101,11 @@ function populateCommits() {
     } else {
       let desiredColumn: number = -1;
       let desiredParent: string = '';
-      let freeableColumns: number[] = [];
+      const freeableColumns: number[] = [];
       for (let j = 0; j < parents.length; j++) {
-        let parent: string = parents[j];
-        let parentId = getNodeId(parent.toString());
-        let proposedColumn = commitList[parentId - 1]['column'];
+        const parent: string = parents[j];
+        const parentId = getNodeId(parent.toString());
+        const proposedColumn = commitList[parentId - 1]['column'];
 
         if (desiredColumn === -1 || desiredColumn > proposedColumn) {
           desiredColumn = proposedColumn;
@@ -116,7 +116,7 @@ function populateCommits() {
 
       }
       for (let k = 0; k < freeableColumns.length; k++) {
-        let index = freeableColumns[k];
+        const index = freeableColumns[k];
         columns[index] = false;
       }
       if (parentCount[desiredParent] === 1) {
@@ -163,18 +163,18 @@ function nextFreeColumn(column: number) {
 }
 
 function addEdges(c) {
-  let parents = c.parents();
+  const parents = c.parents();
   if (parents.length !== 0) {
     parents.forEach(function(parent) {
-      let sha: string = c.sha();
-      let parentSha: string = parent.toString();
+      const sha: string = c.sha();
+      const parentSha: string = parent.toString();
       makeEdge(sha, parentSha);
     });
   }
 }
 
 function addAbsEdge(c) {
-  let parents = c['parents'];
+  const parents = c['parents'];
   for (let i = 0; i < parents.length; i++) {
     for (let j = 0; j < abstractList.length; j++) {
       if (abstractList[j]['sha'].indexOf(parents[i].toString()) > -1) {
@@ -189,7 +189,7 @@ function addAbsEdge(c) {
 
 function addBasicEdge(c) {
   let flag = true;
-  let parents = c['parents'];
+  const parents = c['parents'];
   edgeDic[c['id']] = [];
   for (let i = 0; i < parents.length; i++) {
     for (let j = 0; j < basicList.length; j++) {
@@ -206,12 +206,12 @@ function addBasicEdge(c) {
 }
 
 function sortBasicGraph() {
-  let tmp = basicList;
-  let idList = [];
+  const tmp = basicList;
+  const idList = [];
   while (tmp.length > 0) {
 
-    let n = tmp.shift();
-    let ta = edgeDic[n.id];
+    const n = tmp.shift();
+    const ta = edgeDic[n.id];
     let count = 0;
     for (let i = 0; i < ta.length; i++) {
       for (let j = 0; j < idList.length; j++) {
@@ -238,7 +238,7 @@ function sortBasicGraph() {
 }
 
 function makeBranchColor() {
-  let bcList = [];
+  const bcList = [];
   let count = 0;
   for (let i = 0; i < commitHistory.length; i++) {
     if (commitHistory[i].toString() in bname) {
@@ -250,9 +250,9 @@ function makeBranchColor() {
   }
   count = 0;
   while (bcList.length > 0) {
-    let commit = bcList.pop();
-    let oid = commit.oid.toString();
-    let cid = commit.cid;
+    const commit = bcList.pop();
+    const oid = commit.oid.toString();
+    const cid = commit.cid;
     if (oid in bDict) {
       bDict[oid].push(cid);
     } else {
@@ -381,11 +381,11 @@ function makeAbsNode(c, column: number) {
     const title = 'Author: ' + name + '<br>' + 'Number of Commits: ' + count;
 
     abNodes.add({
+      email: email,
       id: id,
+      image: img4User(name),
       shape: 'circularImage',
       title: title,
-      email: email,
-      image: img4User(name),
       physics: false,
       fixed: (id === 1),
       x: (column - 1) * spacingX,
@@ -401,10 +401,10 @@ function makeAbsNode(c, column: number) {
           shortName = '*' + shortName;
         }
         abNodes.add({
+          email: email,
           id: id + numOfCommits * (i + 1),
           shape: 'box',
           title: branchName,
-          email: email,
           label: shortName,
           physics: false,
           fixed: false,
@@ -482,13 +482,13 @@ function makeNode(c, column: number) {
   }
 
   commitList.push({
-    sha: c.sha(),
-    id: id,
-    time: c.timeMs(),
+    branch: flag,
     column: column,
     email: email,
+    id: id,
     reference: reference,
-    branch: flag,
+    sha: c.sha(),
+    time: c.timeMs(),
   });
 }
 
@@ -513,12 +513,12 @@ function getNodeId(sha: string) {
 
 function reCenter() {
   const moveOptions = {
-    offset: {x: -150, y: 200},
-    scale: 1,
     animation: {
       duration: 1000,
       easingFunction: 'easeInOutQuad',
     },
+    offset: {x: -150, y: 200},
+    scale: 1,
   };
 
   network.focus(commitList[commitList.length - 1]['id'], moveOptions);

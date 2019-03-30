@@ -1,7 +1,17 @@
-let vis = require('vis');
-let $ = require('jquery');
-let options, bsNodes, bsEdges, abNodes, abEdges, nodes, edges, network;
-let startP, secP = null, fromNode = null, toNode;
+import $ = require('jquery');
+import vis = require('vis');
+let options;
+let bsNodes;
+let bsEdges;
+let abNodes;
+let abEdges;
+let nodes;
+let edges;
+let network;
+let startP;
+let secP = null;
+let fromNode = null;
+let toNode;
 
 
 function drawGraph() {
@@ -25,12 +35,12 @@ function drawGraph() {
     edges: bsEdges,
   };
 
-  let abData = {
+  const abData = {
     nodes: abNodes,
     edges: abEdges,
   };
 
-  let data = {
+  const data = {
     nodes: nodes,
     edges: edges,
   };
@@ -43,12 +53,12 @@ function drawGraph() {
 
     edges: {
       arrows: {
+        from: false,
+        middle: false,
         to: {
           enabled: true,
           scaleFactor: 0.6,
         },
-        middle: false,
-        from: false,
       },
       color: '#39c0ba',
       hoverWidth: 0,
@@ -57,9 +67,9 @@ function drawGraph() {
       shadow: true,
       smooth: {
         enabled: true,
+        roundness: 0.5,
         type: 'cubicBezier',
         // forceDirection: 'horizontal',
-        roundness: 0.5,
       },
       width: 3,
     },
@@ -74,34 +84,29 @@ function drawGraph() {
       hover: true,
       hoverConnectedEdges: false,
       keyboard: {
+        bindToWindow: true,
         enabled: false,
         speed: {x: 10, y: 10, zoom: 0.02},
-        bindToWindow: true,
       },
       multiselect: false,
       navigationButtons: false,
-      selectable: true,
       selectConnectedEdges: false,
+      selectable: true,
       tooltipDelay: 300,
       zoomView: true,
     },
 
     layout: {
-      randomSeed: 1,
       improvedLayout: true,
+      randomSeed: 1,
     },
 
     manipulation: {
-      enabled: false,
-      initiallyActive: false,
-      addNode: true,
       addEdge: true,
-      editEdge: true,
-      deleteNode: true,
-      deleteEdge: true,
+      addNode: true,
       controlNodeStyle: {
-        shape: 'dot',
-        size: 6,
+        borderWidth: 2,
+        borderWidthSelected: 2,
         color: {
           background: '#39c0ba',
           border: '#39c0ba',
@@ -110,24 +115,29 @@ function drawGraph() {
             border: '#3c3c3c',
           },
         },
-        borderWidth: 2,
-        borderWidthSelected: 2,
+        shape: 'dot',
+        size: 6,
       },
+      deleteEdge: true,
+      deleteNode: true,
+      editEdge: true,
+      enabled: false,
+      initiallyActive: false,
     },
 
     nodes: {
       borderWidth: 8,
       borderWidthSelected: 8,
       color: {
-        border: '#39c0ba',
         background: '#FFF',
+        border: '#39c0ba',
         highlight: {
-          border: '#FF0',
           background: '#FFF',
+          border: '#FF0',
         },
         hover: {
-          border: '#F00',
           background: '#FFF',
+          border: '#F00',
         },
       },
       shadow: true,
@@ -144,7 +154,7 @@ function drawGraph() {
     processGraph(commits);
   });
 
-  network.on('stabilizationIterationsDone', function () {
+  network.on('stabilizationIterationsDone', function() {
     network.setOptions( { physics: false } );
   });
 
@@ -153,12 +163,12 @@ function drawGraph() {
       return;
     }
 
-    let email = abNodes._data[callback.nodes[0]]['email'];
+    const email = abNodes._data[callback.nodes[0]]['email'];
 
     if (email.includes('noreply.github.com')) {
-      let username = email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
-      updateModalText('Github Profile: <a onClick=\'window.open(\'https://github.com/' + username + 
-        '\')\'>https://github.com/' + username + '</a>' + 
+      const username = email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
+      updateModalText('Github Profile: <a onClick=\'window.open(\'https://github.com/' + username +
+        '\')\'>https://github.com/' + username + '</a>' +
         '<br/><i><small>Note: this user has not made their email public</small></i>');
     } else {
       updateModalText('Email: <a onClick=\'window.open(\'mailto:' + email + '\')\'>' + email + '</a>');
@@ -169,16 +179,16 @@ function drawGraph() {
     if (callback.nodes[0] === undefined) {
       return;
     } else {
-      let nodeId: number = callback.nodes[0];
+      const nodeId: number = callback.nodes[0];
     }
 
-    let moveOptions = {
-      offset: {x: 0, y: 0},
-      scale: 1,
+    const moveOptions = {
       animation: {
         duration: 1000,
         easingFunction: 'easeInOutQuad',
       },
+      offset: {x: 0, y: 0},
+      scale: 1,
     };
 
     network.focus(callback.nodes[0], moveOptions);
@@ -187,12 +197,12 @@ function drawGraph() {
   let flag = 'basic';
 
   network.on('zoom', function(callback) {
-    let moveOptions = {
-      scale: 1,
+    const moveOptions = {
       animation: {
         duration: 1000,
         easingFunction: 'easeInOutQuad',
       },
+      scale: 1,
     };
 
     if (network.getScale() > 1.5 && callback.direction === '+' && flag === 'abstract') {
@@ -228,7 +238,7 @@ function drawGraph() {
 
   network.on('animationFinished', function() {
     if (fromNode !== null && secP !== null) {
-      let toNode = network.getNodeAt(secP);
+      const toNode = network.getNodeAt(secP);
 
       if (fromNode !== toNode && (nodes.get(fromNode)['shape'] === 'box') && (nodes.get(toNode)['shape'] === 'box')) {
         mergeCommits(nodes.get(fromNode)['title']);

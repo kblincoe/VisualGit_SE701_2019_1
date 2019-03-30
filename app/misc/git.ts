@@ -1,18 +1,22 @@
 import * as nodegit from 'git';
 import NodeGit, { Status } from 'nodegit';
 
-let opn = require('opn');
-let $ = require('jquery');
-let Git = require('nodegit');
-let fs = require('fs');
-let async = require('async');
-let readFile = require('fs-sync');
-let green = '#84db00';
-let repo, index, oid, remote, commitMessage;
+import async = require('async');
+import fs = require('fs');
+import readFile = require('fs-sync');
+import $ = require('jquery');
+import Git = require('nodegit');
+import opn = require('opn');
+const green = '#84db00';
+const repo;
+let index;
+let oid;
+const remote;
+let commitMessage;
 let filesToAdd = [];
 let theirCommit = null;
 let modifiedFiles;
-let warnbool;
+const warnbool;
 let CommitButNoPush = 0;
 
 function cloneFromRemote(){
@@ -30,11 +34,11 @@ function addAndCommit() {
 
   .then(function(indexResult) {
     index = indexResult;
-    let filesToStage = [];
+    const filesToStage = [];
     filesToAdd = [];
-    let fileElements = document.getElementsByClassName('file');
+    const fileElements = document.getElementsByClassName('file');
     for (let i = 0; i < fileElements.length; i++) {
-      let fileElementChildren = fileElements[i].childNodes;
+      const fileElementChildren = fileElements[i].childNodes;
       if (fileElementChildren[1].checked === true) {
         filesToStage.push(fileElementChildren[0].innerHTML);
         filesToAdd.push(fileElementChildren[0].innerHTML);
@@ -192,7 +196,7 @@ function PullBuffer(){
 
 function pullFromRemote() {
   let repository;
-  let branch = document.getElementById('branch-name').innerText;
+  const branch = document.getElementById('branch-name').innerText;
   if (modifiedFiles.length > 0) {
     updateModalText('Please commit before pulling from remote!');
   }
@@ -232,11 +236,11 @@ function pullFromRemote() {
     let conflicsExist = false;
 
     if (readFile.exists(repoFullPath + '/.git/MERGE_MSG')) {
-      let tid = readFile.read(repoFullPath + '/.git/MERGE_MSG', null);
+      const tid = readFile.read(repoFullPath + '/.git/MERGE_MSG', null);
       conflicsExist = tid.indexOf('Conflicts') !== -1;
     }
 
-    if(conflicsExist) {
+    if (conflicsExist) {
       updateModalText('Conflicts exists! Please check files list on right side and solve conflicts before you commit again!');
       refreshAll(repository);
     } else {
@@ -258,7 +262,7 @@ function pullFromRemote() {
 
 
 function pushToRemote() {
-  let branch = document.getElementById('branch-name').innerText;
+  const branch = document.getElementById('branch-name').innerText;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     console.log('Pushing changes to remote...');
@@ -384,7 +388,7 @@ function mergeCommits(from) {
 
 function rebaseCommits(from: string, to: string) {
   let repos;
-  let index;
+  const index;
   let branch;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
@@ -444,7 +448,7 @@ function resetCommit(name: string) {
     return Git.AnnotatedCommit.lookup(repos, id);
   })
   .then(function(commit) {
-    let checkoutOptions = new Git.CheckoutOptions();
+    const checkoutOptions = new Git.CheckoutOptions();
     return Git.Reset.fromAnnotated(repos, commit, Git.Reset.TYPE.HARD, checkoutOptions);
   })
   .then(function(number) {
@@ -471,7 +475,7 @@ function revertCommit(name: string) {
     return Git.Commit.lookup(repos, id);
   })
   .then(function(commit) {
-    let revertOptions = new Git.RevertOptions();
+    const revertOptions = new Git.RevertOptions();
     if (commit.parents().length > 1) {
       revertOptions.mainline = 1;
     }
@@ -523,7 +527,7 @@ function displayModifiedFiles() {
       statuses.forEach(addModifiedFile);
       if (modifiedFiles.length !== 0) {
         if (document.getElementById('modified-files-message') !== null) {
-          let filePanelMessage = document.getElementById('modified-files-message');
+          const filePanelMessage = document.getElementById('modified-files-message');
           filePanelMessage.parentNode.removeChild(filePanelMessage);
         }
       }
@@ -532,15 +536,15 @@ function displayModifiedFiles() {
       // Add modified file to array of modified files 'modifiedFiles'
       function addModifiedFile(file) {
         // Check if modified file is already being displayed
-        let filePaths = document.getElementsByClassName('file-path');
+        const filePaths = document.getElementsByClassName('file-path');
         for (let i = 0; i < filePaths.length; i++) {
           if (filePaths[i].innerHTML === file.path()) {
             return;
           }
         }
 
-        let path = file.path();
-        let modification = calculateModification(file);
+        const path = file.path();
+        const modification = calculateModification(file);
         modifiedFiles.push({
             filePath: path,
             fileModification: modification,
@@ -565,16 +569,16 @@ function displayModifiedFiles() {
         }
       }
 
-    function Confirmation(){
-      $('#modalW').modal();
-      return 'Hi';
-    }
+      function Confirmation(){
+        $('#modalW').modal();
+        return 'Hi';
+      }
 
       function displayModifiedFile(file) {
-        let filePath = document.createElement('p');
+        const filePath = document.createElement('p');
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
-        let fileElement = document.createElement('div');
+        const fileElement = document.createElement('div');
         window.onbeforeunload = Confirmation;
         changes = 1;
         // Set how the file has been modified
@@ -590,7 +594,7 @@ function displayModifiedFiles() {
 
         fileElement.appendChild(filePath);
 
-        let checkbox = document.createElement('input');
+        const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'checkbox';
         checkbox.onclick = function(){
@@ -603,7 +607,7 @@ function displayModifiedFiles() {
         document.getElementById('files-changed').appendChild(fileElement);
 
         fileElement.onclick = function() {
-          let doc = document.getElementById('diff-panel');
+          const doc = document.getElementById('diff-panel');
           if (doc.style.width === '0px' || doc.style.width === '') {
             displayDiffPanel();
             document.getElementById('diff-panel-body').innerHTML = '';
@@ -620,12 +624,12 @@ function displayModifiedFiles() {
       }
 
       function printNewFile(filePath) {
-        let fileLocation = require('path').join(repoFullPath, filePath);
-        let lineReader = require('readline').createInterface({
+        const fileLocation = require('path').join(repoFullPath, filePath);
+        const lineReader = require('readline').createInterface({
           input: fs.createReadStream(fileLocation),
         });
 
-        lineReader.on('line', function (line) {
+        lineReader.on('line', function(line) {
           formatNewFileLine(line);
         });
       }
@@ -646,8 +650,8 @@ function displayModifiedFiles() {
                 patch.hunks().then(function(hunks) {
                   hunks.forEach(function(hunk) {
                     hunk.lines().then(function(lines) {
-                      let oldFilePath = patch.oldFile().path();
-                      let newFilePath = patch.newFile().path();
+                      const oldFilePath = patch.oldFile().path();
+                      const newFilePath = patch.newFile().path();
                       if (newFilePath === filePath) {
                         lines.forEach(function(line) {
                           callback(String.fromCharCode(line.origin()) + line.content());
@@ -663,7 +667,7 @@ function displayModifiedFiles() {
       }
 
       function formatLine(line) {
-        let element = document.createElement('div');
+        const element = document.createElement('div');
 
         if (line.charAt(0) === '+') {
           element.style.backgroundColor = '#84db00';
@@ -678,7 +682,7 @@ function displayModifiedFiles() {
       }
 
       function formatNewFileLine(text) {
-        let element = document.createElement('div');
+        const element = document.createElement('div');
         element.style.backgroundColor = green;
         element.innerHTML = text;
         document.getElementById('diff-panel-body').appendChild(element);
@@ -708,7 +712,7 @@ function calculateModification(status) {
 }
 
 function deleteFile(filePath: string) {
-  let newFilePath = filePath.replace(/\\/gi, '/');
+  const newFilePath = filePath.replace(/\\/gi, '/');
   if (fs.existsSync(newFilePath)) {
     fs.unlink(newFilePath, function(err) {
       if (err) {
@@ -735,8 +739,8 @@ function cleanRepo() {
 
       // Gets NEW/untracked files and deletes them
       function deleteUntrackedFiles(file) {
-        let filePath = repoFullPath + '\\' + file.path();
-        let modification = calculateModification(file);
+        const filePath = repoFullPath + '\\' + file.path();
+        const modification = calculateModification(file);
         if (modification === 'NEW') {
           console.log(`Deleting file: ${filePath}`);
           deleteFile(filePath);
@@ -776,7 +780,7 @@ function requestLinkModal() {
  */
 function fetchFromOrigin() {
   console.log('Fetching from origin...');
-  let upstreamRepoPath = document.getElementById('origin-path').value;
+  const upstreamRepoPath = document.getElementById('origin-path').value;
   if (upstreamRepoPath != null) {
     Git.Repository.open(repoFullPath)
     .then(function(repo) {

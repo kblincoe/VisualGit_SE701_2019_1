@@ -1,8 +1,8 @@
-let images = {};
+const images = {};
 // let imageFiles = ['dog1.jpg', 'dog2.jpg', 'dog3.jpg', 'dog4.jpg', 'dog5.jpg'];
-let imageFiles = ['jarjar.jpg', 'yoda.png', 'obiwan.jpg'];
-let imageCount = 0;
-let githubAvatarUrl = require('github-avatar-url');
+const imageFiles = ['jarjar.jpg', 'yoda.png', 'obiwan.jpg'];
+const imageCount = 0;
+import githubAvatarUrl = require('github-avatar-url');
 
 function getName(author: string) {
   const name = author.split('<')[0];

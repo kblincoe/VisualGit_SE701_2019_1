@@ -1,4 +1,4 @@
-let cs = require('color-scheme');
+import cs = require('color-scheme');
 let before = 'default';
 function changeColor(color) {
   // let scheme = new cs;
@@ -7,17 +7,17 @@ function changeColor(color) {
   //     .letiation('soft');
   // let colors = scheme.colors();
   console.log(`Color changed to ${color}`);
-  let head = document.getElementsByClassName('navbar');
-  let headButton = document.getElementsByClassName('navbar-btn');
-  let fa = document.getElementsByClassName('fa');
-  let fp = document.getElementById('file-panel');
-  let p = document.getElementsByTagName('p');
-  let h1 = document.getElementsByTagName('h1');
-  let diffp = document.getElementById('diff-panel-body');
-  let network = document.getElementById('my-network');
-  let footer = document.getElementById('footer');
-  let arp = document.getElementById('add-repository-panel');
-  let auth = document.getElementById('authenticate');
+  const head = document.getElementsByClassName('navbar');
+  const headButton = document.getElementsByClassName('navbar-btn');
+  const fa = document.getElementsByClassName('fa');
+  const fp = document.getElementById('file-panel');
+  const p = document.getElementsByTagName('p');
+  const h1 = document.getElementsByTagName('h1');
+  const diffp = document.getElementById('diff-panel-body');
+  const network = document.getElementById('my-network');
+  const footer = document.getElementById('footer');
+  const arp = document.getElementById('add-repository-panel');
+  const auth = document.getElementById('authenticate');
   if (color === 'white') {
     for (let i = 0; i < head.length; i++) {
       head[i].className = 'navbar navbar-white';
@@ -71,11 +71,11 @@ function changeColor(color) {
     fp.setAttribute('style', 'background-color: #FFC2C2');
 
     for (let i = 0; i < p.length; i++) {
-      p[i].style.color = '#767676'; 
+      p[i].style.color = '#767676';
     }
 
     for (let i = 0; i < h1.length; i++) {
-      h1[i].style.color = '#FFA3A3'; 
+      h1[i].style.color = '#FFA3A3';
     }
 
     diffp.style.color = 'white';
@@ -104,7 +104,7 @@ function changeColor(color) {
     }
 
     fp.setAttribute('style', 'background-color: #9DD2FE');
-    
+
     for (let i = 0; i < p.length; i++) {
       p[i].style.color = '#767676';
     }

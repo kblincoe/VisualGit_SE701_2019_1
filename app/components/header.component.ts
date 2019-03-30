@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RepositoryService } from '../services/repository.service';
 import { GraphService } from '../services/graph.service';
+import { RepositoryService } from '../services/repository.service';
 
 @Component({
   selector: 'app-header',
@@ -57,8 +57,8 @@ import { GraphService } from '../services/graph.service';
           <ul class="navbar-nav navbar-right hidden-xs">
             <li>
               <label id="githubname" style="color:white"></label>
-              <a class="btn btn-default btn-outline btn-circle" id="avatar" data-toggle="collapse" href="#nav-collapse1" aria-expanded="false"
-                aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
+              <a class="btn btn-default btn-outline btn-circle" id="avatar" data-toggle="collapse" href="#nav-collapse1"
+                aria-expanded="false" aria-controls="nav-collapse1" onclick="signInOrOut()">Sign In</a>
             </li>
           </ul>
           <div class="collapse nav navbar-nav nav-collapse" id="nav-collapse1">
@@ -267,7 +267,8 @@ import { GraphService } from '../services/graph.service';
             </div>
             <div class="modal-body" id="modal-text-box">
               Please provide the HTTP path to the original repository:
-              <input type="text" id="origin-path" style=" width: 554px !important" placeholder="https://github.com/ORIGINAL_OWNER/ORIGINAL_OWNER_REPOSITORY.git">
+              <input type="text" id="origin-path" style=" width: 554px !important"
+                placeholder="https://github.com/ORIGINAL_OWNER/ORIGINAL_OWNER_REPOSITORY.git">
             </div>
             <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="fetchFromOrigin()">Confirm</button>
@@ -276,7 +277,7 @@ import { GraphService } from '../services/graph.service';
         </div>
     </div>
   `,
-  providers: [RepositoryService, GraphService],
+  providers: [GraphService, RepositoryService],
 })
 
 export class HeaderComponent   {

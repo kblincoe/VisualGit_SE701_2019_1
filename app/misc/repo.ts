@@ -1,16 +1,16 @@
-import Git = require('nodegit');
 import $ = require('jQuery');
+import Git = require('nodegit');
 let repoFullPath;
 let repoLocalPath;
 let bname = {};
-let branchCommit = [];
-let remoteName = {};
-let localBranches = [];
-import readFile = require('fs-sync');
+const branchCommit = [];
+const remoteName = {};
+const localBranches = [];
 import checkFile = require('fs');
-let repoCurrentBranch = 'master';
-let modal;
-let span;
+import readFile = require('fs-sync');
+const repoCurrentBranch = 'master';
+const modal;
+const span;
 
 function downloadRepository() {
   let fullLocalPath;
@@ -121,7 +121,7 @@ function refreshAll(repository) {
   bname = [];
   repository.getCurrentBranch()
   .then(function(reference) {
-    let branchParts = reference.name().split('/');
+    const branchParts = reference.name().split('/');
     branch = branchParts[branchParts.length - 1];
   }, function(err) {
     console.log(`Error in repo.ts. Attempting to refresh branch, the error is: ${err}`); // TODO show error on screen
@@ -130,7 +130,7 @@ function refreshAll(repository) {
     return repository.getReferences(Git.Reference.TYPE.LISTALL);
   })
   .then(function(branchList) {
-    let count = 0;
+    const count = 0;
     clearBranchElement();
     for (let i = 0; i < branchList.length; i++) {
       const bp = branchList[i].name().split('/');
