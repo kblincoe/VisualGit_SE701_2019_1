@@ -101,7 +101,7 @@ function getEmail(c) {
   return email;
 }
 
-function makeAbsNode(c, column: number, count:number) {
+function makeAbsNode(c, column: number, count: number) {
   let id = nodeId++;
   let name = 'Node ' + id;
   let reference;

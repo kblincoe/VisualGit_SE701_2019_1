@@ -496,7 +496,7 @@ function ExitBeforePush(){
 
 function Confirmed(){
   // Block is empty so console log was added to appease linter
-  console.log('Confirmed')
+  console.log('Confirmed');
 }
 
 // makes the onbeforeunload function nothing so the window actually closes; then closes it.
@@ -631,7 +631,7 @@ function displayModifiedFiles() {
       }
 
       function printFileDiff(filePath) {
-        repo.getHeadCommit().then(function(commit) {
+        repo.getHeadCommit().then((commit) => {
           getCurrentDiff(commit, filePath, function(line) {
             formatLine(line);
           });

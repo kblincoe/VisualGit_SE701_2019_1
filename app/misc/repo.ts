@@ -194,18 +194,18 @@ function getOtherBranches() {
   let list;
   let repos;
   Git.Repository.open(repoFullPath)
-  .then(function(repo) {
+  .then((repo) => {
     repos = repo;
     return repo.getReferenceNames(Git.Reference.TYPE.LISTALL);
   })
-  .then(function(branchList) {
+  .then((branchList) => {
     clearMergeElement();
     list = branchList;
   })
-  .then(function() {
+  .then(() => {
     return repos.getCurrentBranch();
   })
-  .then(function(ref) {
+  .then((ref) => {
     let name = ref.name().split('/');
     clearBranchElement();
     for (let i = 0; i < list.length; i++) {
@@ -282,18 +282,18 @@ function checkoutRemoteBranch(element) {
   })
   .then(function(code) {
     repos.mergeBranches(bn, 'origin/' + bn)
-    .then(function() {
+    .then(() => {
         refreshAll(repos);
         console.log('Pull successful');
     });
-  }, function(err) {
+  }, (err) => {
     console.log(`Error in repo.ts. Attempting to checkout remote branch, the error is: ${err}`);
   });
 }
 
 function updateLocalPath() {
   let text = document.getElementById('repoClone').value;
-  let splitText = text.split(/\.|:|\//);
+  const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     document.getElementById('repoSave').value = splitText[splitText.length - 2];
   }

@@ -31,8 +31,8 @@ function switchToAddRepositoryPanel() {
 }
 
 function wait(ms){
-   var start = new Date().getTime();
-   var end = start;
+   let start = new Date().getTime();
+   let end = start;
    while (end < start + ms) {
      end = new Date().getTime();
   }
@@ -107,8 +107,8 @@ function hideDiffPanelButtons(){
 }
 
 function disableSaveCancelButton() {
-  let saveButton = document.getElementById('save-button');
-  let cancelButton = document.getElementById('cancel-button');
+  const saveButton = document.getElementById('save-button');
+  const cancelButton = document.getElementById('cancel-button');
   saveButton.disabled = true;
   saveButton.style.backgroundColor = gray;
   cancelButton.disabled = true;
@@ -116,8 +116,8 @@ function disableSaveCancelButton() {
 }
 
 function enableSaveCancelButton() {
-  let saveButton = document.getElementById('save-button');
-  let cancelButton = document.getElementById('cancel-button');
+  const saveButton = document.getElementById('save-button');
+  const cancelButton = document.getElementById('cancel-button');
   saveButton.disabled = false;
   saveButton.style.backgroundColor = blue;
   cancelButton.disabled = false;
@@ -125,7 +125,7 @@ function enableSaveCancelButton() {
 }
 
 function disableDiffPanelEditOnHide(){
-  let doc = document.getElementById('diff-panel-body');
+  const doc = document.getElementById('diff-panel-body');
   doc.contentEditable = 'false';
 }
 

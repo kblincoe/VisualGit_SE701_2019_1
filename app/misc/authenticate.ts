@@ -62,9 +62,9 @@ async function loginWithSaved(callback) {
     document.getElementById('password').value = credentials.password;
   }
 }
-  
+
 /**
- * This function reads the input fields for signing in and attempts to sign 
+ * This function reads the input fields for signing in and attempts to sign
  * the user in to their GitHub account.
  */
 function getUserInfo(callback) {
@@ -79,7 +79,7 @@ function getUserInfo(callback) {
 
   const username = document.getElementById(userid).value;
   const password = document.getElementById(passid).value;
-  
+
   cred = Git.Cred.userpassPlaintextNew(username, password);
 
   client = github.client({

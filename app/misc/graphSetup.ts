@@ -23,7 +23,7 @@ function drawGraph() {
   const bsData = {
     nodes: bsNodes,
     edges: bsEdges,
-  }
+  };
 
   let abData = {
     nodes: abNodes,
@@ -149,7 +149,7 @@ function drawGraph() {
   });
 
   network.on('click', function(callback) {
-    if (callback.nodes[0] == undefined) {
+    if (callback.nodes[0] === undefined) {
       return;
     }
 
@@ -162,7 +162,7 @@ function drawGraph() {
     } else {
       updateModalText('Email: <a onClick=\'window.open(\'mailto:' + email + '\')\'>' + email + '</a>');
     }
-  }, false)
+  }, false);
 
   network.on('doubleClick', function(callback) {
     if (callback.nodes[0] === undefined) {
@@ -177,7 +177,7 @@ function drawGraph() {
       animation: {
         duration: 1000,
         easingFunction: 'easeInOutQuad',
-      }
+      },
     };
 
     network.focus(callback.nodes[0], moveOptions);
@@ -191,19 +191,19 @@ function drawGraph() {
       animation: {
         duration: 1000,
         easingFunction: 'easeInOutQuad',
-      }
+      },
     };
 
     if (network.getScale() > 1.5 && callback.direction === '+' && flag === 'abstract') {
       network.setData(data);
       flag = 'node';
       network.fit(moveOptions);
-      //network.redraw();
+      // network.redraw();
     } else if (network.getScale() < 0.4 && callback.direction === '-' && flag === 'node') {
       network.setData(abData);
       flag = 'abstract';
       network.fit(moveOptions);
-      //network.redraw();
+      // network.redraw();
     } else if (network.getScale() > 1.5 && callback.direction === '+' && flag === 'basic') {
       network.setData(abData);
       flag = 'abstract';

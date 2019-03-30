@@ -14,7 +14,7 @@ import { GraphService } from '../services/graph.service';
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#"><img src="./assets/AddRepositoryFolder.svg" onclick="switchToAddRepositoryPanel()" class="add-repository-button" 
+          <a href="#"><img src="./assets/AddRepositoryFolder.svg" onclick="switchToAddRepositoryPanel()" class="add-repository-button"
           title="Add Repository"></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
@@ -51,7 +51,7 @@ import { GraphService } from '../services/graph.service';
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()"
               title="Clean"></i></a></li>
             <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
-              title="Sync"></i></a></li>           
+              title="Sync"></i></a></li>
           </ul>
 
           <ul class="navbar-nav navbar-right hidden-xs">
@@ -270,7 +270,7 @@ import { GraphService } from '../services/graph.service';
               <input type="text" id="origin-path" style=" width: 554px !important" placeholder="https://github.com/ORIGINAL_OWNER/ORIGINAL_OWNER_REPOSITORY.git">
             </div>
             <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="fetchFromOrigin()">Confirm</button>  
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="fetchFromOrigin()">Confirm</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
