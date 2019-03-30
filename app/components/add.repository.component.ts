@@ -8,7 +8,7 @@ import { Component } from "@angular/core";
       <div class="add-repository-body flex-container-col">
         <div id="open-recent-repository" class="open-recent-repository">
           <div class="title">
-            <h1 class="open-local-repo">Open Recent</h1>
+            <h1>Open Recent</h1>
           </div>
           <ul class="list-group recents-list" id="recents-list">
           </ul>
@@ -16,7 +16,7 @@ import { Component } from "@angular/core";
         <div>
           <div class="clone-body flex-container-col">
             <div class="title">
-              <h1 class="clone-title">Clone from Internet</h1>
+              <h1>Clone from Internet</h1>
             </div>
           </div>
           <form style="max-width: 700px;">
@@ -41,7 +41,7 @@ import { Component } from "@angular/core";
         </div>
         <div id="open-local-repository" class="open-local-repository">
           <div class="title">
-            <h1 class="open-local-repo">Open Local Repository</h1>
+            <h1>Open Local Repository</h1>
           </div>
           <form style="max-width: 700px;">
             <div class="form-group">

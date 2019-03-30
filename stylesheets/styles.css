@@ -334,10 +334,6 @@ body .add-repository-panel h1 {
   color: white;
 }
 
-body .add-repository-panel .open-local-repo {
-  margin-top: 70px;
-}
-
 body .add-repository-panel p {
   display: inline-block;
   margin-right: 20px;
@@ -347,7 +343,7 @@ body .add-repository-panel .title {
   width: 100%;
 }
 
-body .add-repository-panel .title .clone-title {
+body .add-repository-panel .title {
   margin-top: 20px;
 }
 
