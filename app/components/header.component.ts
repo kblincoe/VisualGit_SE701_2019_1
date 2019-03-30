@@ -31,9 +31,9 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" onkeyup="sortBranches()" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName" class="form-control masterTooltip" placeholder="Search or create branch"  onkeyup="sortBranches(); checkBranch(this)" title="tool tip">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
+                      <button class="btn btn-default masterTooltip" id = "branch-btn" type="button" disabled="disabled" onclick="createBranch()" title="tool tip">OK</button>
                     </span>
                   </div>
                 </li>
