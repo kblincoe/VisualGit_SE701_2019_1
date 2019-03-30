@@ -182,7 +182,7 @@ function signInOrOut() {
     $('#avatar').removeAttr('data-toggle');
 
     if ((changes == 1) || (CommitButNoPush == 1)){
-			$("#modalW2").modal();
+		  $("#modalW2").modal();
     }
     else {
       redirectToHomePage();
@@ -199,5 +199,5 @@ function redirectToHomePage() {
   signed = 0;
   changes = 0;
   CommitButNoPush = 0;
-  //LogInAfterConfirm();
+  // LogInAfterConfirm();
 }
