@@ -13,7 +13,8 @@
     "postinstall": "electron-builder install-app-deps",
     "createjs": "tsc",
     "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
-    "lint": "tslint app/**/*.ts"
+    "lint": "tslint -q app/**/*.ts && echo linter completed with no linting errors",
+    "lintAllSeverities": "tslint app/**/*.ts"
   },
   "keywords": [
     "VisualGit",
