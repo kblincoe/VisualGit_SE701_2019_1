@@ -91,7 +91,7 @@ function addAndCommit() {
     for (let i = 0; i < filesToAdd.length; i++) {
       addCommand('git add ' + filesToAdd[i]);
     }
-    addCommand('git commit -m '' + commitMessage + ''');
+    addCommand('git commit -m "' + commitMessage + '"');
     refreshAll(repository);
   }, function(err) {
     console.log(`Error in git.ts. Attempting to commit, the error is: ${err}`);
