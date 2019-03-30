@@ -513,7 +513,27 @@ function Reload(){
 	location.reload();
 }
 
+function clearRemovedFiles() {
+
+  let createdFilesArray = [];
+
+  let createdFiles = document.getElementsByClassName("file file-created");
+  let prePath = "<p id=\"file-path-id-0\" class=\"file-path\">";
+  let postPath = "</p><input type=\"checkbox\" class=\"checkbox\">"
+
+  for (let i = 0; i < createdFiles.length; i++) {
+    let createdFilePath = createdFiles[i].innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
+    if (!(fs.existsSync(createdFilePath))) {
+      document.getElementsByClassName("file file-created")[i].remove();
+    }
+  }
+  return;
+}
+
 function displayModifiedFiles() {
+
+  clearRemovedFiles();
+  
   modifiedFiles = [];
 
   Git.Repository.open(repoFullPath)
@@ -528,7 +548,6 @@ function displayModifiedFiles() {
         }
       }
       modifiedFiles.forEach((f, i) => displayModifiedFile(f, i));
-
 
       // Add modified file to array of modified files 'modifiedFiles'
       function addModifiedFile(file) {
