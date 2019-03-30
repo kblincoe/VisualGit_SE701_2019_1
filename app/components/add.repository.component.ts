@@ -6,6 +6,13 @@ import { Component } from "@angular/core";
     <div class="add-repository-panel" id="add-repository-panel">
       <img src="./assets/Back.svg" (click)="returnToMainPanel()" class="back-button">
       <div class="add-repository-body flex-container-col">
+        <div id="open-recent-repository" class="open-recent-repository">
+          <div class="title">
+            <h1 class="open-local-repo">Open Recent</h1>
+          </div>
+          <ul class="list-group recents-list" id="recents-list">
+          </ul>
+        </div>
         <div>
           <div class="clone-body flex-container-col">
             <div class="title">
@@ -82,7 +89,7 @@ export class AddRepositoryComponent {
       document.getElementById("dirPickerOpenLocal").click();
     } else {
       // If directory is specified, continue as normal
-      this.openRepository();
+      this.openLocalRepository();
     }
   }
 
@@ -91,7 +98,7 @@ export class AddRepositoryComponent {
   }
 
   openRepository(): void {
-    openRepository();
+    openLocalRepository();
     switchToMainPanel();
   }
 

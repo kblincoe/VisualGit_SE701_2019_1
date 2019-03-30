@@ -10,7 +10,8 @@ require('electron-debug')();
 
 // Add library for triggering hot electron reloads
 require('electron-reload')(__dirname, {
-    electron: require('${__dirname}/../../node_modules/electron')
+	electron: require('${__dirname}/../../node_modules/electron'),
+	ignored: /recents.json|[\/\\]\./, // avoid reload when we write to recents
 });
 
 // prevent window being garbage collected

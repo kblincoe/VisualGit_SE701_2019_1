@@ -371,6 +371,12 @@ body .add-repository-panel .button {
   height: 100%;
 }
 
+body .add-repository-panel .recents-list {
+  max-width: 700px;
+  max-height: 200px;
+  overflow-y:scroll;
+}
+
 body .navbar .iconbar {
   padding-left: 12px;
   margin-top: 14px;

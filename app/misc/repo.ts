@@ -35,11 +35,15 @@ function downloadRepository() {
 }
 
 function getRecentRepositories(): Array<String> {
-  let objRead = jsonfile.readFileSync(recentsFile);
-  if (objRead.recents == null) {
-    return new Array<String>();
+  if (checkFile.existsSync(recentsFile)) {
+    let objRead = jsonfile.readFileSync(recentsFile);
+    if (objRead.recents == null) {
+      return new Array<String>();
+    } else {
+      return objRead.recents;
+    }
   } else {
-    return objRead.recents;
+    return new Array<String>();
   }
 }
 
@@ -47,14 +51,42 @@ function saveRecentRepository(path: String) {
   let recentsArray = getRecentRepositories();
   if (recentsArray.length > 10) {
     // Max length of 10
-    recentsArray.shift()
+    recentsArray.shift();
   }
+  // Remove path from array if it's already there (so we move it back to the front)
+  let recentsArrayFiltered = recentsArray.filter(e => e !== path);
   // Append new path and write back to JSON
-  recentsArray.push(path);
-  let obj = {
-    recents: recentsArray
+  recentsArrayFiltered.push(path);
+  let JSONobj = {
+    recents: recentsArrayFiltered
   }
-  jsonfile.writeFileSync(recentsFile);
+  jsonfile.writeFileSync(recentsFile, JSONobj);
+}
+
+function populateRecents(): void {
+  // Populates the recents list
+  let list = document.getElementById("recents-list");
+  
+  while (list.firstChild) {
+    // Remove all children
+    list.removeChild(list.firstChild);
+  }
+
+  getRecentRepositories().forEach(element => {
+    let entry = document.createElement("a");
+    entry.href = "#";
+    entry.addEventListener("click", () => {
+      if (checkFile.existsSync(element)) {
+        openRepository(element, element);
+        switchToMainPanel();
+      } else {
+        displayModal("Repository no longer exists on disk");
+      }
+    });
+    entry.className = "list-group-item";
+    entry.innerHTML = element as string;
+    list.appendChild(entry);
+  });
 }
 
 function downloadFunc(cloneURL: string, fullLocalPath) {
@@ -71,6 +103,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
             if(!isErrorOpeningRepo) {
+              saveRecentRepository(fullLocalPath);
               setCloneStatistics(`${repoUser}/${repoName}`, data.size);
             }
           }); 
@@ -116,24 +149,30 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   });
 }
 
-function openRepository() {
+function openLocalRepository() {
   // Full path is determined by either handwritten directory or selected by file browser
+  let localPath: String;
+  let fullLocalPath: String;
   if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
-    let localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
-    let fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
+    localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
     document.getElementById("repoOpen").value = fullLocalPath;
     document.getElementById("repoOpen").text = fullLocalPath;
   } else {
-    let localPath = document.getElementById("repoOpen").value;
-    let fullLocalPath;
+    localPath = document.getElementById("repoOpen").value;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
     } else {
       fullLocalPath = require("path").join(__dirname, localPath);
     }
   }
+  openRepository(fullLocalPath, localPath);
+}
 
+function openRepository(fullLocalPath: String, localPath: String) {
+  // Open a reponsitory for which we have the file path for
   console.log(`Trying to open repository at ${fullLocalPath}`);
+  saveRecentRepository(fullLocalPath);
   displayModal("Opening Local Repository...");
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
