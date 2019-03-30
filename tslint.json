@@ -11,7 +11,7 @@
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": false,
         "one-line": [true, "check-open-brace"],
-        "indent": [true, "tabs"],
+        "indent": [true, "spaces", 2],
         "no-console": {
             "severity": "warning",
             "options": ["debug", "info", "log", "time", "timeEnd", "trace"]

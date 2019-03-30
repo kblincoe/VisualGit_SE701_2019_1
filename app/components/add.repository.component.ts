@@ -14,7 +14,8 @@ import { Component } from "@angular/core";
             </div>
             <div class="flex-container-row">
               <div class="flex-empty-space"></div>
-            <input type="text" oninput="updateLocalPath()" name="repositoryRemote" size="50" id="repoClone" placeholder="https://github.com/user/repository.git"/>
+            <input type="text" oninput="updateLocalPath()" name="repositoryRemote" size="50" id="repoClone"
+            placeholder="https://github.com/user/repository.git"/>
             <button type="button" class="button-clone" id="cloneButton" onclick="selectSave()">Clone</button>
             </div>
           </div>
@@ -27,7 +28,8 @@ import { Component } from "@angular/core";
               <input type="text" name="repositoryLocal" size="50" id="repoSave"/>
   
               <button class="button-clone" (click)="selectSave()">Save</button>
-              <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="addRepository();" style="display: none;" webkitdirectory />
+              <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="addRepository();" style="display: none;"
+              webkitdirectory />
             </div>
           </div>
         </div>
@@ -44,7 +46,8 @@ import { Component } from "@angular/core";
             <div>
               <input type="text" name="repositoryLocal" size="50" id="repoOpen"/>
               <button class="button-open" (click)="selectDirectory()">Open</button>
-              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;" webkitdirectory />
+              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()"
+              style="display: none;" webkitdirectory />
             </div>
           </div>
         </div>
