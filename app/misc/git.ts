@@ -517,12 +517,12 @@ function Reload(){
 // clears all removed files from the sidebar display
 function clearRemovedFiles() {
 
-  let createdFiles = Array.from(document.getElementsByClassName("file file-created"));
+  const createdFiles = Array.from(document.getElementsByClassName("file file-created"));
   const prePath = '<p id="file-path-id-0" class="file-path">';
   const postPath = '</p><input type="checkbox" class="checkbox">';
 
   const removeFileFromModifiedFiles = (file: any, i: number) => { 
-    let createdFilePath = file.innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
+    const createdFilePath = file.innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
     if (!(fs.existsSync(createdFilePath))) {
       document.getElementsByClassName("file file-created")[i].remove();
       if (_previousId !== createdFilePath) {
@@ -531,7 +531,6 @@ function clearRemovedFiles() {
     }
   }
   createdFiles.forEach(removeFileFromModifiedFiles);
-  return;
 }
 
 function displayModifiedFiles() {
