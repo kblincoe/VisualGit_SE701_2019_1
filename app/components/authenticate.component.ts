@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
       <br><br>
       <p id="personalAccessTokenMsg" style="display: none;"><i>Your account has Two-Factor Authentication enabled.
         Please enter you personal access token, if you don't know
-        how to setup a personal access token click <a (click)="personalAccessTokenHelp()">here</a></i></p>   
+        how to setup a personal access token click <a (click)="personalAccessTokenHelp()">here</a></i></p>
     </div>
     <br>
     <input id="rememberLogin" type="checkbox"> Remember Login<br/>
@@ -59,7 +59,7 @@ export class AuthenticateComponent {
     window.open('https://github.com/join?', '_blank');
   }
 
-  personalAccessTokenHelp() : void {
-    window.open("https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line");
+  personalAccessTokenHelp(): void {
+    window.open('https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line');
   }
 }

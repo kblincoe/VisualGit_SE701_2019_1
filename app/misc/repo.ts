@@ -1,10 +1,10 @@
-import { parse } from 'path';
 import fetch from 'node-fetch';
+import { parse } from 'path';
 
+import $ = require('jQuery');
 import NetworkSpeed = require('network-speed');
+import Git = require('nodegit');
 import ProgressBar = require('progressbar.js');
-let Git = require('nodegit');
-let $ = require('jQuery');
 
 let repoFullPath;
 let repoLocalPath;
@@ -24,8 +24,8 @@ let isErrorOpeningRepo;
 
 function downloadRepository() {
   // Full path is always in repoSave
-  let localPath = document.getElementById("repoSave").value;
-  let cloneURL = document.getElementById("repoClone").value;
+  const localPath = document.getElementById('repoSave').value;
+  const cloneURL = document.getElementById('repoClone').value;
 
   if (!cloneURL || cloneURL.length === 0) {
       updateModalText('Clone Failed - Empty URL Given');
@@ -37,7 +37,7 @@ function downloadRepository() {
 
 function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
-  
+
   // Get user host of the repo and the name of the repo from the url
   const urlParts = cloneURL.split('/');
   const repoUser = urlParts[3];
@@ -48,12 +48,12 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
       function(response) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
-            if(!isErrorOpeningRepo) {
+            if (!isErrorOpeningRepo) {
               setCloneStatistics(`${repoUser}/${repoName}`, data.size);
             }
-          }); 
-        };
-      }
+          });
+        }
+      },
     )
     .catch(function(err) {
       console.log('Fetch Error :-S', err);
@@ -70,9 +70,9 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
           const progress = (100 * (stats.receivedObjects() + stats.indexedObjects())) / (stats.totalObjects() * 2);
           updateDownloadPercentage(progress);
           getNetworkDownloadSpeed();
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   console.log('Cloning into ' + fullLocalPath);
@@ -327,17 +327,17 @@ function updateLocalPath() {
   const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     // Calculate full path by joining working dir + repo name
-    let fullLocalPath = require('path').join(__dirname, splitText[splitText.length - 2]);
+    const fullLocalPath = require('path').join(__dirname, splitText[splitText.length - 2]);
     document.getElementById('repoSave').value = fullLocalPath;
   }
 }
 
-function updateCustomPath(userPath: String) {
-  let text = document.getElementById('repoClone').value;
-  let splitText = text.split(/\.|:|\//);
+function updateCustomPath(userPath: string) {
+  const text = document.getElementById('repoClone').value;
+  const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     // Calculate full path by joining working dir + repo name
-    let fullLocalPath = require('path').join(userPath, splitText[splitText.length - 2]);
+    const fullLocalPath = require('path').join(userPath, splitText[splitText.length - 2]);
     document.getElementById('repoSave').value = fullLocalPath;
   } else {
     // Couldn't compute path
@@ -376,7 +376,7 @@ function displayModal(text) {
 
 function updateModalText(text) {
   const modal = document.getElementById('modal-text-box');
-  if(modal) {
+  if (modal) {
     modal.innerHTML = text;
     $('#modal').modal('show');
   }
@@ -405,9 +405,9 @@ function setCloneStatistics(repoName: string, repoSize: number) {
         bottom: '5px',
         padding: 0,
         margin: 0,
-        transform: null
+        transform: null,
       },
-      autoStyleContainer: false
+      autoStyleContainer: false,
     },
     // Changes colour from a starting colour to a final colour
     from: {color: '#39C0BA' },
@@ -415,19 +415,19 @@ function setCloneStatistics(repoName: string, repoSize: number) {
     step: (state, bar) => {
       bar.path.setAttribute('stroke', state.color); // Colour transition
       bar.setText(`${(bar.value() * 100).toFixed(2)}%`); // Percentage Label
-    }
+    },
   });
 }
 
 function updateDownloadPercentage(percentage: number) {
-  if(progressBar) {
+  if (progressBar) {
     progressBar.animate((percentage / 100)); // Supply a number between 0 and 1
   }
 }
 
 function updateDownloadSpeed(speed: number) {
   const speedRounded = Math.round(speed);
-  if(!isNaN(speedRounded) && document.getElementById("download-speed")) {
+  if (!isNaN(speedRounded) && document.getElementById('download-speed')) {
     document.getElementById('download-speed')!.innerHTML = `${speedRounded} kB/s`;
   }
 }
@@ -437,9 +437,10 @@ function updateDownloadSpeed(speed: number) {
  */
 async function getNetworkDownloadSpeed() {
   const networkSpeed = new NetworkSpeed();
-  // Retrieve 250kB binaries from server host, same as speedtest https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
-  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000'; 
+  // Retrieve 250kB binaries from server host, same as speedtest
+  // https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000';
   const fileSize = 250000;  // Size of the file retrived from the website, for calcs
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
-}  
+}

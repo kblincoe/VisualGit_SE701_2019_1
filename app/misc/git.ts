@@ -16,9 +16,9 @@ let commitMessage;
 let filesToAdd = [];
 let theirCommit = null;
 let modifiedFiles;
-let warnbool;
-var CommitButNoPush = 0;
-let _previousId = "";
+const warnbool;
+let CommitButNoPush = 0;
+let previousId = '';
 
 function cloneFromRemote(){
   switchToClonePanel();
@@ -522,26 +522,26 @@ function Reload(){
 // clears all removed files from the sidebar display
 function clearRemovedFiles() {
 
-  const createdFiles = Array.from(document.getElementsByClassName("file file-created"));
+  const createdFiles = Array.from(document.getElementsByClassName('file file-created'));
   const prePath = '<p id="file-path-id-0" class="file-path">';
   const postPath = '</p><input type="checkbox" class="checkbox">';
 
-  const removeFileFromModifiedFiles = (file: any, i: number) => { 
-    const createdFilePath = file.innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
+  const removeFileFromModifiedFiles = (file: any, i: number) => {
+    const createdFilePath = file.innerHTML.match(new RegExp(prePath + '(.*)' + postPath))[1];
     if (!(fs.existsSync(createdFilePath))) {
-      document.getElementsByClassName("file file-created")[i].remove();
-      if (_previousId !== createdFilePath) {
+      document.getElementsByClassName('file file-created')[i].remove();
+      if (previousId !== createdFilePath) {
         hideDiffPanel();
       }
     }
-  }
+  };
   createdFiles.forEach(removeFileFromModifiedFiles);
 }
 
 function displayModifiedFiles() {
 
   clearRemovedFiles();
-  
+
   modifiedFiles = [];
 
   Git.Repository.open(repoFullPath)
@@ -599,7 +599,7 @@ function displayModifiedFiles() {
       }
 
       function displayModifiedFile(file, index) {
-        let filePath = document.createElement('p');
+        const filePath = document.createElement('p');
         filePath.id = `file-path-id-${index}`;
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
@@ -632,15 +632,15 @@ function displayModifiedFiles() {
         document.getElementById('files-changed').appendChild(fileElement);
 
         fileElement.onclick = function() {
-          let doc = document.getElementById(`file-path-id-${index}`);
+          const doc = document.getElementById(`file-path-id-${index}`);
 
-          if (_previousId !== doc.innerHTML){
+          if (previousId !== doc.innerHTML){
             hideDiffPanel();
           }
 
 
-          let diff_panel = document.getElementById("diff-panel");
-          if ((diff_panel.style.width === '0px' || diff_panel.style.width === '') && !checkbox.checked) {
+          const diffPanel = document.getElementById('diff-panel');
+          if ((diffPanel.style.width === '0px' || diffPanel.style.width === '') && !checkbox.checked) {
             displayDiffPanel();
             document.getElementById('diff-panel-body').innerHTML = '';
 
@@ -652,7 +652,7 @@ function displayModifiedFiles() {
           } else {
             hideDiffPanel();
           }
-          _previousId = doc.innerHTML;
+          previousId = doc.innerHTML;
         };
       }
 
@@ -705,7 +705,7 @@ function displayModifiedFiles() {
       }
 
       function formatLine(changeType, lineno, line) {
-        let element = document.createElement('div');
+        const element = document.createElement('div');
 
         if (changeType === '+') {
           element.style.backgroundColor = '#84db00';
@@ -724,13 +724,13 @@ function displayModifiedFiles() {
       }
 
       /**
-       * Adds varying amount of spaces between line number and code depending on size
+       * Adds letying amount of spaces between line number and code depending on size
        * of line number.
        */
       function formatSpaces(sizeOfLineNumber, line) {
-        var defaultSpaces = 8;
-        for (var i = 0; i < defaultSpaces - sizeOfLineNumber; i++) {
-          line = line + ' '
+        const defaultSpaces = 8;
+        for (let i = 0; i < defaultSpaces - sizeOfLineNumber; i++) {
+          line = line + ' ';
         }
         return line;
       }
