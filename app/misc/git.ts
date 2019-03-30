@@ -518,7 +518,6 @@ function Reload(){
 function clearRemovedFiles() {
 
   let createdFilesArray = [];
-
   let createdFiles = document.getElementsByClassName("file file-created");
   let prePath = '<p id="file-path-id-0" class="file-path">';
   let postPath = '</p><input type="checkbox" class="checkbox">';
@@ -527,6 +526,9 @@ function clearRemovedFiles() {
     let createdFilePath = createdFiles[i].innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
     if (!(fs.existsSync(createdFilePath))) {
       document.getElementsByClassName("file file-created")[i].remove();
+      if (_previousId !== createdFilePath){
+        hideDiffPanel();
+      }
     }
   }
   return;
@@ -550,7 +552,6 @@ function displayModifiedFiles() {
         }
       }
       modifiedFiles.forEach((f, i) => displayModifiedFile(f, i));
-
 
       // Add modified file to array of modified files 'modifiedFiles'
       function addModifiedFile(file) {
