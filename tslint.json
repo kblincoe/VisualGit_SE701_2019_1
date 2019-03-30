@@ -10,7 +10,6 @@
         "no-bitwise": true,
         "member-access": [false],
         "no-conditional-assignment": true,
-        "only-arrow-functions": false,
         "no-shadowed-variable": false,
         "object-literal-sort-keys": false,
         "no-string-literal": false,
@@ -20,6 +19,8 @@
         "one-line": [true, "check-open-brace"],
         "indent": [true, "spaces", 2],
         "quotemark": [true, "single", "avoid-template"],
+        "prefer-for-of": { "severity": "warning" },
+        "only-arrow-functions": { "severity": "warning" },
         "no-console": {
             "severity": "warning",
             "options": ["debug", "info", "log", "time", "timeEnd", "trace"]

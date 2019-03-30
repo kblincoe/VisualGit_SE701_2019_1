@@ -451,8 +451,8 @@ function resetCommit(name: string) {
     const checkoutOptions = new Git.CheckoutOptions();
     return Git.Reset.fromAnnotated(repos, commit, Git.Reset.TYPE.HARD, checkoutOptions);
   })
-  .then(function(number) {
-    if (number !== 0) {
+  .then(function(resetStatus) {
+    if (resetStatus !== 0) {
       updateModalText('Reset failed, please check if you have pushed the commit.');
     } else {
       updateModalText('Reset successfully.');
@@ -481,8 +481,8 @@ function revertCommit(name: string) {
     }
     return Git.Revert.revert(repos, commit, revertOptions);
   })
-  .then(function(number) {
-    if (number === -1) {
+  .then(function(revertStatus) {
+    if (revertStatus === -1) {
       updateModalText('Revert failed, please check if you have pushed the commit.');
     } else {
       updateModalText('Revert successfully.');
