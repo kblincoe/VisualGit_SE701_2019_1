@@ -64,13 +64,16 @@ import { Component } from '@angular/core';
           </div>
           <div class="form-group">
               <div class="input-group">
-                <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSave" readonly/>
+                <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
                 <div class="input-group-btn">
-                  <button class="btn" type="button" (click)="selectDirOnly()">Browse</button>
+                  <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
                 </div>
               </div>
-              <input type="file" id="dirPickerSaveNew" name="dirListSave" (change)="updateDir()" style="display: none;" webkitdirectory />
+              <input type="file" id="dirPickerSaveNewLocal" name="dirListSave" (change)="updateDirLocal()" style="display: none;" webkitdirectory />
           </div>
+        </div>
+        <div class="form-group">
+              <button class="btn btn-primary btn-lg" type="button" id="cloneButton" (click)="initRepository()">Clone</button>
         </div>
       </div>
     </div>
@@ -99,7 +102,11 @@ export class AddRepositoryComponent {
     document.getElementById('dirPickerSaveNew').click();
   }
 
-  // Add function that determines if directory written or not
+  selectDirOnlyLocal(): void {
+    document.getElementById("dirPickerSaveNewLocal").click();
+  }
+
+  //Add function that determines if directory written or not
   selectDirectory(): void {
     if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value === '') {
       // If no directory specified, launch file browser
@@ -110,6 +117,10 @@ export class AddRepositoryComponent {
     }
   }
 
+  updateDirLocal(): void{
+    console.log(document.getElementById("dirPickerSaveNewLocal").files[0].path);
+    document.getElementById("newRepoSaveLocal").value = document.getElementById("dirPickerSaveNewLocal").files[0].path;
+  }
   updateDir(): void {
     updateCustomPath(document.getElementById('dirPickerSaveNew').files[0].path);
   }
@@ -130,7 +141,7 @@ export class AddRepositoryComponent {
   }
 
   initRepository():void{
-
+    initRepo();
     switchToMainPanel();
   }
 

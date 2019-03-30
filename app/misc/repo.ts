@@ -152,28 +152,23 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   });
 }
 
-function openLocalRepository() {
+function initRepo(){
+  let fullLocalPath;
   // Full path is determined by either handwritten directory or selected by file browser
-  let localPath: string;
-  let fullLocalPath: string;
-  if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
-    localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
-    fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
-    document.getElementById('repoOpen').value = fullLocalPath;
-    document.getElementById('repoOpen').text = fullLocalPath;
+  if (document.getElementById("newRepoSaveLocal").value == null || document.getElementById("newRepoSaveLocal").value == "") {
+    let localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
+    document.getElementById("newRepoSaveLocal").value = fullLocalPath;
+    document.getElementById("newRepoSaveLocal").text = fullLocalPath;
   } else {
-    localPath = document.getElementById('repoOpen').value;
+    let localPath = document.getElementById("newRepoSaveLocal").value;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
     } else {
-      fullLocalPath = require('path').join(__dirname, localPath);
+      fullLocalPath = require("path").join(__dirname, localPath);
     }
   }
-  openRepository(fullLocalPath, localPath);
-}
 
-  // Open a reponsitory for which we have the file path for
-function initRepo(fullLocalPath){
   Git.Repository.init(fullLocalPath, 0).then(function (repository){
     console.log("Init called");
     openRepository(fullLocalPath,fullLocalPath);
@@ -436,6 +431,7 @@ function updateCustomPath(userPath: string) {
     document.getElementById('repoSave').value = userPath;
   }
 }
+
 
 // function initModal() {
 //   modal = document.getElementById('modal');
