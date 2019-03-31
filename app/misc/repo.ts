@@ -253,9 +253,13 @@ function openRepository(fullLocalPath: string, localPath: string) {
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
       const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
     }
+
+    const windowAny: any = window;
+    windowAny.graphComponent.setLoading(true);
     refreshAll(repository, () => {
       console.log('Repo successfully opened');
       updateModalText('Repository successfully opened');
+      windowAny.graphComponent.setLoading(false);
     });
   },
   function(err) {

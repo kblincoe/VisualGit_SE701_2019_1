@@ -23,13 +23,16 @@ const avatarUrls = {};
 const branchIds = {};
 
 function processGraph(commits: nodegit.Commit[], cb?: () => void) {
-  commitHistory = [];
-  numOfCommits = commits.length;
-  sortCommits(commits);
-  makeBranchColor();
-  populateCommits();
-  if (cb) {
-    cb();
+  try {
+    commitHistory = [];
+    numOfCommits = commits.length;
+    sortCommits(commits);
+    makeBranchColor();
+    populateCommits();
+  } finally {
+    if (cb) {
+      cb();
+    }
   }
 }
 
