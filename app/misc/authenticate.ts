@@ -18,13 +18,7 @@ let signedIn = false;
 
 function signInHead(callback) {
 	if (signedIn) {
-    if (hasChanges()) {
-      $("#modalWarnNotCommittedLogout").modal();
-    } else if (hasUnpushedCommits()) {
-      $("#modalWarnNotPushedLogout").modal();
-    } else {
-			getUserInfo(callback);
-		}
+    confirmSignOut();
 	}	else {
 	  getUserInfo(callback);
 	}
@@ -153,11 +147,8 @@ function cloneRepo() {
   $('#repo-modal').modal('hide');
 }
 
-function signInOrOut() {
-  let doc = document.getElementById("sign_in");
-  if (doc && doc.style.display === 'none') {
-    $('#avatar').removeAttr('data-toggle');
-
+function confirmSignOut() {
+  if (signedIn) {
     if (hasChanges()) {
       $("#modalWarnNotCommittedLogout").modal();
     } else if (hasUnpushedCommits()) {
@@ -166,9 +157,6 @@ function signInOrOut() {
       redirectToHomePage();
     }
   }
-  // Clear sign in input fields
-  document.getElementById('head-username').value = '';
-  document.getElementById('head-password').value = '';
 }
 
 function redirectToHomePage() {
