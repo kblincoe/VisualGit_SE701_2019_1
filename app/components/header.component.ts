@@ -186,7 +186,7 @@ import { RepositoryService } from '../services/repository.service';
           You have changes that are not yet committed. Do you want to commit these before logging out?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SignOut()">Sign Out</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="signOut()">Sign Out</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
@@ -206,7 +206,7 @@ import { RepositoryService } from '../services/repository.service';
           You have commits saved locally that have not been pushed. Do you want to push these to your remote repository before logging out?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="SignOut()">Sign Out</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="signOut()">Sign Out</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
@@ -290,7 +290,7 @@ export class HeaderComponent   {
     signInHead(collapseSignPanel);
   }
 
-  SignOut(): void {
+  signOut(): void {
     redirectToHomePage();
   }
 

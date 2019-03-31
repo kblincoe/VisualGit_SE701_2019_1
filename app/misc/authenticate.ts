@@ -154,8 +154,8 @@ function cloneRepo() {
 }
 
 function signInOrOut() {
-  const doc = document.getElementById('avatar');
-  if (doc.innerHTML === 'Sign Out'){
+  let doc = document.getElementById("sign_in");
+  if (doc && doc.style.display === 'none') {
     $('#avatar').removeAttr('data-toggle');
 
     if (hasChanges()) {
