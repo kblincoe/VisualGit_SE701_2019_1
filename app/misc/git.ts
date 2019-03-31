@@ -513,7 +513,30 @@ function Reload(){
 	location.reload();
 }
 
+
+// clears all removed files from the sidebar display
+function clearRemovedFiles() {
+
+  const createdFiles = Array.from(document.getElementsByClassName("file file-created"));
+  const prePath = '<p id="file-path-id-0" class="file-path">';
+  const postPath = '</p><input type="checkbox" class="checkbox">';
+
+  const removeFileFromModifiedFiles = (file: any, i: number) => { 
+    const createdFilePath = file.innerHTML.match(new RegExp(prePath + "(.*)" + postPath))[1];
+    if (!(fs.existsSync(createdFilePath))) {
+      document.getElementsByClassName("file file-created")[i].remove();
+      if (_previousId !== createdFilePath) {
+        hideDiffPanel();
+      }
+    }
+  }
+  createdFiles.forEach(removeFileFromModifiedFiles);
+}
+
 function displayModifiedFiles() {
+
+  clearRemovedFiles();
+  
   modifiedFiles = [];
 
   Git.Repository.open(repoFullPath)
@@ -528,7 +551,6 @@ function displayModifiedFiles() {
         }
       }
       modifiedFiles.forEach((f, i) => displayModifiedFile(f, i));
-
 
       // Add modified file to array of modified files 'modifiedFiles'
       function addModifiedFile(file) {
