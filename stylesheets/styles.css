@@ -490,3 +490,8 @@ body .footer .git-command {
   padding-left: 6px;
   padding-right: 4px;
 }
+
+#modal {
+  word-wrap: break-word;
+  overflow: auto;
+}
