@@ -14,7 +14,7 @@ function queryGitignoreTypes(callback) {
         url: "https://www.gitignore.io/api/list",
         success: function (response) {
             data = response;
-            data.replace('\n',",");
+            data = data.split('\n').join(',');
             gitignoretypes = data.split(",");
             callback(gitignoretypes);
         },

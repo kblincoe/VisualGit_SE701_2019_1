@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from "@angular/core";
+import { AddGitignoreComponent } from "./add.gitignore.component";
 
 @Component({
   selector: 'add-repository-panel',
@@ -13,6 +14,24 @@ import { Component } from '@angular/core';
           <ul class="list-group recents-list" id="recents-list">
           </ul>
         </div>
+      <div id="create-local-resitory" class="create-local-resitory">
+      <div class="title">
+        <h1 class="create-local-title">Create New Local Repository</h1>
+      </div>
+      <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
+            <div class="input-group-btn">
+              <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
+            </div>
+          </div>
+          <input type="file" id="dirPickerSaveNewLocal" name="dirListSave" (change)="updateDirLocal()" style="display: none;" webkitdirectory />
+      </div>
+    </div>
+    <div class="form-group">
+          <button class="btn btn-primary btn-lg" type="button" id="initButton" (click)="initRepository()">Init Repo</button>
+    </div>
+    <add-gitignore-panel id="gitignore-selector"></add-gitignore-panel>
         <div>
           <div class="clone-body flex-container-col">
             <div class="title">
@@ -58,29 +77,17 @@ import { Component } from '@angular/core';
           </form>
         </div>
 
-        <div id="create-local-resitory" class="create-local-resitory">
-          <div class="title">
-            <h1 class="create-local-title">Create New Local Repository</h1>
-          </div>
-          <div class="form-group">
-              <div class="input-group">
-                <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
-                <div class="input-group-btn">
-                  <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
-                </div>
-              </div>
-              <input type="file" id="dirPickerSaveNewLocal" name="dirListSave" (change)="updateDirLocal()" style="display: none;" webkitdirectory />
-          </div>
-        </div>
-        <div class="form-group">
-              <button class="btn btn-primary btn-lg" type="button" id="cloneButton" (click)="initRepository()">Clone</button>
-        </div>
+        
       </div>
     </div>
   `,
+  directives: [AddGitignoreComponent]
 })
 
 export class AddRepositoryComponent {
+
+  @ViewChild(AddGitignoreComponent)
+  gitignore : AddGitignoreComponent;
 
   addRepository(): void {
     downloadRepository();
@@ -141,7 +148,8 @@ export class AddRepositoryComponent {
   }
 
   initRepository():void{
-    initRepo();
+    console.log(this.gitignore.selectedItems);
+    initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }
 

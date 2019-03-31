@@ -342,6 +342,10 @@ body .add-repository-panel h1 {
   color: white;
 }
 
+body .add-repository-panel .open-local-repo {
+  margin-top: 4px;
+}
+
 body .add-repository-panel p {
   display: inline-block;
   margin-right: 20px;
@@ -501,3 +505,64 @@ body .footer .git-command {
   overflow: auto;
 }
 
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.dropdown-container, .instructions {
+  width: 400px;
+  font-size: 14px;
+  font-family: sans-serif;
+  overflow: auto;
+}
+
+.instructions {
+  width: 100%;
+  text-align: center;
+}
+
+.dropdown-button {
+  float: left;
+  width: 100%;
+  background: whitesmoke;
+  padding: 10px 12px;
+
+  cursor: pointer;
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+  
+}
+
+.dropdown-label, .dropdown-quantity {
+  float: left;
+}
+
+.dropdown-quantity {
+  margin-left: 4px;
+}
+
+.fa-filter {
+  float: right;
+}
+
+.dropdown-list {
+  float: left;
+  width: 100%;
+
+  border: 1px solid lightgray;
+  border-top: none;
+  box-sizing: border-box;
+  padding: 10px 12px;
+    
+}
+
+div#listhere {
+  margin: 10px 0;
+  max-height: 200px;
+  overflow-y: auto;
+}

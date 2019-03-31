@@ -152,7 +152,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   });
 }
 
-function initRepo(){
+function initRepo(gitignoreTypes: String[]){
   let fullLocalPath;
   // Refactor all this mess
   if (document.getElementById("newRepoSaveLocal").value == null || document.getElementById("newRepoSaveLocal").value == "") {
@@ -171,17 +171,21 @@ function initRepo(){
 
   Git.Repository.init(fullLocalPath, 0).then(function (repository){
     console.log("Init called");
-    openRepository(fullLocalPath,fullLocalPath);
-    queryGitignore(['Java', 'maven'], function (gitignore) {
-      const fs = require('fs');
-      fs.appendFile(fullLocalPath + "/.gitignore", gitignore, function (err: any) {
-        if (err) {
-          return console.log(err);
-        }
-
-        console.log(".gitignore created");
-      }); 
-    })
+    if (gitignoreTypes.length>0){
+      queryGitignore(gitignoreTypes, function (gitignore) {
+        const fs = require('fs');
+        fs.appendFile(fullLocalPath + "/.gitignore", gitignore, function (err: any) {
+          if (err) {
+            return console.log(err);
+          }
+  
+          console.log(".gitignore created");
+          openRepository(fullLocalPath,fullLocalPath);
+        }); 
+      })
+    }else{
+      openRepository(fullLocalPath,fullLocalPath);
+    }
   });
 
 
