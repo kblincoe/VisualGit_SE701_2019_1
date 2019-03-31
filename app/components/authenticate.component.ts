@@ -42,7 +42,7 @@ import { Component } from "@angular/core";
     <button style="width:280px;" class="btn btn-link" (click)="createNewAccount()">Create New Account?</button>
 
     <br>
-    <button type="submit" style="width:280px;" class="btn btn-primary" onclick="switchToAddRepositoryPanel()">Continue without sign in</button>
+    <button type="submit" style="width:280px;" class="btn btn-primary" onclick="switchToAddRepositoryPanel(); continueWithoutSignIn();">Continue without sign in</button>
   </form>
 </div>
   `
@@ -58,7 +58,11 @@ export class AuthenticateComponent {
     window.open("https://github.com/join?", "_blank");
   }
 
-  personalAccessTokenHelp() : void {
+  personalAccessTokenHelp(): void {
     window.open("https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line");
   }
+  openGitHubPasswordResetPage(): void {
+    window.open("https://github.com/password_reset", "");
+  }
+
 }
