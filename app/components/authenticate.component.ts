@@ -58,7 +58,11 @@ export class AuthenticateComponent {
     window.open("https://github.com/join?", "_blank");
   }
 
-  personalAccessTokenHelp() : void {
+  personalAccessTokenHelp(): void {
     window.open("https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line");
   }
+  openGitHubPasswordResetPage(): void {
+    window.open("https://github.com/password_reset", "");
+  }
+
 }
