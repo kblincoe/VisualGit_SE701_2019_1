@@ -245,7 +245,11 @@ function pullFromRemote() {
       refreshAll(repository);
     }
   }, function(err) {
-    updateModalText(`${err} Failed to pull from remote`);
+    if (err == `Error: String path is required.`){
+      updateModalText(`Failed to pull from remote as no repository is currently open. Either clone one from a remote location or open one locally.`);
+    } else {
+      updateModalText(`${err} Failed to pull from remote`);
+    }
     console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
   });
 //   .then(function(updatedRepository) {
