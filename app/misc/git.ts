@@ -299,8 +299,20 @@ function pushToRemote() {
   });
 }
 
-function createBranch() {
-  const branchName = document.getElementById('branchName').value;
+function createBranch(obj) {
+
+  let branchName;
+  // Checking where the branch is being created from (normal menu or collapsible)
+  if (obj.id == 'branch-btn') {
+    branchName = document.getElementById("branchName").value;
+    document.getElementById("branchName").value = "";
+    obj.disabled = true;
+  } else {
+    branchName = document.getElementById("branchName2").value;
+    document.getElementById("branchName2").value = "";
+    obj.disabled = true;
+  }
+
   let repos;
   console.log(`Creating branch: ${branchName}`);
 
