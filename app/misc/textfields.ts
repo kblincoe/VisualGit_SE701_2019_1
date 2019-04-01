@@ -1,21 +1,27 @@
+// When creating branch, checks whether name is valid
 function checkBranch(input) {
-    let regex = /^(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/.])$/gi;
+    let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/.])$/gi;
     //input.value = input.value.replace(regex, "");
-    let result = regex.test(input.value);
 
-    if (result) {
+    let valid = regex.test(input.value);
+
+    // If branch name is valid enables button, otherwise disables
+    if (valid) {
         $("#branch-btn").attr("disabled",false);
+        $("#branch-btn2").attr("disabled",false);
     } else {
         $("#branch-btn").attr("disabled",true);
+        $("#branch-btn2").attr("disabled",true);
     }
 }
 
+// Code for branch name tool tip
 $(document).ready(function() {
     $('.masterTooltip').hover(function(){
         // Hover over code
         let title = $(this).attr('title');
         $(this).data('tipText', title).removeAttr('title');
-        $('<p class="tooltip"></p>')
+        $('<p class="tooltip branchTooltip"></p>')
             .text(title)
             .appendTo('body')
             .fadeIn('slow');

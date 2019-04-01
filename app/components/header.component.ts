@@ -30,9 +30,9 @@ import { GraphService } from "../services/graph.service";
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" class="form-control masterTooltip" placeholder="Search or create branch"  onkeyup="checkBranch(this)" title="tool tip">
+                    <input type="text" id="branchName" class="form-control" placeholder="Search or create branch"  onkeyup="checkBranch(this)">
                     <span class="input-group-btn">
-                      <button class="btn btn-default masterTooltip" id = "branch-btn" type="button" disabled="disabled" onclick="createBranch()" title="tool tip">OK</button>
+                      <button class="btn btn-default masterTooltip" id = "branch-btn" type="button" disabled="disabled" onclick="createBranch()" title="Must meet Git branch standards">OK</button>
                     </span>
                   </div>
                 </li>
@@ -76,9 +76,9 @@ import { GraphService } from "../services/graph.service";
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName" class="form-control"  onkeyup="checkBranch(this)" placeholder="Search or create branch">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
+                      <button class="btn btn-default masterTooltip" id = "branch-btn2" type="button" disabled="disabled" title="Must meet Git branch standards" onclick="createBranch()">OK</button>
                     </span>
                   </div>
                 </li>
