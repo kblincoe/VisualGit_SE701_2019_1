@@ -23,7 +23,6 @@ const span;
 let progressBar;
 let isErrorOpeningRepo;
 
-
 function downloadRepository() {
   // Full path is always in repoSave
   const localPath = document.getElementById('repoSave').value;

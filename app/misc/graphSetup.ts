@@ -1,6 +1,8 @@
+import { ipcRenderer } from 'electron';
+import { GraphData, InitGraphParams } from '../backgroundTasks/initializeGraph';
 import $ = require('jquery');
 import vis = require('vis');
-let options;
+
 let bsNodes;
 let bsEdges;
 let abNodes;
@@ -13,9 +15,133 @@ let secP = null;
 let fromNode = null;
 let toNode;
 
+export const OPTIONS = {
+  configure: {
+    enabled: false,
+  },
+
+  edges: {
+    arrows: {
+      to: {
+        enabled: true,
+        scaleFactor: 0.6
+      },
+      middle: false,
+      from: false,
+    },
+    color: "#39c0ba",
+    hoverWidth: 0,
+    physics: false,
+    selectionWidth: 0,
+    shadow: true,
+    smooth: {
+      enabled: true,
+      type: "cubicBezier",
+      // forceDirection: "horizontal",
+      roundness: 0.5
+    },
+    width: 3,
+  },
+
+  groups: {},
+
+  interaction: {
+    dragNodes: true,
+    dragView: true,
+    hideEdgesOnDrag: false,
+    hideNodesOnDrag: false,
+    hover: true,
+    hoverConnectedEdges: false,
+    keyboard: {
+      enabled: false,
+      speed: {x: 10, y: 10, zoom: 0.02},
+      bindToWindow: true
+    },
+    multiselect: false,
+    navigationButtons: false,
+    selectable: true,
+    selectConnectedEdges: false,
+    tooltipDelay: 300,
+    zoomView: true,
+  },
+
+  layout: {
+    randomSeed: 1,
+    improvedLayout: true,
+  },
+
+  manipulation: {
+    enabled: false,
+    initiallyActive: false,
+    addNode: true,
+    addEdge: true,
+    editEdge: true,
+    deleteNode: true,
+    deleteEdge: true,
+    controlNodeStyle: {
+      shape: "dot",
+      size: 6,
+      color: {
+        background: "#39c0ba",
+        border: "#39c0ba",
+        highlight: {
+          background: "#07f968",
+          border: "#3c3c3c"
+        }
+      },
+      borderWidth: 2,
+      borderWidthSelected: 2,
+    }
+  },
+
+  nodes: {
+    borderWidth: 8,
+    borderWidthSelected: 8,
+    color: {
+      border: "#39c0ba",
+      background: "#FFF",
+      highlight: {
+        border: "#FF0",
+        background: "#FFF"
+      },
+      hover: {
+        border: "#F00",
+        background: "#FFF"
+      },
+    },
+    shadow: true,
+  },
+
+  physics: {
+    enabled: false,
+  },
+};
+
+// messages must be logged in this process to be visible in devtools.
+ipcRenderer.on('log', (event: any, param: string) => {
+  console.log(`background process says: ${param}`);
+});
+
+function initGraphInBg(params: InitGraphParams, callback: (data: GraphData) => void) {
+  ipcRenderer.send('initGraph', params);
+
+  ipcRenderer.on('finishGraph', (event: any, results: GraphData) => {
+    callback(results);
+  });
+}
+
 
 function drawGraph(cb?: () => void) {
+  const fullPathToRepo: string = repoFullPath;
+  initGraphInBg({ fullPathToRepo }, (data) => {
+    console.log('graph calculations finished')
+    console.log(data);
+    if (cb) cb();
+  });
 
+  console.log('started background processing of graph initialization');
+
+  return;
 
   bsNodes = new vis.DataSet([]);
   bsEdges = new vis.DataSet([]);
@@ -45,110 +171,7 @@ function drawGraph(cb?: () => void) {
     edges: edges,
   };
 
-  options = {
-
-    configure: {
-      enabled: false,
-    },
-
-    edges: {
-      arrows: {
-        from: false,
-        middle: false,
-        to: {
-          enabled: true,
-          scaleFactor: 0.6,
-        },
-      },
-      color: '#39c0ba',
-      hoverWidth: 0,
-      physics: false,
-      selectionWidth: 0,
-      shadow: true,
-      smooth: {
-        enabled: true,
-        roundness: 0.5,
-        type: 'cubicBezier',
-        // forceDirection: 'horizontal',
-      },
-      width: 3,
-    },
-
-    groups: {},
-
-    interaction: {
-      dragNodes: true,
-      dragView: true,
-      hideEdgesOnDrag: false,
-      hideNodesOnDrag: false,
-      hover: true,
-      hoverConnectedEdges: false,
-      keyboard: {
-        bindToWindow: true,
-        enabled: false,
-        speed: {x: 10, y: 10, zoom: 0.02},
-      },
-      multiselect: false,
-      navigationButtons: false,
-      selectConnectedEdges: false,
-      selectable: true,
-      tooltipDelay: 300,
-      zoomView: true,
-    },
-
-    layout: {
-      improvedLayout: true,
-      randomSeed: 1,
-    },
-
-    manipulation: {
-      addEdge: true,
-      addNode: true,
-      controlNodeStyle: {
-        borderWidth: 2,
-        borderWidthSelected: 2,
-        color: {
-          background: '#39c0ba',
-          border: '#39c0ba',
-          highlight: {
-            background: '#07f968',
-            border: '#3c3c3c',
-          },
-        },
-        shape: 'dot',
-        size: 6,
-      },
-      deleteEdge: true,
-      deleteNode: true,
-      editEdge: true,
-      enabled: false,
-      initiallyActive: false,
-    },
-
-    nodes: {
-      borderWidth: 8,
-      borderWidthSelected: 8,
-      color: {
-        background: '#FFF',
-        border: '#39c0ba',
-        highlight: {
-          background: '#FFF',
-          border: '#FF0',
-        },
-        hover: {
-          background: '#FFF',
-          border: '#F00',
-        },
-      },
-      shadow: true,
-    },
-
-    physics: {
-      enabled: false,
-    },
-  };
-
-  network = new vis.Network(container, bsData, options);
+  network = new vis.Network(container, bsData, OPTIONS);
 
   network.on('stabilizationIterationsDone', function() {
     network.setOptions( { physics: false } );
@@ -267,6 +290,11 @@ function drawGraph(cb?: () => void) {
   });
 
   getAllCommits(function(commits) {
-    processGraph(commits, cb);
+    processGraph(commits, () => {
+      console.log(container);
+      if (cb) {
+        cb();
+      }
+    });
   });
 }
