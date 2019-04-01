@@ -191,11 +191,11 @@ function redirectToHomePage() {
 
 function setAccountInfo(data) {
     if (data != null) {
-        // As were logged in, we display account instead of sign in button
+        // As were logged in, we display account
         const accountGroup = document.getElementById('github_account');
-        const signIn = document.getElementById('sign_in');
+        const returnMainMenu = document.getElementById('return_main_menu');
         accountGroup.style.display = 'block';
-        signIn.style.display = 'none';
+        returnMainMenu.style.display = 'none';
 
         // Populate elements with account data from GitHub callback
         const avatar = document.getElementById('github_avatar');
@@ -203,4 +203,9 @@ function setAccountInfo(data) {
         avatar.src = data.avatar_url;
         name.innerText = data.login;
     }
+}
+
+function continueWithoutSignIn() {
+  const returnMainMenu = document.getElementById('return_main_menu');
+  returnMainMenu.style.display = 'block';
 }
