@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "file-panel",
+  selector: 'file-panel',
   template: `
   <div class="file-panel" id="file-panel">
 
@@ -23,7 +23,7 @@ import { Component } from "@angular/core";
     </div>
 
   </div>
-  `
+  `,
 })
 
 export class FilePanelComponent {

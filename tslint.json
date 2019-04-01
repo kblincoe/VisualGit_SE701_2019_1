@@ -1,0 +1,29 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "max-line-length": {
+            "options": [140]
+        },
+        "semicolon": [true, "always"],
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "member-access": [false],
+        "no-conditional-assignment": true,
+        "no-shadowed-variable": false,
+        "object-literal-sort-keys": false,
+        "no-string-literal": false,
+        "object-literal-shorthand": false,
+        "no-reference": false,
+        "no-consecutive-blank-lines": false,
+        "one-line": [true, "check-open-brace"],
+        "indent": [true, "spaces", 2],
+        "quotemark": [true, "single", "avoid-template"],
+        "prefer-for-of": { "severity": "warning" },
+        "only-arrow-functions": { "severity": "warning" },
+        "no-console": {
+            "severity": "warning",
+            "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+        }
+    }
+}

@@ -1,13 +1,13 @@
-import { Component } from "@angular/core";
-import { HeaderComponent } from "./header.component";
-import { FilePanelComponent } from "./file.panel.component";
-import { BodyPanelComponent } from "./body.panel.component";
-import { FooterComponent } from "./footer.component";
-import { AddRepositoryComponent } from "./add.repository.component";
-import { AuthenticateComponent } from "./authenticate.component"
+import { Component } from '@angular/core';
+import { AddRepositoryComponent } from './add.repository.component';
+import { AuthenticateComponent } from './authenticate.component';
+import { BodyPanelComponent } from './body.panel.component';
+import { FilePanelComponent } from './file.panel.component';
+import { FooterComponent } from './footer.component';
+import { HeaderComponent } from './header.component';
 
 @Component({
-  selector: "my-app",
+  selector: 'my-app',
   template: `
     <user-auth></user-auth>
     <app-header></app-header>
@@ -16,7 +16,7 @@ import { AuthenticateComponent } from "./authenticate.component"
     <add-repository-panel></add-repository-panel>
     <app-footer></app-footer>
   `,
-  directives: [HeaderComponent, FilePanelComponent, BodyPanelComponent, FooterComponent, AddRepositoryComponent, AuthenticateComponent]
+  directives: [AddRepositoryComponent, AuthenticateComponent, BodyPanelComponent, FilePanelComponent,  FooterComponent, HeaderComponent],
 })
 
 export class AppComponent { }

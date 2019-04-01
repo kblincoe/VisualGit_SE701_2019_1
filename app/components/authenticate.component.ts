@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "user-auth",
+  selector: 'user-auth',
   template: `
   <div class="authenticate" id="authenticate">
   <form role="form" style="text-align:center; margin-top:100px">
@@ -19,33 +19,34 @@ import { Component } from "@angular/core";
       <br><br>
       <p id="personalAccessTokenMsg" style="display: none;"><i>Your account has Two-Factor Authentication enabled.
         Please enter you personal access token, if you don't know
-        how to setup a personal access token click <a (click)="personalAccessTokenHelp()">here</a></i></p>   
+        how to setup a personal access token click <a (click)="personalAccessTokenHelp()">here</a></i></p>
     </div>
     <br>
-    <input id="rememberLogin" type="checkbox"> Remember Login<br/> 
-    
+    <input id="rememberLogin" type="checkbox"> Remember Login<br/>
+
     <br>
     <div>
       <button type="submit" style="width:280px;" class="btn btn-success" (click)="switchToMainPanel()">Sign In</button>
       <br>
     </div>
-    
+
     <br>
     <button type="submit" style="width:280px;" class="btn btn-primary" onclick="useSaved()">Load Saved Credentials</button>
     <br>
     <br>
-            
+
     <button style="width:280px;" class="btn btn-link" (click)="openGitHubPasswordResetPage()">Forgot your password?</button>
-    
+
     <br>
 
     <button style="width:280px;" class="btn btn-link" (click)="createNewAccount()">Create New Account?</button>
 
     <br>
-    <button type="submit" style="width:280px;" class="btn btn-primary" onclick="switchToAddRepositoryPanel(); continueWithoutSignIn();">Continue without sign in</button>
+    <button type="submit" style="width:280px;" class="btn btn-primary" onclick="switchToAddRepositoryPanel();
+     continueWithoutSignIn();">Continue without sign in</button>
   </form>
 </div>
-  `
+  `,
 })
 
 export class AuthenticateComponent {
@@ -55,14 +56,14 @@ export class AuthenticateComponent {
   }
 
   createNewAccount(): void {
-    window.open("https://github.com/join?", "_blank");
+    window.open('https://github.com/join?', '_blank');
   }
 
   personalAccessTokenHelp(): void {
-    window.open("https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line");
+    window.open('https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line');
   }
   openGitHubPasswordResetPage(): void {
-    window.open("https://github.com/password_reset", "");
+    window.open('https://github.com/password_reset', '');
   }
 
 }

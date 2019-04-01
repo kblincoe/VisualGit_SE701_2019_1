@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "add-repository-panel",
+  selector: 'add-repository-panel',
   template: `
     <div class="add-repository-panel" id="add-repository-panel">
       <img src="./assets/Back.svg" (click)="returnToMainPanel()" class="back-button">
@@ -15,7 +15,8 @@ import { Component } from "@angular/core";
           <form style="max-width: 700px;">
             <div class="form-group">
               <div class="input-group input-group-lg">
-                <input style="width: 700px;" type="text" class="form-control" oninput="updateLocalPath()" name="repositoryRemote" id="repoClone" placeholder="https://github.com/user/repository.git"/>
+                <input style="width: 700px;" type="text" class="form-control" oninput="updateLocalPath()" name="repositoryRemote"
+                 id="repoClone" placeholder="https://github.com/user/repository.git"/>
               </div>
             </div>
             <div class="form-group">
@@ -44,13 +45,14 @@ import { Component } from "@angular/core";
                   <button class="btn btn-primary" type="button" (click)="selectDirectory()">Browse and Open</button>
                 </div>
               </div>
-              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;" webkitdirectory />
+              <input type="file" id="dirPickerOpenLocal" name="dirList" (change)="openRepository()" style="display: none;"
+                webkitdirectory />
             </div>
           </form>
         </div>
       </div>
     </div>
-  `
+  `,
 })
 
 export class AddRepositoryComponent {
@@ -60,11 +62,11 @@ export class AddRepositoryComponent {
     switchToMainPanel();
   }
 
-  //Add function that determines if directory written or not
+  // Add function that determines if directory written or not
   selectSave(): void {
-    if (document.getElementById("repoSave").value == null || document.getElementById("repoSave").value == "") {
+    if (document.getElementById('repoSave').value == null || document.getElementById('repoSave').value === '') {
       // If no directory specified, display error
-      displayModal("Invalid clone destination");
+      displayModal('Invalid clone destination');
     } else {
       // If directory is specified, continue as normal
       this.addRepository();
@@ -72,14 +74,14 @@ export class AddRepositoryComponent {
   }
 
   selectDirOnly(): void {
-    document.getElementById("dirPickerSaveNew").click();
+    document.getElementById('dirPickerSaveNew').click();
   }
 
-  //Add function that determines if directory written or not
+  // Add function that determines if directory written or not
   selectDirectory(): void {
-    if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
+    if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value === '') {
       // If no directory specified, launch file browser
-      document.getElementById("dirPickerOpenLocal").click();
+      document.getElementById('dirPickerOpenLocal').click();
     } else {
       // If directory is specified, continue as normal
       this.openRepository();
@@ -87,7 +89,7 @@ export class AddRepositoryComponent {
   }
 
   updateDir(): void {
-    updateCustomPath(document.getElementById("dirPickerSaveNew").files[0].path);
+    updateCustomPath(document.getElementById('dirPickerSaveNew').files[0].path);
   }
 
   openRepository(): void {
