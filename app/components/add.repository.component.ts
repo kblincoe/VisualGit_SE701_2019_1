@@ -91,7 +91,7 @@ export class AddRepositoryComponent {
       document.getElementById('dirPickerOpenLocal').click();
     } else {
       // If directory is specified, continue as normal
-      this.openLocalRepository();
+      this.openRepository();
     }
   }
 

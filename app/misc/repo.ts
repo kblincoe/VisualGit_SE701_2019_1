@@ -13,6 +13,7 @@ let bname = {};
 const branchCommit = [];
 const remoteName = {};
 const localBranches = [];
+const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
 const repoCurrentBranch = 'master';
@@ -50,14 +51,14 @@ function getRecentRepositories(): string[] {
 
 function saveRecentRepository(path: string) {
   const recentsArray = getRecentRepositories();
-  if (recentsArray.length > 10) {
-    // Max length of 10
-    recentsArray.shift();
-  }
   // Remove path from array if it's already there (so we move it back to the front)
   const recentsArrayFiltered = recentsArray.filter((e) => e !== path);
   // Append new path and write back to JSON
   recentsArrayFiltered.push(path);
+  if (recentsArrayFiltered.length > 10) {
+    // Max length of 10
+    recentsArrayFiltered.shift();
+  }
   const JSONobj = {
     recents: recentsArrayFiltered,
   };
