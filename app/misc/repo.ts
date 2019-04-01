@@ -2,10 +2,10 @@ import fetch from 'node-fetch';
 import { parse } from 'path';
 
 import $ = require('jQuery');
+import jsonfile = require('jsonfile');
 import NetworkSpeed = require('network-speed');
 import Git = require('nodegit');
 import ProgressBar = require('progressbar.js');
-import jsonfile = require('jsonfile');
 
 let repoFullPath;
 let repoLocalPath;
@@ -35,57 +35,57 @@ function downloadRepository() {
   }
 }
 
-function getRecentRepositories(): Array<String> {
+function getRecentRepositories(): string[] {
   if (checkFile.existsSync(recentsFile)) {
-    let objRead = jsonfile.readFileSync(recentsFile);
+    const objRead = jsonfile.readFileSync(recentsFile);
     if (objRead.recents == null) {
-      return new Array<String>();
+      return [];
     } else {
       return objRead.recents;
     }
   } else {
-    return new Array<String>();
+    return [];
   }
 }
 
-function saveRecentRepository(path: String) {
-  let recentsArray = getRecentRepositories();
+function saveRecentRepository(path: string) {
+  const recentsArray = getRecentRepositories();
   if (recentsArray.length > 10) {
     // Max length of 10
     recentsArray.shift();
   }
   // Remove path from array if it's already there (so we move it back to the front)
-  let recentsArrayFiltered = recentsArray.filter(e => e !== path);
+  const recentsArrayFiltered = recentsArray.filter((e) => e !== path);
   // Append new path and write back to JSON
   recentsArrayFiltered.push(path);
-  let JSONobj = {
-    recents: recentsArrayFiltered
-  }
+  const JSONobj = {
+    recents: recentsArrayFiltered,
+  };
   jsonfile.writeFileSync(recentsFile, JSONobj);
 }
 
 function populateRecents(): void {
   // Populates the recents list
-  let list = document.getElementById("recents-list");
-  
+  const list = document.getElementById('recents-list');
+
   while (list.firstChild) {
     // Remove all children
     list.removeChild(list.firstChild);
   }
 
   // Reverse so we have newly accessed first
-  getRecentRepositories().reverse().forEach(element => {
-    let entry = document.createElement("a");
-    entry.href = "#";
-    entry.addEventListener("click", () => {
+  getRecentRepositories().reverse().forEach((element) => {
+    const entry = document.createElement('a');
+    entry.href = '#';
+    entry.addEventListener('click', () => {
       if (checkFile.existsSync(element)) {
         openRepository(element, element);
         switchToMainPanel();
       } else {
-        displayModal("Repository no longer exists on disk");
+        displayModal('Repository no longer exists on disk');
       }
     });
-    entry.className = "list-group-item";
+    entry.className = 'list-group-item';
     entry.innerHTML = element as string;
     list.appendChild(entry);
   });
@@ -104,7 +104,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
       function(response) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
-            if(!isErrorOpeningRepo) {
+            if (!isErrorOpeningRepo) {
               saveRecentRepository(fullLocalPath);
               setCloneStatistics(`${repoUser}/${repoName}`, data.size);
             }
@@ -153,15 +153,15 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
 
 function openLocalRepository() {
   // Full path is determined by either handwritten directory or selected by file browser
-  let localPath: String;
-  let fullLocalPath: String;
-  if (document.getElementById("repoOpen").value === null || document.getElementById("repoOpen").value === "") {
-    localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
-    fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
-    document.getElementById("repoOpen").value = fullLocalPath;
-    document.getElementById("repoOpen").text = fullLocalPath;
+  let localPath: string;
+  let fullLocalPath: string;
+  if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
+    localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
+    document.getElementById('repoOpen').value = fullLocalPath;
+    document.getElementById('repoOpen').text = fullLocalPath;
   } else {
-    localPath = document.getElementById("repoOpen").value;
+    localPath = document.getElementById('repoOpen').value;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
     } else {
@@ -171,11 +171,11 @@ function openLocalRepository() {
   openRepository(fullLocalPath, localPath);
 }
 
-function openRepository(fullLocalPath: String, localPath: String) {
+function openRepository(fullLocalPath: string, localPath: string) {
   // Open a reponsitory for which we have the file path for
   console.log(`Trying to open repository at ${fullLocalPath}`);
   saveRecentRepository(fullLocalPath);
-  displayModal("Opening Local Repository...");
+  displayModal('Opening Local Repository...');
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
     repoFullPath = fullLocalPath;
