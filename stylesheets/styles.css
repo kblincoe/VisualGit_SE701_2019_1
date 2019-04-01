@@ -124,11 +124,14 @@ body .navbar .dropdown-menu {
   z-index: 300;
   background-color: #282828;
   width: 250px;
+  max-height: 500px;
   color: #ffffff;
+  overflow-y: auto;
 }
 
 body .navbar .dropdown-menu a {
   color: #000;
+  overflow-x: auto;
 }
 
 /*body .navbar .repo-name {
@@ -495,3 +498,4 @@ body .footer .git-command {
   word-wrap: break-word;
   overflow: auto;
 }
+
