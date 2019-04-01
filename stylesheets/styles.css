@@ -11,6 +11,10 @@ ul{
   outline: 0;
 }
 
+.auth-logo {
+  height: 40px;
+}
+
 .add-repository-button {
   position: relative;
   z-index: 2;
@@ -55,6 +59,7 @@ ul{
 #Password1 {
   width: 100px;
 }
+
 
 @media screen and (max-width: 767px) {
     .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; }
@@ -119,11 +124,14 @@ body .navbar .dropdown-menu {
   z-index: 300;
   background-color: #282828;
   width: 250px;
+  max-height: 500px;
   color: #ffffff;
+  overflow-y: auto;
 }
 
 body .navbar .dropdown-menu a {
   color: #000;
+  overflow-x: auto;
 }
 
 /*body .navbar .repo-name {
@@ -421,6 +429,26 @@ body .footer .git-command {
   color: #999;
 }
 
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn,
+.input-group-btn:first-child > .btn-group > .btn,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+  border-radius: 4px;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group > .btn,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child),
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+  border-radius: 4px;
+}
+
 .account_group {
   display: inline-flex;
   float: right;
@@ -467,3 +495,9 @@ body .footer .git-command {
   padding-left: 6px;
   padding-right: 4px;
 }
+
+#modal {
+  word-wrap: break-word;
+  overflow: auto;
+}
+
