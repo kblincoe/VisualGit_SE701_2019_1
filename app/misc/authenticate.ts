@@ -17,11 +17,11 @@ let url;
 let signedIn = false;
 
 function signInHead(callback) {
-	if (signedIn) {
+  if (signedIn) {
     confirmSignOut();
-	}	else {
-	  getUserInfo(callback);
-	}
+  } else {
+    getUserInfo(callback);
+  }
 }
 
 function LogInAfterConfirm(callback){

@@ -187,12 +187,12 @@ function getAllCommits(callback) {
     });
 }
 
-function PullBuffer(){
+function PullBuffer() {
   if (changes) {
-      $("#modalWarnNotCommittedPull").modal();
-	} else {
-		pullFromRemote();
-	}
+    $("#modalWarnNotCommittedPull").modal();
+  } else {
+    pullFromRemote();
+  }
 }
 
 function pullFromRemote() {
@@ -606,7 +606,7 @@ function displayModifiedFiles() {
         filePath.id = `file-path-id-${index}`;
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
-        let fileElement = document.createElement("div");
+        const fileElement = document.createElement("div");
         window.onbeforeunload = confirmationModal;
         changes = true;
         // Set how the file has been modified
