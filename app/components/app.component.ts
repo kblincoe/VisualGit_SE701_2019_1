@@ -5,6 +5,7 @@ import { BodyPanelComponent } from './body.panel.component';
 import { FilePanelComponent } from './file.panel.component';
 import { FooterComponent } from './footer.component';
 import { HeaderComponent } from './header.component';
+import { ProjectPanelComponent } from './project.panel.component';
 
 @Component({
   selector: 'my-app',

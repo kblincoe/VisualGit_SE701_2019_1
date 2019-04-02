@@ -12,6 +12,7 @@ function collapseSignPanel() {
 function switchToClonePanel(){
   hideAuthenticatePanel();
   hideFilePanel();
+  hideProjectPanel();
   hideGraphPanel();
   displayClonePanel();
 }
@@ -20,12 +21,14 @@ function switchToMainPanel() {
   hideAuthenticatePanel();
   hideAddRepositoryPanel();
   displayFilePanel();
+  displayProjectPanel();
   displayGraphPanel();
 }
 
 function switchToAddRepositoryPanel() {
   hideAuthenticatePanel();
   hideFilePanel();
+  hideProjectPanel();
   hideGraphPanel();
   displayAddRepositoryPanel();
 }
@@ -51,6 +54,10 @@ function displayGraphPanel() {
   document.getElementById('graph-panel').style.zIndex = '10';
 }
 
+function displayProjectPanel() {
+  document.getElementById('project-panel').style.zIndex = '10';
+}
+
 function displayAddRepositoryPanel() {
   document.getElementById('add-repository-panel').style.zIndex = '10';
   populateRecents();
@@ -63,6 +70,10 @@ function hideFilePanel() {
 
 function hideGraphPanel() {
   document.getElementById('graph-panel').style.zIndex = '-10';
+}
+
+function hideProjectPanel() {
+  document.getElementById('project-panel').style.zIndex = '-10';
 }
 
 function hideAddRepositoryPanel() {
