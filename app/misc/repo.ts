@@ -163,38 +163,38 @@ function initRepo(gitignoreTypes: string[]){
   }
 
   const createAndAdd = function(){
-  let repository;
-  let index;
-  // Most of this part is based off of
-  // https://github.com/nodegit/nodegit/blob/master/examples/create-new-repo.js
-  Git.Repository.init(fullLocalPath, 0).then(function(repo) {
-    repository = repo;
-  })
-  .then(function(){
-    return repository.refreshIndex();
-  })
-  .then(function(idx: any) {
-    index = idx;
-  })
-  .then(function() {
-    return index.addByPath('.gitignore');
-  })
-  .then(function() {
-    return index.write();
-  })
-  .then(function() {
-    return index.writeTree();
-  })
-  .then(function(oid: any) {
-    const sign = Git.Signature.default(repository);
-    // Since we're creating an inital commit, it has no parents. Note that unlike
-    // normal we don't get the head either, because there isn't one yet.
-    return repository.createCommit('HEAD', sign, sign, 'add gitignore', oid, []);
-  })
-  .done(function(commitId) {
-    console.log('New Commit: ', commitId);
-    openRepository(fullLocalPath, localPath);
-  });
+    let repository;
+    let index;
+    // Most of this part is based off of
+    // https://github.com/nodegit/nodegit/blob/master/examples/create-new-repo.js
+    Git.Repository.init(fullLocalPath, 0).then(function(repo) {
+      repository = repo;
+    })
+    .then(function(){
+      return repository.refreshIndex();
+    })
+    .then(function(idx: any) {
+      index = idx;
+    })
+    .then(function() {
+      return index.addByPath('.gitignore');
+    })
+    .then(function() {
+      return index.write();
+    })
+    .then(function() {
+      return index.writeTree();
+    })
+    .then(function(oid: any) {
+      const sign = Git.Signature.default(repository);
+      // Since we're creating an inital commit, it has no parents. Note that unlike
+      // normal we don't get the head either, because there isn't one yet.
+      return repository.createCommit('HEAD', sign, sign, 'add gitignore', oid, []);
+    })
+    .done(function(commitId) {
+      console.log('New Commit: ', commitId);
+      openRepository(fullLocalPath, localPath);
+    });
   };
 
   const fs = require('fs');
@@ -205,7 +205,11 @@ function initRepo(gitignoreTypes: string[]){
       return console.log(err);
     }
     console.log('.gitignore created');
-    createAndAdd();
+    if (fs.existsSync(fullLocalPath + '/.git')) {
+      openRepository(fullLocalPath, localPath);
+    }else{
+      createAndAdd();
+    }
   };
   if (gitignoreTypes.length > 0){
     queryGitignore(gitignoreTypes, function(gitignore) {
