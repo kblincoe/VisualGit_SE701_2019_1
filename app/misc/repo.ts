@@ -181,6 +181,26 @@ function initRepo(gitignoreTypes: String[]){
   });
 }
 
+function openLocalRepository() {
+  // Full path is determined by either handwritten directory or selected by file browser
+  let localPath: string;
+  let fullLocalPath: string;
+  if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
+    localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
+    document.getElementById('repoOpen').value = fullLocalPath;
+    document.getElementById('repoOpen').text = fullLocalPath;
+  } else {
+    localPath = document.getElementById('repoOpen').value;
+    if (checkFile.existsSync(localPath)) {
+      fullLocalPath = localPath;
+    } else {
+      fullLocalPath = require('path').join(__dirname, localPath);
+    }
+  }
+  openRepository(fullLocalPath, localPath);
+}
+
 function openRepository(fullLocalPath: string, localPath: string) {
  
   console.log(`Trying to open repository at ${fullLocalPath}`);
