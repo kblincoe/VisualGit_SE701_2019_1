@@ -337,6 +337,23 @@ function displayBranch(name, id, onclick) {
   ul.appendChild(li);
 }
 
+function sortBranches() {
+  let txtValue, i, a;
+  const input = document.getElementById("branchName");
+  const filter = input.value.toUpperCase();
+  const ul = document.getElementById("branch-dropdown");
+  const li = ul.getElementsByTagName("li");
+  for (i = 1; i < li.length; i++) {
+    a = li[i].firstChild;
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+    } else {
+        li[i].style.display = "none";
+    }
+  }
+}
+
 function checkoutLocalBranch(element) {
   let bn;
   if (typeof element === 'string') {
