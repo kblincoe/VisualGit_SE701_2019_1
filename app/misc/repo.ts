@@ -238,7 +238,7 @@ function openLocalRepository() {
 }
 
 function openRepository(fullLocalPath: string, localPath: string) {
- 
+  // Open a reponsitory for which we have the file path for
   console.log(`Trying to open repository at ${fullLocalPath}`);
   saveRecentRepository(fullLocalPath);
   displayModal('Opening Local Repository...');
@@ -493,7 +493,6 @@ function updateCustomPath(userPath: string) {
     document.getElementById('repoSave').value = userPath;
   }
 }
-
 
 // function initModal() {
 //   modal = document.getElementById('modal');
