@@ -245,8 +245,8 @@ function pullFromRemote() {
       refreshAll(repository);
     }
   }, function(err) {
-    if (err == `Error: String path is required.`){
-      updateModalText(`Failed to pull from remote as no repository is currently open. Either clone one from a remote location or open one locally.`);
+    if (err == 'Error: String path is required.'){
+      updateModalText('Failed to pull from remote as no repository is currently open. Either clone one from a remote location or open one locally.');
     } else {
       updateModalText(`${err} Failed to pull from remote`);
     }
