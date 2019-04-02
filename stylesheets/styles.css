@@ -551,14 +551,16 @@ body .footer .git-command {
 }
 
 .dropdown-list {
+  margin-top:40px;
   float: left;
-  width: 100%;
-
+  width: 400px;
+  position: absolute;
   border: 1px solid lightgray;
   border-top: none;
   box-sizing: border-box;
   padding: 10px 12px;
-    
+  z-index: 100;
+  background-color:white;
 }
 
 div#listhere {
