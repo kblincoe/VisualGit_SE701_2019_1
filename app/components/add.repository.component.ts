@@ -18,7 +18,7 @@ import { AddGitignoreComponent } from "./add.gitignore.component";
       <div class="title">
         <h1 class="create-local-title">Create New Local Repository</h1>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="max-width: 700px;">
           <div class="input-group">
             <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
             <div class="input-group-btn">
