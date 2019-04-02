@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { parse } from 'path';
 
 import $ = require('jQuery');
+import jsonfile = require('jsonfile');
 import NetworkSpeed = require('network-speed');
 import Git = require('nodegit');
 import ProgressBar = require('progressbar.js');
@@ -12,6 +13,7 @@ let bname = {};
 const branchCommit = [];
 const remoteName = {};
 const localBranches = [];
+const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
 const repoCurrentBranch = 'master';
@@ -32,7 +34,62 @@ function downloadRepository() {
   } else {
       downloadFunc(cloneURL, localPath);
   }
+}
 
+function getRecentRepositories(): string[] {
+  if (checkFile.existsSync(recentsFile)) {
+    const objRead = jsonfile.readFileSync(recentsFile);
+    if (objRead.recents == null) {
+      return [];
+    } else {
+      return objRead.recents;
+    }
+  } else {
+    return [];
+  }
+}
+
+function saveRecentRepository(path: string) {
+  const recentsArray = getRecentRepositories();
+  // Remove path from array if it's already there (so we move it back to the front)
+  const recentsArrayFiltered = recentsArray.filter((e) => e !== path);
+  // Append new path and write back to JSON
+  recentsArrayFiltered.push(path);
+  if (recentsArrayFiltered.length > 10) {
+    // Max length of 10
+    recentsArrayFiltered.shift();
+  }
+  const JSONobj = {
+    recents: recentsArrayFiltered,
+  };
+  jsonfile.writeFileSync(recentsFile, JSONobj);
+}
+
+function populateRecents(): void {
+  // Populates the recents list
+  const list = document.getElementById('recents-list');
+
+  while (list.firstChild) {
+    // Remove all children
+    list.removeChild(list.firstChild);
+  }
+
+  // Reverse so we have newly accessed first
+  getRecentRepositories().reverse().forEach((element) => {
+    const entry = document.createElement('a');
+    entry.href = '#';
+    entry.addEventListener('click', () => {
+      if (checkFile.existsSync(element)) {
+        openRepository(element, element);
+        switchToMainPanel();
+      } else {
+        displayModal('Repository no longer exists on disk');
+      }
+    });
+    entry.className = 'list-group-item';
+    entry.innerHTML = element as string;
+    list.appendChild(entry);
+  });
 }
 
 function downloadFunc(cloneURL: string, fullLocalPath) {
@@ -49,6 +106,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
             if (!isErrorOpeningRepo) {
+              saveRecentRepository(fullLocalPath);
               setCloneStatistics(`${repoUser}/${repoName}`, data.size);
             }
           });
@@ -94,24 +152,30 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   });
 }
 
-function openRepository() {
+function openLocalRepository() {
   // Full path is determined by either handwritten directory or selected by file browser
+  let localPath: string;
+  let fullLocalPath: string;
   if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
-    const localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
-    const fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
+    localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
     document.getElementById('repoOpen').value = fullLocalPath;
     document.getElementById('repoOpen').text = fullLocalPath;
   } else {
-    const localPath = document.getElementById('repoOpen').value;
-    let fullLocalPath;
+    localPath = document.getElementById('repoOpen').value;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
     } else {
       fullLocalPath = require('path').join(__dirname, localPath);
     }
   }
+  openRepository(fullLocalPath, localPath);
+}
 
+function openRepository(fullLocalPath: string, localPath: string) {
+  // Open a reponsitory for which we have the file path for
   console.log(`Trying to open repository at ${fullLocalPath}`);
+  saveRecentRepository(fullLocalPath);
   displayModal('Opening Local Repository...');
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
