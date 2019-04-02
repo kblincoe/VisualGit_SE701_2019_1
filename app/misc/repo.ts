@@ -371,6 +371,9 @@ function checkoutLocalBranch(element) {
       console.log(`Error in repo.ts. Attempting to checkout branch, the error is: ${err}`);
     });
   });
+
+  // Clear branch creation text field
+  document.getElementById("branchName").value = "";
 }
 
 function checkoutRemoteBranch(element) {
