@@ -218,6 +218,7 @@ typings/
 
 # Generated files
 /data.json
+/recents.json
 
 # Sensitive or high-churn files
 
