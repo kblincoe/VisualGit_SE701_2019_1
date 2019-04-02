@@ -243,6 +243,14 @@ body .body-panel {
   z-index: 0;
 }
 
+body .body-panel .project-panel {
+  width: 200px;
+  height: 100%;
+  color: #00990D;
+  background-color: #00990D;
+  overflow-y: scroll;
+  float: right;
+}
 
 body .body-panel .diff-panel {
   width: 0;

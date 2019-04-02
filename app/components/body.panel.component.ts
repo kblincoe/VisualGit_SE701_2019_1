@@ -8,8 +8,8 @@ import { ProjectPanelComponent } from './project.panel.component';
   template: `
   <div class="body-panel" id="body-panel">
     <diff-panel></diff-panel>
-    <graph-panel></graph-panel>
     <project-panel></project-panel>
+    <graph-panel></graph-panel>
   </div>
   `,
   directives: [DiffPanelComponent, GraphPanelComponent, ProjectPanelComponent],
