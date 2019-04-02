@@ -1,8 +1,8 @@
-//https://codepen.io/rustybailey/pen/GJjvYB
-import { Component, Output, EventEmitter } from "@angular/core";
+// https://codepen.io/rustybailey/pen/GJjvYB
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-    selector: "add-gitignore-panel",
+    selector: 'add-gitignore-panel',
     template: `
 <div class="dropdown-container" >
     <div class="dropdown-button noselect" (click)="onContainerClick(e)">
@@ -21,32 +21,32 @@ import { Component, Output, EventEmitter } from "@angular/core";
         </div>
     </div>
 </div>
-`
+`,
 })
 
 export class AddGitignoreComponent {
 
     @Output('ngInit') initEvent: EventEmitter<any> = new EventEmitter();
 
-    types: String[] = [];
+    types: string[] = [];
     checked: boolean[] = [];
-    query: string = "";
-    selectedItems: String[] = [];
+    query: string = '';
+    selectedItems: string[] = [];
     show = false;
 
-    //Runs on creation of component
+    // Runs on creation of component
     ngOnInit() {
         console.log('Init gitignore list');
-        queryGitignoreTypes((types: String[]) => {
+        queryGitignoreTypes((types: string[]) => {
             this.types = types;
-            this.checked = this.types.map(_ => false);
-        })
+            this.checked = this.types.map((_) => false);
+        });
     }
 
     onChange(e) {
         this.selectedItems = this.checked
             .reduce((out, bool, index) => bool ? out.concat(index) : out, [] as number[])
-            .map(val => this.types[val]);
+            .map((val) => this.types[val]);
         console.log(this.selectedItems);
     }
 

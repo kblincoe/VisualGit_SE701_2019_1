@@ -1,39 +1,39 @@
-//This file uses the API of gitignore.io
+// This file uses the API of gitignore.io
 
-//cache result of types query
-var gitignoretypes;
+// vcache result of types query
+let gitignoretypes;
 
-//passes a String[] to the callback with is the list of possible gitignore catagories
+// passes a string[] to the callback with is the list of possible gitignore catagories
 function queryGitignoreTypes(callback) {
     if (gitignoretypes !== undefined){
         callback(gitignoretypes);
     }
-    var data;    
+    let data;
 
     $.ajax({
-        url: "https://www.gitignore.io/api/list",
-        success: function (response) {
+        url: 'https://www.gitignore.io/api/list',
+        success: function(response) {
             data = response;
             data = data.split('\n').join(',');
-            gitignoretypes = data.split(",");
+            gitignoretypes = data.split(',');
             callback(gitignoretypes);
         },
-        error: function () {
-            console.log("Error using gitignore API");
-        }
+        error: function() {
+            console.log('Error using gitignore API');
+        },
     });
 }
 
-//returns a String with the .gitignore file generated with the types given
-function queryGitignore(types : String[], callback){
-    var csv = types.join(',');
+// returns a string with the .gitignore file generated with the types given
+function queryGitignore(types: string[], callback){
+    const csv = types.join(',');
     $.ajax({
-        url: "https://www.gitignore.io/api/" + csv,
-        success: function (response) {
+        url: 'https://www.gitignore.io/api/' + csv,
+        success: function(response) {
             callback(response);
         },
-        error: function () {
-            console.log("Error using gitignore API");
-        }
+        error: function() {
+            console.log('Error using gitignore API');
+        },
     });
 }

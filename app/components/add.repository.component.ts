@@ -1,5 +1,5 @@
-import { Component, ViewChild } from "@angular/core";
-import { AddGitignoreComponent } from "./add.gitignore.component";
+import { Component, ViewChild } from '@angular/core';
+import { AddGitignoreComponent } from './add.gitignore.component';
 
 @Component({
   selector: 'add-repository-panel',
@@ -79,13 +79,13 @@ import { AddGitignoreComponent } from "./add.gitignore.component";
       </div>
     </div>
   `,
-  directives: [AddGitignoreComponent]
+  directives: [AddGitignoreComponent],
 })
 
 export class AddRepositoryComponent {
 
   @ViewChild(AddGitignoreComponent)
-  gitignore : AddGitignoreComponent;
+  gitignore: AddGitignoreComponent;
 
   addRepository(): void {
     downloadRepository();
@@ -108,10 +108,10 @@ export class AddRepositoryComponent {
   }
 
   selectDirOnlyLocal(): void {
-    document.getElementById("dirPickerSaveNewLocal").click();
+    document.getElementById('dirPickerSaveNewLocal').click();
   }
 
-  //Add function that determines if directory written or not
+  // Add function that determines if directory written or not
   selectDirectory(): void {
     if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value === '') {
       // If no directory specified, launch file browser
@@ -123,17 +123,17 @@ export class AddRepositoryComponent {
   }
 
   updateDirLocal(): void{
-    console.log(document.getElementById("dirPickerSaveNewLocal").files[0].path);
-    document.getElementById("newRepoSaveLocal").value = document.getElementById("dirPickerSaveNewLocal").files[0].path;
+    console.log(document.getElementById('dirPickerSaveNewLocal').files[0].path);
+    document.getElementById('newRepoSaveLocal').value = document.getElementById('dirPickerSaveNewLocal').files[0].path;
   }
   updateDir(): void {
     updateCustomPath(document.getElementById('dirPickerSaveNew').files[0].path);
   }
-  //There is quite a bit of dupe code 
+  // There is quite a bit of dupe code
   selectNewRepoDirectory(): void {
-    if (document.getElementById("newRepoOpen").value == null || document.getElementById("newRepoOpen").value == "") {
+    if (document.getElementById('newRepoOpen').value === null || document.getElementById('newRepoOpen').value === '') {
       // If no directory specified, launch file browser
-      document.getElementById("dirPickerOpenNewLocal").click();
+      document.getElementById('dirPickerOpenNewLocal').click();
     } else {
       // If directory is specified, continue as normal
       this.initRepository();
@@ -145,7 +145,7 @@ export class AddRepositoryComponent {
     switchToMainPanel();
   }
 
-  initRepository():void{
+  initRepository(): void {
     initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }
