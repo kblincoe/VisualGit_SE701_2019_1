@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
-import { RepositoryService } from "../services/repository.service";
-import { GraphService } from "../services/graph.service";
+import { Component } from '@angular/core';
+import { GraphService } from '../services/graph.service';
+import { RepositoryService } from '../services/repository.service';
 
 @Component({
-  selector: "app-header",
+  selector: 'app-header',
   template: `
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid row">
@@ -14,7 +14,8 @@ import { GraphService } from "../services/graph.service";
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="#"><img src="./assets/AddRepositoryFolder.svg" onclick="switchToAddRepositoryPanel()" class="add-repository-button" title="Add Repository"></a>
+          <a href="#"><img src="./assets/AddRepositoryFolder.svg" onclick="switchToAddRepositoryPanel()" class="add-repository-button"
+          title="Add Repository"></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav col-md-5 hidden-xs">
@@ -41,23 +42,30 @@ import { GraphService } from "../services/graph.service";
           </ul>
 
           <ul class="navbar-nav col-md-4 hidden-xs">
-            <li class="upload"><a href="#"><i class="iconbar fa fa-upload fa-lg col-md-2" aria-hidden="true" onclick="pushToRemote()" title="Push"></i></a></li>
-            <li class="download"><a href="#"><i class="iconbar fa fa-download fa-lg col-md-2" aria-hidden="true" onclick="pullFromRemote()" title="Pull"></i></a></li>
-            <li class="clone"><a href="#"><i class="iconbar fa fa-clone fa-lg col-md-2" aria-hidden="true" onclick="cloneFromRemote()" title="Clone"></i></a></li>
-            <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()" title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()" title="Sync"></i></a></li>           
+            <li class="upload"><a href="#"><i class="iconbar fa fa-upload fa-lg col-md-2" aria-hidden="true" onclick="pushToRemote()"
+              title="Push"></i></a></li>
+            <li class="download"><a href="#"><i class="iconbar fa fa-download fa-lg col-md-2" aria-hidden="true" onclick="pullFromRemote()"
+              title="Pull"></i></a></li>
+            <li class="clone"><a href="#"><i class="iconbar fa fa-clone fa-lg col-md-2" aria-hidden="true" onclick="cloneFromRemote()"
+              title="Clone"></i></a></li>
+            <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()"
+              title="Clean"></i></a></li>
+            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
+              title="Sync"></i></a></li>
           </ul>
-          
+
           <ul id="github_account" class="navbar-nav navbar-right hidden-xs">
             <li class="account_group"><img id="github_avatar" src=""></li>
             <li class="account_group"><p id="github_name"></p></li>
             <li class="account_group"><p class="divider">|</p></li>
-            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt" onclick="signInOrOut()"></a></li>
+            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
+            onclick="signInOrOut()"></a></li>
           </ul>
 
           <ul id="return_main_menu" class="navbar-nav navbar-right hidden-xs">
             <li class="account_group"><p class="divider">|</p></li>
-            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt" onclick="signInOrOut()" title="Back to Login"></a></li>
+            <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
+              onclick="signInOrOut()" title="Back to Login"></a></li>
           </ul>
 
           <ul class="nav navbar-nav visible-xs">
@@ -260,21 +268,22 @@ import { GraphService } from "../services/graph.service";
             </div>
             <div class="modal-body" id="modal-text-box">
               Please provide the HTTP path to the original repository:
-              <input type="text" id="origin-path" style=" width: 554px !important" placeholder="https://github.com/ORIGINAL_OWNER/ORIGINAL_OWNER_REPOSITORY.git">
+              <input type="text" id="origin-path" style=" width: 554px !important"
+                placeholder="https://github.com/ORIGINAL_OWNER/ORIGINAL_OWNER_REPOSITORY.git">
             </div>
             <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="fetchFromOrigin()">Confirm</button>  
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="fetchFromOrigin()">Confirm</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
     </div>
   `,
-  providers: [RepositoryService, GraphService]
+  providers: [GraphService, RepositoryService],
 })
 
 export class HeaderComponent   {
-  repoName: string = "Repo name";
-  repoBranch: string = "Repo branch";
+  repoName: string = 'Repo name';
+  repoBranch: string = 'Repo branch';
   repository: any;
 
   promptUserToAddRepository(): void {

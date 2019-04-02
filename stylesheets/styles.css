@@ -124,11 +124,14 @@ body .navbar .dropdown-menu {
   z-index: 300;
   background-color: #282828;
   width: 250px;
+  max-height: 500px;
   color: #ffffff;
+  overflow-y: auto;
 }
 
 body .navbar .dropdown-menu a {
   color: #000;
+  overflow-x: auto;
 }
 
 /*body .navbar .repo-name {
@@ -339,10 +342,6 @@ body .add-repository-panel h1 {
   color: white;
 }
 
-body .add-repository-panel .open-local-repo {
-  margin-top: 70px;
-}
-
 body .add-repository-panel p {
   display: inline-block;
   margin-right: 20px;
@@ -352,7 +351,7 @@ body .add-repository-panel .title {
   width: 100%;
 }
 
-body .add-repository-panel .title .clone-title {
+body .add-repository-panel .title {
   margin-top: 20px;
 }
 
@@ -374,6 +373,12 @@ body .add-repository-panel .left {
 
 body .add-repository-panel .button {
   height: 100%;
+}
+
+body .add-repository-panel .recents-list {
+  max-width: 700px;
+  max-height: 200px;
+  overflow-y:scroll;
 }
 
 body .navbar .iconbar {
@@ -495,3 +500,4 @@ body .footer .git-command {
   word-wrap: break-word;
   overflow: auto;
 }
+
