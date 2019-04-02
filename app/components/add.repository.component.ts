@@ -76,8 +76,6 @@ import { AddGitignoreComponent } from "./add.gitignore.component";
             </div>
           </form>
         </div>
-
-        
       </div>
     </div>
   `,
@@ -148,7 +146,6 @@ export class AddRepositoryComponent {
   }
 
   initRepository():void{
-    console.log(this.gitignore.selectedItems);
     initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }

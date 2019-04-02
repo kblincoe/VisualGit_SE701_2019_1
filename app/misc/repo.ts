@@ -154,20 +154,13 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
 
 function initRepo(gitignoreTypes: String[]){
   let fullLocalPath;
-  // Refactor all this mess
-  if (document.getElementById("newRepoSaveLocal").value == null || document.getElementById("newRepoSaveLocal").value == "") {
-    let localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
-    fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
-    document.getElementById("newRepoSaveLocal").value = fullLocalPath;
-    document.getElementById("newRepoSaveLocal").text = fullLocalPath;
+ 
+  let localPath = document.getElementById("newRepoSaveLocal").value;
+  if (checkFile.existsSync(localPath)) {
+    fullLocalPath = localPath;
   } else {
-    let localPath = document.getElementById("newRepoSaveLocal").value;
-    if (checkFile.existsSync(localPath)) {
-      fullLocalPath = localPath;
-    } else {
-      fullLocalPath = require("path").join(__dirname, localPath);
-    }
-  }
+    fullLocalPath = require("path").join(__dirname, localPath);
+  }  
 
   Git.Repository.init(fullLocalPath, 0).then(function (repository){
     console.log("Init called");
@@ -177,8 +170,7 @@ function initRepo(gitignoreTypes: String[]){
         fs.appendFile(fullLocalPath + "/.gitignore", gitignore, function (err: any) {
           if (err) {
             return console.log(err);
-          }
-  
+          }  
           console.log(".gitignore created");
           openRepository(fullLocalPath,fullLocalPath);
         }); 
@@ -187,8 +179,6 @@ function initRepo(gitignoreTypes: String[]){
       openRepository(fullLocalPath,fullLocalPath);
     }
   });
-
-
 }
 
 function openRepository(fullLocalPath: string, localPath: string) {
