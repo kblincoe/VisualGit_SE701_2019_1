@@ -55,6 +55,7 @@ function displayGraphPanel() {
 
 function displayAddRepositoryPanel() {
   document.getElementById('add-repository-panel').style.zIndex = '10';
+  populateRecents();
   $('#open-local-repository').show();
 }
 
