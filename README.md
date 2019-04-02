@@ -73,8 +73,30 @@ To run the compiler use the following command:
 npm run-script createjs
 ````
 
-###Angular2
+### Angular2
 [Angular](https://angular.io/) is a framework that combines declarative templates, dependency injections, end to end tooling, and integrated best practices. The original source code was written using AngularJS and then reworked to use Angular2 instead, which was a complete rewrite of the former. As a result, note that the source code still retains conventions and code fragments from AngularJS in some places.
+
+### Linting
+#### For Normal Developers
+1. In the root directory for the repository open a terminal
+2. Run the command `````npm run lint`````
+
+This will run the linter on the repositories TS files checking for any major violation of our tslint.json config (errors only)
+
+- If there is a critical failure (return code 1) it means that the linter is not running properly, please contact @SamuelZheng11 for help
+- If there is a linting issue (return code 2) then it means there are linting errors present, fix accordingly by scrolling to a lint error and pressing `ctrl + click` on the file that is specified 
+![Help](https://user-images.githubusercontent.com/26497223/55282893-cd96b180-53b2-11e9-9ca0-8cddc4322042.png)
+
+- If there are no lint errors there a message will read `Linter completed with no linting errors`
+
+#### For Future and Advanced Developers
+1. In the root directory for the repository open a terminal
+2. Run the command `npm run lintAllSeverities`
+
+This will run the linter on the repositories TS files checking for any major or minor violation of our tslint.json config (includes errors, warnings, notes, etc)
+
+- The exit code is the same as running the linter normally
+- Minor config violations will be logged in the console. However, The linter will terminal gracefully (without saying it ran into any issues)
 
 # Features
 
