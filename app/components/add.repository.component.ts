@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { AddGitignoreComponent } from './add.gitignore.component';
 
 @Component({
   selector: 'add-repository-panel',
@@ -13,6 +14,24 @@ import { Component } from '@angular/core';
           <ul class="list-group recents-list" id="recents-list">
           </ul>
         </div>
+      <div id="create-local-resitory" class="create-local-resitory">
+      <div class="title">
+        <h1 class="create-local-title">Create New Local Repository</h1>
+      </div>
+      <div class="form-group" style="max-width: 700px;">
+          <div class="input-group">
+            <input type="text" class="form-control" name="repositoryLocal" placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
+            <div class="input-group-btn">
+              <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
+            </div>
+          </div>
+          <input type="file" id="dirPickerSaveNewLocal" name="dirListSave" (change)="updateDirLocal()" style="display: none;" webkitdirectory />
+      </div>
+    </div>
+    <div class="form-group">
+          <button class="btn btn-primary btn-lg" type="button" id="initButton" (click)="initRepository()">Init Repo</button>
+    </div>
+    <add-gitignore-panel id="gitignore-selector"></add-gitignore-panel>
         <div>
           <div class="clone-body flex-container-col">
             <div class="title">
@@ -60,9 +79,13 @@ import { Component } from '@angular/core';
       </div>
     </div>
   `,
+  directives: [AddGitignoreComponent],
 })
 
 export class AddRepositoryComponent {
+
+  @ViewChild(AddGitignoreComponent)
+  gitignore: AddGitignoreComponent;
 
   addRepository(): void {
     downloadRepository();
@@ -84,6 +107,10 @@ export class AddRepositoryComponent {
     document.getElementById('dirPickerSaveNew').click();
   }
 
+  selectDirOnlyLocal(): void {
+    document.getElementById('dirPickerSaveNewLocal').click();
+  }
+
   // Add function that determines if directory written or not
   selectDirectory(): void {
     if (document.getElementById('repoOpen').value == null || document.getElementById('repoOpen').value === '') {
@@ -95,12 +122,31 @@ export class AddRepositoryComponent {
     }
   }
 
+  updateDirLocal(): void{
+    console.log(document.getElementById('dirPickerSaveNewLocal').files[0].path);
+    document.getElementById('newRepoSaveLocal').value = document.getElementById('dirPickerSaveNewLocal').files[0].path;
+  }
   updateDir(): void {
     updateCustomPath(document.getElementById('dirPickerSaveNew').files[0].path);
+  }
+  // There is quite a bit of dupe code
+  selectNewRepoDirectory(): void {
+    if (document.getElementById('newRepoOpen').value === null || document.getElementById('newRepoOpen').value === '') {
+      // If no directory specified, launch file browser
+      document.getElementById('dirPickerOpenNewLocal').click();
+    } else {
+      // If directory is specified, continue as normal
+      this.initRepository();
+    }
   }
 
   openRepository(): void {
     openLocalRepository();
+    switchToMainPanel();
+  }
+
+  initRepository(): void {
+    initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }
 
