@@ -122,26 +122,26 @@ ipcRenderer.on('log', (event: any, param: string) => {
   console.log(`background process says: ${param}`);
 });
 
+/** 
+ * Note: Not yet implemented, do not use. But infrastructure is in place for 
+ * background processing to be implemented. Simply fill out the code in 
+ * the initializeGraph.ts file, then call this method and provide a callback
+ * that uses the output to construct the graph.
+ * */
 function initGraphInBg(params: InitGraphParams, callback: (data: GraphData) => void) {
   ipcRenderer.send('initGraph', params);
-
   ipcRenderer.on('finishGraph', (event: any, results: GraphData) => {
     callback(results);
   });
 }
 
-
 function drawGraph(cb?: () => void) {
   const fullPathToRepo: string = repoFullPath;
-  initGraphInBg({ fullPathToRepo }, (data) => {
-    console.log('graph calculations finished')
-    console.log(data);
-    if (cb) cb();
-  });
 
-  console.log('started background processing of graph initialization');
-
-  return;
+  // uncomment once background initialization has been implemented
+  // initGraphInBg({ fullPathToRepo }, (data) => {
+  //   // use data to construct the graph
+  // });
 
   bsNodes = new vis.DataSet([]);
   bsEdges = new vis.DataSet([]);
@@ -291,7 +291,6 @@ function drawGraph(cb?: () => void) {
 
   getAllCommits(function(commits) {
     processGraph(commits, () => {
-      console.log(container);
       if (cb) {
         cb();
       }

@@ -23,28 +23,23 @@ function log(msg) {
     ipcRenderer.send('log', msg);
 }
 
-function sendOutput(output) {
+function sendOutput(output: GraphData) {
     log('finished processing, sending result...');
     ipcRenderer.send('finishGraph', output);
 }
 
 function ready() {
     ipcRenderer.on('initGraph', (event, param) => {
-        console.log(event);
         initGraph(param);
     });
     
     ipcRenderer.send('ready');
 }
 
-function initGraph(params) {
-    console.log(params);
-    // log(`initializing graph. full path is ${params.fullPathToRepo}`);
-    // TODO: perform initialization work.
-    sendOutput({ hello: 'yeet' });
+function initGraph(params: InitGraphParams) {
+    // Perform graph initialization work here.
+    // sendOutput(output);
 }
-
-
 
 // when script runs, tell the creator that it is ready to do work.
 ready();

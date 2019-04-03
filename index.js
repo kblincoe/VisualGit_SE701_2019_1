@@ -253,6 +253,7 @@ app.on('ready', () => {
 	mainWindow = createMainWindow();
 	Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
 
+	// start background process to initialize graph
 	ipcMain.on('initGraph', (event, param) => {
 		bgProcess = new electron.BrowserWindow({ show: false });
 		bgProcess.loadURL('file://' + __dirname + '/app/backgroundTasks/initializeGraph.html');
@@ -262,6 +263,7 @@ app.on('ready', () => {
 		});
 	});
 
+	// notify main window when background graph initialization is finished
 	ipcMain.on('finishGraph', (event, param) => {
 		mainWindow.webContents.send('finishGraph', param);
 	});
