@@ -4,32 +4,49 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ProjectDirectoryService {
 
-    getDirectories(dir:string): string[] {
+    currentDir:string;
+    fileSep:string;
 
-        dir = repoFullPath + dir;
-        let fileList = this.searchDirectory(dir, 'directories');
+    constructor() {
+        if (process.platform === 'win32') {
+            this.fileSep = '\\';
+        } else {
+            this.fileSep = '/';
+        }
+    }
+
+    changeDirectory(dir: string): void {
+        if (!this.currentDir) this.currentDir = repoFullPath;
+        this.currentDir = this.currentDir + this.fileSep + dir;
+    }
+
+    getDirectories(): string[] {
+
+        if (!this.currentDir) this.currentDir = repoFullPath
+        let fileList = this.searchDirectory(this.currentDir, 'directories');
 
         return fileList;
     }
 
-    getFiles(dir:string): string[] {
+    getFiles(): string[] {
         
-        dir = repoFullPath + dir;
-        let fileList = this.searchDirectory(dir, 'files');
+        if (!this.currentDir) this.currentDir = repoFullPath
+        let fileList = this.searchDirectory(this.currentDir, 'files');
 
         return fileList;
     }
 
     searchDirectory(dirPath:string, type:string): string[] {
+        console.log('HEO: ' + dirPath)
         let fileList = [''];
         var files = fs.readdirSync(dirPath);
         for (var i in files) {
             if (!files.hasOwnProperty(i)) continue;
-            var fullName = dirPath+'/'+files[i];
+            var fullName = dirPath + this.fileSep + files[i];
             if (fs.statSync(fullName).isDirectory() && type === 'directories'){
-                fileList.push(fullName.replace(dirPath, ''))
-            } else if (type === 'files') {
-                fileList.push(fullName.replace(dirPath, ''));
+                fileList.push(fullName.replace(dirPath + this.fileSep, ''))
+            } else if (!fs.statSync(fullName).isDirectory() && type === 'files') {
+                fileList.push(fullName.replace(dirPath + this.fileSep, ''));
             }
         }
 

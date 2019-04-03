@@ -49,8 +49,9 @@ export class ProjectPanelComponent {
   }
 
   handleClickedDir(dir:string):void {
-    this.files = this.projectDirectoryService.getFiles(dir);
-    this.dirs = this.projectDirectoryService.getDirectories(dir);
+    this.projectDirectoryService.changeDirectory(dir)
+    this.files = this.projectDirectoryService.getFiles();
+    this.dirs = this.projectDirectoryService.getDirectories();
     this.changeDetectorRef.detectChanges();
   }
 }
