@@ -249,8 +249,9 @@ function pullFromRemote() {
       refreshAll(repository);
     }
   }, function(err) {
-    if (err == 'Error: String path is required.'){
-      updateModalText('Failed to pull from remote as no repository is currently open. Either clone one from a remote location or open one locally.');
+    if (err === 'Error: String path is required.'){
+      updateModalText('Failed to pull from remote as no repository is currently open. \
+      Either clone one from a remote location or open one locally.');
     } else {
       updateModalText(`${err} Failed to pull from remote`);
     }
@@ -306,14 +307,14 @@ function createBranch() {
 
   // Check if there's a repo open
   if (repoFullPath == null) {
-    displayModal(`No repository has been found. Please open or clone a repository and try again.`);
+    displayModal('No repository has been found. Please open or clone a repository and try again.');
   } else {
     Git.Repository.open(repoFullPath)
         .then(function(repo) {
 
           // Create a new branch on head
           repos = repo;
-          addCommand("git branch " + branchName);
+          addCommand('git branch ' + branchName);
           return repo.getHeadCommit()
               .then(function(commit) {
                 return repo.createBranch(
@@ -321,18 +322,18 @@ function createBranch() {
                     commit,
                     0,
                     repo.defaultSignature(),
-                    "Created new-branch on HEAD");
+                    'Created new-branch on HEAD');
               }, function(err) {
                 console.log(`Error in git.ts. Attempting to create a branch, the error is: ${err}`);
               });
         }).done(function() {
       refreshAll(repos);
-      console.log("Branch successfully created.");
+      console.log('Branch successfully created.');
     });
   }
 
   // Clear branch creation text field
-  document.getElementById("branchName").value = "";
+  document.getElementById('branchName').value = '';
 }
 
 function mergeLocalBranches(element) {

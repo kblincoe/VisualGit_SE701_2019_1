@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
-import { GraphData, InitGraphParams } from '../backgroundTasks/initializeGraph';
 import $ = require('jquery');
 import vis = require('vis');
+import { IGraphData, InitGraphParams } from '../backgroundTasks/initializeGraph';
 
 let bsNodes;
 let bsEdges;
@@ -24,21 +24,21 @@ export const OPTIONS = {
     arrows: {
       to: {
         enabled: true,
-        scaleFactor: 0.6
+        scaleFactor: 0.6,
       },
       middle: false,
       from: false,
     },
-    color: "#39c0ba",
+    color: '#39c0ba',
     hoverWidth: 0,
     physics: false,
     selectionWidth: 0,
     shadow: true,
     smooth: {
       enabled: true,
-      type: "cubicBezier",
+      type: 'cubicBezier',
       // forceDirection: "horizontal",
-      roundness: 0.5
+      roundness: 0.5,
     },
     width: 3,
   },
@@ -55,7 +55,7 @@ export const OPTIONS = {
     keyboard: {
       enabled: false,
       speed: {x: 10, y: 10, zoom: 0.02},
-      bindToWindow: true
+      bindToWindow: true,
     },
     multiselect: false,
     navigationButtons: false,
@@ -79,34 +79,34 @@ export const OPTIONS = {
     deleteNode: true,
     deleteEdge: true,
     controlNodeStyle: {
-      shape: "dot",
+      shape: 'dot',
       size: 6,
       color: {
-        background: "#39c0ba",
-        border: "#39c0ba",
+        background: '#39c0ba',
+        border: '#39c0ba',
         highlight: {
-          background: "#07f968",
-          border: "#3c3c3c"
-        }
+          background: '#07f968',
+          border: '#3c3c3c',
+        },
       },
       borderWidth: 2,
       borderWidthSelected: 2,
-    }
+    },
   },
 
   nodes: {
     borderWidth: 8,
     borderWidthSelected: 8,
     color: {
-      border: "#39c0ba",
-      background: "#FFF",
+      border: '#39c0ba',
+      background: '#FFF',
       highlight: {
-        border: "#FF0",
-        background: "#FFF"
+        border: '#FF0',
+        background: '#FFF',
       },
       hover: {
-        border: "#F00",
-        background: "#FFF"
+        border: '#F00',
+        background: '#FFF',
       },
     },
     shadow: true,
@@ -122,15 +122,15 @@ ipcRenderer.on('log', (event: any, param: string) => {
   console.log(`background process says: ${param}`);
 });
 
-/** 
- * Note: Not yet implemented, do not use. But infrastructure is in place for 
- * background processing to be implemented. Simply fill out the code in 
+/**
+ * Note: Not yet implemented, do not use. But infrastructure is in place for
+ * background processing to be implemented. Simply fill out the code in
  * the initializeGraph.ts file, then call this method and provide a callback
  * that uses the output to construct the graph.
- * */
-function initGraphInBg(params: InitGraphParams, callback: (data: GraphData) => void) {
+ */
+function initGraphInBg(params: InitGraphParams, callback: (data: IGraphData) => void) {
   ipcRenderer.send('initGraph', params);
-  ipcRenderer.on('finishGraph', (event: any, results: GraphData) => {
+  ipcRenderer.on('finishGraph', (event: any, results: IGraphData) => {
     callback(results);
   });
 }

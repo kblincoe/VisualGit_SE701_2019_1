@@ -1,7 +1,8 @@
-/** Script to be run in the background for initializing the graph. 
- * Parameters are sent as messages via the relevant electron modules. */
+/** Script to be run in the background for initializing the graph.
+ * Parameters are sent as messages via the relevant electron modules.
+ */
 
-const { ipcRenderer } = require('electron');
+import { ipcRenderer } from 'electron';
 
 /** Input params */
 export interface InitGraphParams {
@@ -9,7 +10,7 @@ export interface InitGraphParams {
 }
 
 /** Output structure */
-export interface GraphData {
+export interface IGraphData {
     bsNodes: {};
     bsEdges: {};
     abNodes: {};
@@ -23,7 +24,7 @@ function log(msg) {
     ipcRenderer.send('log', msg);
 }
 
-function sendOutput(output: GraphData) {
+function sendOutput(output: IGraphData) {
     log('finished processing, sending result...');
     ipcRenderer.send('finishGraph', output);
 }
@@ -32,7 +33,7 @@ function ready() {
     ipcRenderer.on('initGraph', (event, param) => {
         initGraph(param);
     });
-    
+
     ipcRenderer.send('ready');
 }
 

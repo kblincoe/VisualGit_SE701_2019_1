@@ -61,22 +61,21 @@ const GRAPH_COMPONENT_REF: string = 'graphComponent';
 
 export class GraphPanelComponent {
   isLoading: boolean;
-  zone: NgZone
+  zone: NgZone;
 
   constructor(zone: NgZone) {
     this.zone = zone;
     this.isLoading = false;
 
     window[GRAPH_COMPONENT_REF] = {
-      setLoading: (state: boolean) => this.setLoading(state)
+      setLoading: (state: boolean) => this.setLoading(state),
     };
   }
 
   setLoading(loading: boolean) {
     this.zone.run(() => {
       this.isLoading = loading;
-    })
-    
+    });
   }
 
   mergeBranches(): void {
