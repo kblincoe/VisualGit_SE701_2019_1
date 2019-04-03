@@ -528,3 +528,26 @@ async function getNetworkDownloadSpeed() {
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
 }
+
+/**
+ * When creating branch, checks whether name is valid
+  */
+function checkBranch(input) {
+  let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/.])$/gi;
+  let valid = regex.test(input.value);
+
+  // If branch name is valid enables button, otherwise disables
+  if (valid) {
+    if (input.id == 'branchName') {
+      $("#branch-btn").attr("disabled",false);
+    } else {
+      $("#branch-btn2").attr("disabled",false);
+    }
+  } else {
+    if (input.id == 'branchName') {
+      $("#branch-btn").attr("disabled",true);
+    } else {
+      $("#branch-btn2").attr("disabled",true);
+    }
+  }
+}
