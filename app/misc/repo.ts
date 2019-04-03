@@ -137,12 +137,11 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   .then(function(repository) {
     isErrorOpeningRepo = false;
     console.log('Repo successfully cloned');
-    refreshAll(repository);
     updateModalText('Clone Successful, repository saved under: ' + fullLocalPath);
     addCommand('git clone ' + cloneURL + ' ' + fullLocalPath);
     repoFullPath = fullLocalPath;
     repoLocalPath = fullLocalPath;
-    refreshAll(repository);
+    openRepository(repoFullPath, repoLocalPath);
   },
   function(err) {
     updateModalText('Clone Failed - ' + err);
