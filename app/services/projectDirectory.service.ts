@@ -1,5 +1,7 @@
 import Git = require('nodegit');
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class ProjectDirectoryService {
 
     getDirectories(dir:string): string[] {

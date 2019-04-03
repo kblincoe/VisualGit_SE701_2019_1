@@ -21,18 +21,20 @@ import { ProjectDirectoryService } from '../services/projectDirectory.service';
 
   </div>
   `,
+  providers: [ProjectDirectoryService]
 })
 
 export class ProjectPanelComponent {
 
   changeDetectorRef:ChangeDetectorRef;
+  projectDirectoryService:ProjectDirectoryService;
 
-  constructor(changeDecetctoeref:ChangeDetectorRef) {
+  constructor(changeDecetctoeref:ChangeDetectorRef, projectDirectoryService:ProjectDirectoryService) {
     projectPanelComponent = this;
     this.changeDetectorRef = changeDecetctoeref;
+    this.projectDirectoryService = projectDirectoryService;
   }
 
-  projectDirectoryService = new ProjectDirectoryService(); // TODO: maybe inject?
   files;
   dirs;
 
