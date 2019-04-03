@@ -4,7 +4,7 @@
 // import * as nodegit from 'git';
 // import NodeGit, { Status } from 'nodegit';
 
-const { ipcRenderer, } = require('electron');
+const { ipcRenderer } = require('electron');
 let Git = require("nodegit");
 let repo;
 
