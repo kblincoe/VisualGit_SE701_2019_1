@@ -302,7 +302,7 @@ function pushToRemote() {
 function createBranch(obj) {
 
   let branchName;
-  // Checking where the branch is being created from (normal menu or collapsible)
+  // Checking where the branch is being created from, clears its text field and disables button associated button
   if (obj.id == 'branch-btn') {
     branchName = document.getElementById("branchName").value;
     document.getElementById("branchName").value = "";
