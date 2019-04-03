@@ -94,7 +94,7 @@ function getUserInfo(callback) {
     } else {
       setAccountInfo(data);
       signedIn = true;
-      ipcRenderer.send('authenticate');
+      ipcRenderer.send('authenticate', signedIn);
       callback();
 
       ghme.repos(function(err, data, head) {

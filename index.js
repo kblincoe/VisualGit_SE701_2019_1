@@ -253,8 +253,8 @@ app.on('ready', () => {
 	Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
 });
 
-ipcMain.on('authenticate', (event) => {
+ipcMain.on('authenticate', (event, signedIn) => {
 	const authMenu = myMenu;
-	authMenu[2].submenu[0].enabled = true;
+	authMenu[2].submenu[0].enabled = signedIn;
 	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
