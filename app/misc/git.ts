@@ -19,7 +19,7 @@ let modifiedFiles;
 const warnbool;
 let changes = false;
 let unpushedCommits = false;
-let previousId = "";
+let previousId = '';
 
 function cloneFromRemote(){
   switchToClonePanel();
@@ -189,7 +189,7 @@ function getAllCommits(callback) {
 
 function PullBuffer() {
   if (changes) {
-    $("#modalWarnNotCommittedPull").modal();
+    $('#modalWarnNotCommittedPull').modal();
   } else {
     pullFromRemote();
   }
@@ -287,8 +287,8 @@ function pushToRemote() {
       .then(function() {
         unpushedCommits = false;
         window.onbeforeunload = Confirmed;
-        console.log("Push successful");
-        updateModalText("Push successful");
+        console.log('Push successful');
+        updateModalText('Push successful');
         refreshAll(repo);
       });
     });
@@ -593,11 +593,11 @@ function displayModifiedFiles() {
       // will show but default is not prevented, and window will reload/close
       function confirmationModal(event) {
         event.preventDefault();
-        event.returnValue = "";
+        event.returnValue = '';
         if (hasChanges()) {
-          $("#modalWarnNotCommittedExit").modal();
+          $('#modalWarnNotCommittedExit').modal();
         } else if (hasUnpushedCommits()) {
-          $("#modalWarnNotPushedExit").modal();
+          $('#modalWarnNotPushedExit').modal();
         }
       }
 
@@ -606,7 +606,7 @@ function displayModifiedFiles() {
         filePath.id = `file-path-id-${index}`;
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
-        const fileElement = document.createElement("div");
+        const fileElement = document.createElement('div');
         window.onbeforeunload = confirmationModal;
         changes = true;
         // Set how the file has been modified

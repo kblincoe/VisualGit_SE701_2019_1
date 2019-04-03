@@ -150,9 +150,9 @@ function cloneRepo() {
 function confirmSignOut() {
   if (signedIn) {
     if (hasChanges()) {
-      $("#modalWarnNotCommittedLogout").modal();
+      $('#modalWarnNotCommittedLogout').modal();
     } else if (hasUnpushedCommits()) {
-      $("#modalWarnNotPushedLogout").modal();
+      $('#modalWarnNotPushedLogout').modal();
     } else {
       redirectToHomePage();
     }
@@ -161,10 +161,10 @@ function confirmSignOut() {
 
 function redirectToHomePage() {
   window.onbeforeunload = Confirmed;
-  window.location.href = "index.html";
+  window.location.href = 'index.html';
   signedIn = false;
   clear();
-  //LogInAfterConfirm();
+  // LogInAfterConfirm();
 }
 
 function setAccountInfo(data) {
