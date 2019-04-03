@@ -6,8 +6,8 @@ import { ProjectDirectoryServcie } from '../services/projectDirectory.service';
   template: `
   <div class="project-panel" id="project-panel">
 
-    <div (click)="updateFiles()" class="project-window">
-      <p *ngFor="let file of files">
+    <div (click)="updateFiles()" class="project-window" *ngFor="let file of files">
+      <p (click)="handleClickedFile(file)">
         {{ file }}
       </p>
     </div>
@@ -29,5 +29,9 @@ export class ProjectPanelComponent {
 
   updateFiles():void {
     this.files = this.projectDirectoryService.getFolders();
+  }
+
+  handleClickedFile(file:string):void {
+    console.log(file);
   }
 }

@@ -7,9 +7,11 @@ export class ProjectDirectoryServcie {
         let fileList = [];
         this.getFiles(repoFullPath, fileList)
 
-        return [fileList];
+        return fileList;
     }
 
+    // Algorithm courtesy of 
+    // http://resolvethis.com/how-to-get-all-files-in-a-folder-in-javascript/
     getFiles(dir:string, fileList): [] {
         fileList = fileList || [];
     
