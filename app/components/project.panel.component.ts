@@ -25,7 +25,7 @@ export class ProjectPanelComponent {
   // }
 
   projectDirectoryService = new ProjectDirectoryServcie(); // TODO: maybe inject?
-  files = this.projectDirectoryService.getFolders();
+  files = [""];
 
   updateFiles():void {
     this.files = this.projectDirectoryService.getFolders();
