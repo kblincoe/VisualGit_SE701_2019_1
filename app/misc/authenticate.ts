@@ -94,6 +94,7 @@ function getUserInfo(callback) {
     } else {
       setAccountInfo(data);
       signedIn = true;
+      ipcRenderer.send('authenticate', signed);
       callback();
 
       ghme.repos(function(err, data, head) {
@@ -112,7 +113,6 @@ function getUserInfo(callback) {
               repoList[rep['full_name']] = rep['html_url'];
           }
         }
-        ipcRenderer.send('authenticate', signed);
     });
 }
 

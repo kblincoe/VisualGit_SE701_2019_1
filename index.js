@@ -255,13 +255,6 @@ app.on('ready', () => {
 
 ipcMain.on('authenticate', (event, signed) => {
 	const authMenu = myMenu;
-	console.log(signed);
-
-	if (signed === 1) {
-		authMenu[2].submenu[0].enabled = true;
-	} else if (signed === 0) {
-		authMenu[2].submenu[0].enabled = false;
-	}
-
+	authMenu[2].submenu[0].enabled = true;
 	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
