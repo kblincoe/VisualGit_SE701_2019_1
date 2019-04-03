@@ -1,15 +1,22 @@
-import { Component } from '@angular/core';
-import { ProjectDirectoryServcie } from '../services/projectDirectory.service';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { ProjectDirectoryService } from '../services/projectDirectory.service';
 
 @Component({
   selector: 'project-panel',
   template: `
   <div class="project-panel" id="project-panel">
 
-    <div (click)="updateFiles()" class="project-window" *ngFor="let file of files">
-      <p (click)="handleClickedFile(file)">
-        {{ file }}
-      </p>
+    <div class="project-window">
+      <div class="dir-cell" *ngFor="let dir of dirs">
+        <p (click)="handleClickedDir(dir)">
+          <b>{{ dir }}</b>
+        </p>
+      </div>
+      <div class="file-cell" *ngFor="let file of files">
+        <p (click)="handleClickedFile(file)">
+          {{ file }}
+        </p>
+      </div>
     </div>
 
   </div>
@@ -18,20 +25,30 @@ import { ProjectDirectoryServcie } from '../services/projectDirectory.service';
 
 export class ProjectPanelComponent {
 
-  // projectDirectoryService:ProjectDirectoryServcie;
+  changeDetectorRef:ChangeDetectorRef;
 
-  // ProjectPanelComponent(projectDirectoryServcie:ProjectDirectoryServcie) {
-  //   this.projectDirectoryService = projectDirectoryServcie;
-  // }
+  constructor(changeDecetctoeref:ChangeDetectorRef) {
+    projectPanelComponent = this;
+    this.changeDetectorRef = changeDecetctoeref;
+  }
 
-  projectDirectoryService = new ProjectDirectoryServcie(); // TODO: maybe inject?
-  files = [""];
+  projectDirectoryService = new ProjectDirectoryService(); // TODO: maybe inject?
+  files;
+  dirs;
 
-  updateFiles():void {
-    this.files = this.projectDirectoryService.getFolders();
+  updateProjectWindow():void {
+    this.files = this.projectDirectoryService.getFiles('');
+    this.dirs = this.projectDirectoryService.getDirectories('');
+    this.changeDetectorRef.detectChanges();
   }
 
   handleClickedFile(file:string):void {
-    console.log(file);
+    console.log('OPEN: ' + file);
+  }
+
+  handleClickedDir(dir:string):void {
+    this.files = this.projectDirectoryService.getFiles(dir);
+    this.dirs = this.projectDirectoryService.getDirectories(dir);
+    this.changeDetectorRef.detectChanges();
   }
 }

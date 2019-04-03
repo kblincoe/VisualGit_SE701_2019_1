@@ -1,30 +1,36 @@
 import Git = require('nodegit');
 
-export class ProjectDirectoryServcie {
+export class ProjectDirectoryService {
 
-    getFolders(): string[] {
+    getDirectories(dir:string): string[] {
 
-        let fileList = [];
-        this.getFiles(repoFullPath, fileList)
+        dir = repoFullPath + dir;
+        let fileList = this.searchDirectory(dir, 'directories');
 
         return fileList;
     }
 
-    // Algorithm courtesy of 
-    // http://resolvethis.com/how-to-get-all-files-in-a-folder-in-javascript/
-    getFiles(dir:string, fileList): [] {
-        fileList = fileList || [];
-    
-        var files = fs.readdirSync(dir);
-        for(var i in files){
+    getFiles(dir:string): string[] {
+        
+        dir = repoFullPath + dir;
+        let fileList = this.searchDirectory(dir, 'files');
+
+        return fileList;
+    }
+
+    searchDirectory(dirPath:string, type:string): string[] {
+        let fileList = [''];
+        var files = fs.readdirSync(dirPath);
+        for (var i in files) {
             if (!files.hasOwnProperty(i)) continue;
-            var name = dir+'/'+files[i];
-            if (fs.statSync(name).isDirectory()){
-                this.getFiles(name, fileList);
-            } else {
-                fileList.push(name);
+            var fullName = dirPath+'/'+files[i];
+            if (fs.statSync(fullName).isDirectory() && type === 'directories'){
+                fileList.push(fullName.replace(dirPath, ''))
+            } else if (type === 'files') {
+                fileList.push(fullName.replace(dirPath, ''));
             }
         }
+
         return fileList;
     }
 }

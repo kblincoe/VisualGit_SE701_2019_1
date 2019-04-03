@@ -248,7 +248,12 @@ body .body-panel .project-panel .project-window {
   height: 100%;
   background-color: #404040;
   overflow-y: scroll;
+  overflow-x: scroll;
   float: right;
+}
+
+body .body-panel .project-panel .project-window .file-cell {
+  color: #001C83;
 }
 
 body .body-panel .diff-panel {
@@ -264,7 +269,6 @@ body .body-panel .diff-panel .diff-panel-body {
   background-color: #282828;
   color: #fff;
   overflow-y: scroll;
-  overflow-x: scroll;
 }
 
 body .body-panel .diff-panel .diff-panel-body div {
