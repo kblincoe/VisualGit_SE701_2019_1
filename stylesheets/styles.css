@@ -243,11 +243,10 @@ body .body-panel {
   z-index: 0;
 }
 
-body .body-panel .project-panel {
+body .body-panel .project-panel .project-window {
   width: 200px;
   height: 100%;
-  color: #00990D;
-  background-color: #00990D;
+  background-color: #404040;
   overflow-y: scroll;
   float: right;
 }

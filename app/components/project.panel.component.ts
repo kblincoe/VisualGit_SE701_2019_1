@@ -1,41 +1,33 @@
 import { Component } from '@angular/core';
-import { DirectoryTreeComponent } from 'ng2-directory-tree'
+import { ProjectDirectoryServcie } from '../services/projectDirectory.service';
 
 @Component({
   selector: 'project-panel',
   template: `
   <div class="project-panel" id="project-panel">
 
-    <div class="project-window">
-      <directory-tree [directory]="dir" (onChange)="logging($event)" [keyboardWatch]=true></directory-tree>
+    <div (click)="updateFiles()" class="project-window">
+      <p *ngFor="let file of files">
+        {{ file }}
+      </p>
     </div>
 
   </div>
   `,
-  directives: [DirectoryTreeComponent]
 })
 
 export class ProjectPanelComponent {
 
-  dir = {
-    "name": "photos",
-    "children": [
-      {
-        "name": "summer",
-        "children": [
-          {
-            "name": "june",
-            "children": [
-              {
-                "name": "windsurf.jpg"
-              }]
-          }
-        ]
-      }
-    ]
-  }
+  // projectDirectoryService:ProjectDirectoryServcie;
 
-  logging(node) {
-      console.log(node)
+  // ProjectPanelComponent(projectDirectoryServcie:ProjectDirectoryServcie) {
+  //   this.projectDirectoryService = projectDirectoryServcie;
+  // }
+
+  projectDirectoryService = new ProjectDirectoryServcie(); // TODO: maybe inject?
+  files = this.projectDirectoryService.getFolders();
+
+  updateFiles():void {
+    this.files = this.projectDirectoryService.getFolders();
   }
 }
