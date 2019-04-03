@@ -50,7 +50,7 @@ import { RepositoryService } from '../services/repository.service';
               title="Clone"></i></a></li>
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()"
               title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
+            <li class="sync"><a href="#"><i class="iconbar fa fa-sync-alt fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
               title="Sync"></i></a></li>
           </ul>
 
