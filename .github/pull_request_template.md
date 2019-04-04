@@ -23,6 +23,7 @@ If your changes cannot be tested programmatically, add steps below so that the r
 - [] Meets the projects coding conventions
 - [] No out of scope changes
 - [] @Mentioned any relevant team members 
+- [] No failure when running the linter (`npm run lint`)
 - [] Included a relevant gif (search [here](https://giphy.com/) for inspiration)
 
 ![](*insert gif link between braces here*)
