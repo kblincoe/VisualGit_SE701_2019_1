@@ -4,8 +4,9 @@
 // import * as nodegit from 'git';
 // import NodeGit, { Status } from 'nodegit';
 
-import Git = require('nodegit');
-const repo;
+const { ipcRenderer } = require('electron');
+let Git = require("nodegit");
+let repo;
 
 import github = require('octonode');
 const aid;
@@ -93,6 +94,7 @@ function getUserInfo(callback) {
     } else {
       setAccountInfo(data);
       signedIn = true;
+      ipcRenderer.send('authenticate', signedIn);
       callback();
 
       ghme.repos(function(err, data, head) {
@@ -111,9 +113,7 @@ function getUserInfo(callback) {
               repoList[rep['full_name']] = rep['html_url'];
           }
         }
-      });
-    }
-  });
+    });
 }
 
 function selectRepo(ele) {
