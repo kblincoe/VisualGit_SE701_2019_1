@@ -602,7 +602,7 @@ async function getNetworkDownloadSpeed() {
  * When creating branch, checks whether name is valid
   */
 function checkBranch(input) {
-  let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/.])$/gi;
+  let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/])$/gi;
   let valid = regex.test(input.value);
 
   // If branch name is valid enables button, otherwise disables
