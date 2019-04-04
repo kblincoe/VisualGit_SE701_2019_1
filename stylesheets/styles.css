@@ -259,6 +259,11 @@ body .body-panel .project-panel .project-window {
 
 body .body-panel .project-panel .project-window .file-cell {
   color: #001C83;
+  cursor: pointer;
+}
+
+body .body-panel .project-panel .project-window .dir-cell {
+  cursor: pointer;
 }
 
 body .body-panel .diff-panel {

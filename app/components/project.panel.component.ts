@@ -10,13 +10,13 @@ import { ProjectDirectoryService } from '../services/projectDirectory.service';
       &lt;
     </button>
     <div class="project-window">
-      <div class="dir-cell" *ngFor="let dir of dirs">
-        <p (click)="handleClickedDir(dir)">
+      <div class="dir-cell" *ngFor="let dir of dirs" (click)="handleClickedDir(dir)">
+        <p>
           <b>{{ dir }}</b>
         </p>
       </div>
-      <div class="file-cell" *ngFor="let file of files">
-        <p (click)="handleClickedFile(file)">
+      <div class="file-cell" *ngFor="let file of files" (click)="handleClickedFile(file)">
+        <p>
           {{ file }}
         </p>
       </div>
