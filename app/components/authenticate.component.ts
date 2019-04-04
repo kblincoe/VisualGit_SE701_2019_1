@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
 
     <br>
     <div>
-      <button type="submit" style="width:280px;" class="btn btn-success" (click)="switchToMainPanel()">Sign In</button>
+      <button type="submit" style="width:280px;" class="btn btn-success" (click)="switchToTheMainPanel()">Sign In</button>
       <br>
     </div>
 
@@ -51,7 +51,7 @@ import { Component } from '@angular/core';
 
 export class AuthenticateComponent {
 
-  switchToMainPanel(): void {
+  switchToTheMainPanel(): void {
     signInPage(switchToAddRepositoryPanel);
   }
 

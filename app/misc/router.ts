@@ -2,6 +2,8 @@ let cred;
 let blue = '#39c0ba';
 let gray = '#5b6969';
 
+const {authenticate} = require('authenticate');
+
 function collapseSignPanel() {
   $('#nav-collapse1').collapse('hide');
   // Clear sign in input fields
@@ -17,6 +19,7 @@ function switchToClonePanel(){
 }
 
 function switchToMainPanel() {
+  console.log("Goodbye")
   hideAuthenticatePanel();
   hideAddRepositoryPanel();
   displayFilePanel();
@@ -130,6 +133,6 @@ function disableDiffPanelEditOnHide(){
   doc.contentEditable = 'false';
 }
 
-function useSaved() {
-  loginWithSaved(switchToMainPanel);
+async function useSaved() {
+  await loginWithSaved(switchToMainPanel);
 }
