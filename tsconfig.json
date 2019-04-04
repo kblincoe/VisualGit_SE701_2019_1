@@ -13,12 +13,16 @@
         "noImplicitUseStrict": false,
         "removeComments": true,
         "noLib": false,
+        "rootDir": "app",
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true,
         "strictNullChecks": true
     },
     "exclude": [
         "node_modules"
+    ],
+    "include": [
+        "**/*"
     ],
     "compileOnSave": true,
     "buildOnSave": false,
