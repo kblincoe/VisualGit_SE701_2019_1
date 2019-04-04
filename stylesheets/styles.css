@@ -243,13 +243,18 @@ body .body-panel {
   z-index: 0;
 }
 
+body .body-panel .project-panel {
+  float: right;
+  height: 100%;
+  width: 20%;
+}
+
 body .body-panel .project-panel .project-window {
   width: 200px;
   height: 100%;
   background-color: #404040;
   overflow-y: scroll;
   overflow-x: scroll;
-  float: right;
 }
 
 body .body-panel .project-panel .project-window .file-cell {

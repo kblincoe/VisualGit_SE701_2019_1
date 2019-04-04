@@ -6,6 +6,9 @@ import { ProjectDirectoryService } from '../services/projectDirectory.service';
   template: `
   <div class="project-panel" id="project-panel">
 
+    <button class="project-back-button" (click)="handleBackClick()">
+      &lt;
+    </button>
     <div class="project-window">
       <div class="dir-cell" *ngFor="let dir of dirs">
         <p (click)="handleClickedDir(dir)">
@@ -39,8 +42,8 @@ export class ProjectPanelComponent {
   dirs;
 
   updateProjectWindow():void {
-    this.files = this.projectDirectoryService.getFiles('');
-    this.dirs = this.projectDirectoryService.getDirectories('');
+    this.files = this.projectDirectoryService.getFiles();
+    this.dirs = this.projectDirectoryService.getDirectories();
     this.changeDetectorRef.detectChanges();
   }
 
@@ -49,7 +52,14 @@ export class ProjectPanelComponent {
   }
 
   handleClickedDir(dir:string):void {
-    this.projectDirectoryService.changeDirectory(dir)
+    this.projectDirectoryService.moveDownInDirectory(dir);
+    this.files = this.projectDirectoryService.getFiles();
+    this.dirs = this.projectDirectoryService.getDirectories();
+    this.changeDetectorRef.detectChanges();
+  }
+
+  handleBackClick():void {
+    this.projectDirectoryService.moveUpInDirectory();
     this.files = this.projectDirectoryService.getFiles();
     this.dirs = this.projectDirectoryService.getDirectories();
     this.changeDetectorRef.detectChanges();

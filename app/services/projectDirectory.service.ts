@@ -15,9 +15,13 @@ export class ProjectDirectoryService {
         }
     }
 
-    changeDirectory(dir: string): void {
+    moveDownInDirectory(dir: string): void {
         if (!this.currentDir) this.currentDir = repoFullPath;
         this.currentDir = this.currentDir + this.fileSep + dir;
+    }
+
+    moveUpInDirectory():void {
+        this.currentDir = this.currentDir.substr(0, this.currentDir.lastIndexOf(this.fileSep));
     }
 
     getDirectories(): string[] {
@@ -37,7 +41,6 @@ export class ProjectDirectoryService {
     }
 
     searchDirectory(dirPath:string, type:string): string[] {
-        console.log('HEO: ' + dirPath)
         let fileList = [''];
         var files = fs.readdirSync(dirPath);
         for (var i in files) {
