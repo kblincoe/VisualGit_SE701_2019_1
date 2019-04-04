@@ -14,28 +14,12 @@ let client;
 const avaterImg;
 const repoList = {};
 let url;
-let signed = 0;
-let changes = 0;
-
-
-// Called then user pushes to sign out even if they have commited changes but not pushed; prompts a confirmation modal
-
-function CommitNoPush(){
-  if (CommitButNoPush === 1){
-    $('#modalW2').modal();
-  }
-}
+let signedIn = false;
 
 function signInHead(callback) {
-  if (signed === 1){
-    if ((changes === 1) || (CommitButNoPush === 1)){
-      $('#modalW2').modal();
-    }
-    else {
-      getUserInfo(callback);
-    }
-  }
-  else{
+  if (signedIn) {
+    confirmSignOut();
+  } else {
     getUserInfo(callback);
   }
 }
@@ -108,7 +92,7 @@ function getUserInfo(callback) {
       }
     } else {
       setAccountInfo(data);
-      signed = 1;
+      signedIn = true;
       callback();
 
       ghme.repos(function(err, data, head) {
@@ -163,29 +147,23 @@ function cloneRepo() {
   $('#repo-modal').modal('hide');
 }
 
-function signInOrOut() {
-  const doc = document.getElementById('avatar');
-  if (doc.innerHTML === 'Sign Out'){
-    $('#avatar').removeAttr('data-toggle');
-
-    if ((changes === 1) || (CommitButNoPush === 1)){
-      $('#modalW2').modal();
-    }
-    else {
+function confirmSignOut() {
+  if (signedIn) {
+    if (hasChanges()) {
+      $('#modalWarnNotCommittedLogout').modal();
+    } else if (hasUnpushedCommits()) {
+      $('#modalWarnNotPushedLogout').modal();
+    } else {
       redirectToHomePage();
     }
   }
-  // Clear sign in input fields
-  document.getElementById('head-username').value = '';
-  document.getElementById('head-password').value = '';
 }
 
 function redirectToHomePage() {
   window.onbeforeunload = Confirmed;
   window.location.href = 'index.html';
-  signed = 0;
-  changes = 0;
-  CommitButNoPush = 0;
+  signedIn = false;
+  clear();
   // LogInAfterConfirm();
 }
 
