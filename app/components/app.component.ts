@@ -25,11 +25,10 @@ export class AppComponent implements OnInit {
     @ViewChild(AuthenticateComponent) authComp: AuthenticateComponent;
 
   ngOnInit(){
-      debugger
     if (sessionStorage.getItem('firstLogin') === null){
         sessionStorage.setItem('firstLogin', 'firstLogin');
         useSaved().then(_  => {
-            this.authComp.switchToTheMainPanel();
+            this.authComp.switchToMainPanel();
         });
     }
   }

@@ -19,7 +19,6 @@ function switchToClonePanel(){
 }
 
 function switchToMainPanel() {
-  console.log("Goodbye")
   hideAuthenticatePanel();
   hideAddRepositoryPanel();
   displayFilePanel();
