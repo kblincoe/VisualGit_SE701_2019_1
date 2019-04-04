@@ -31,7 +31,7 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName" onkeyup="sortBranches()" class="form-control" placeholder="Search or create branch">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
                     </span>
@@ -50,7 +50,7 @@ import { RepositoryService } from '../services/repository.service';
               title="Clone"></i></a></li>
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()"
               title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
+            <li class="sync"><a href="#"><i class="iconbar fa fa-sync-alt fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
               title="Sync"></i></a></li>
           </ul>
 
@@ -59,13 +59,13 @@ import { RepositoryService } from '../services/repository.service';
             <li class="account_group"><p id="github_name"></p></li>
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-            onclick="signInOrOut()"></a></li>
+            onclick="confirmSignOut()"></a></li>
           </ul>
 
           <ul id="return_main_menu" class="navbar-nav navbar-right hidden-xs">
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-              onclick="signInOrOut()" title="Back to Login"></a></li>
+            onclick="confirmSignOut()" title="Back to Login"></a></li>
           </ul>
 
           <ul class="nav navbar-nav visible-xs">
@@ -84,7 +84,7 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName" onkeyup="sortBranches()" class="form-control" placeholder="Search or create branch">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
                     </span>
@@ -131,7 +131,8 @@ import { RepositoryService } from '../services/repository.service';
       </div>
     </div>
 
-    <div id="modalW" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="modalWarnNotCommittedExit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -141,19 +142,18 @@ import { RepositoryService } from '../services/repository.service';
             <h4 class="modal-title">Warning!</h4>
           </div>
           <div class="modal-body" id="modal-text-box">
-            You have changes that have not been committed or pushed. If you exit or reload now you will lose progress.
+            You have changes that are not yet committed. Do you want to commit these before exiting?
           </div>
           <div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="Reload()"  >Reload</button>
-			<button type="button" class="btn btn-primary" data-dismiss="modal"  onclick="Close()"  >Exit</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Reload()">Reload</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Close()">Exit</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
       </div>
     </div>
 
-
-	<div id="modalW2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="modalWarnNotPushedExit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -163,18 +163,19 @@ import { RepositoryService } from '../services/repository.service';
             <h4 class="modal-title">Warning!</h4>
           </div>
           <div class="modal-body" id="modal-text-box">
-
-            You have changes that have not been committed or pushed. If you log out now you will lose progress.
+            You have commits saved locally that have not been pushed. Do you want to push these to your remote repository before exiting?
           </div>
           <div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="WarningSignIn()">OK</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Reload()">Reload</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Close()">Exit</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
       </div>
     </div>
 
-	<div id="modalW3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="modalWarnNotCommittedLogout" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -184,18 +185,18 @@ import { RepositoryService } from '../services/repository.service';
             <h4 class="modal-title">Warning!</h4>
           </div>
           <div class="modal-body" id="modal-text-box">
-            You have changes that have not been committed or pushed. If you Pull now you will lose progress.
+          You have changes that are not yet committed. Do you want to commit these before logging out?
           </div>
           <div class="modal-footer">
-			<button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="pullFromRemote()">OK</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="signOut()">Sign Out</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
       </div>
     </div>
 
-
-    <div id="modalW2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="modalWarnNotPushedLogout" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -205,18 +206,18 @@ import { RepositoryService } from '../services/repository.service';
             <h4 class="modal-title">Warning!</h4>
           </div>
           <div class="modal-body" id="modal-text-box">
-
-            You have changes that have not been committed or pushed. If you log out now you will lose progress.
+          You have commits saved locally that have not been pushed. Do you want to push these to your remote repository before logging out?
           </div>
           <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="WarningSignIn()">OK</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="signOut()">Sign Out</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="modalW3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="modalWarnNotCommittedPull" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
           <div class="modal-header">
@@ -226,10 +227,9 @@ import { RepositoryService } from '../services/repository.service';
             <h4 class="modal-title">Warning!</h4>
           </div>
           <div class="modal-body" id="modal-text-box">
-            You have changes that have not been committed or pushed. If you Pull now you will lose progress.
+            You have changes that have not been committed. Please discard or commit these changes before pulling.
           </div>
           <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="pullFromRemote()">OK</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
           </div>
         </div>
@@ -294,7 +294,7 @@ export class HeaderComponent   {
     signInHead(collapseSignPanel);
   }
 
-  WarningSignIn(): void {
+  signOut(): void {
     redirectToHomePage();
   }
 

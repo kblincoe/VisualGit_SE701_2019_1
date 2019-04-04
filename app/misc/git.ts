@@ -17,7 +17,8 @@ let filesToAdd = [];
 let theirCommit = null;
 let modifiedFiles;
 const warnbool;
-let CommitButNoPush = 0;
+let changes = false;
+let unpushedCommits = false;
 let previousId = '';
 
 function cloneFromRemote(){
@@ -82,8 +83,8 @@ function addAndCommit() {
   })
   .then(function(oid) {
     theirCommit = null;
-    changes = 0;
-    CommitButNoPush = 1;
+    changes = false;
+    unpushedCommits = true;
     console.log(`Commit successful:  + ${oid.tostrS()}`);
     hideDiffPanel();
     clearModifiedFilesList();
@@ -186,11 +187,10 @@ function getAllCommits(callback) {
     });
 }
 
-function PullBuffer(){
-  if ((changes === 1) || (CommitButNoPush === 1)){
-    $('#modalW3').modal();
-  }
-  else {
+function PullBuffer() {
+  if (changes) {
+    $('#modalWarnNotCommittedPull').modal();
+  } else {
     pullFromRemote();
   }
 }
@@ -289,7 +289,7 @@ function pushToRemote() {
         );
       })
       .then(function() {
-        CommitButNoPush = 0;
+        unpushedCommits = false;
         window.onbeforeunload = Confirmed;
         console.log('Push successful');
         updateModalText('Push successful');
@@ -508,10 +508,6 @@ function revertCommit(name: string) {
 }
 
 // Makes a modal for confirmation pop up instead of actually exiting application for confirmation.
-function ExitBeforePush(){
-  $('#modalW').modal();
-}
-
 function Confirmed(){
   // Block is empty so console log was added to appease linter
   console.log('Confirmed');
@@ -606,9 +602,16 @@ function displayModifiedFiles() {
         }
       }
 
-      function Confirmation(){
-        $('#modalW').modal();
-        return 'Hi';
+      // chrome requires returnValue to be set for events, otherwise the modal
+      // will show but default is not prevented, and window will reload/close
+      function confirmationModal(event) {
+        event.preventDefault();
+        event.returnValue = '';
+        if (hasChanges()) {
+          $('#modalWarnNotCommittedExit').modal();
+        } else if (hasUnpushedCommits()) {
+          $('#modalWarnNotPushedExit').modal();
+        }
       }
 
       function displayModifiedFile(file, index) {
@@ -617,8 +620,8 @@ function displayModifiedFiles() {
         filePath.className = 'file-path';
         filePath.innerHTML = file.filePath;
         const fileElement = document.createElement('div');
-        window.onbeforeunload = Confirmation;
-        changes = 1;
+        window.onbeforeunload = confirmationModal;
+        changes = true;
         // Set how the file has been modified
         if (file.fileModification === 'NEW') {
           fileElement.className = 'file file-created';
@@ -866,4 +869,17 @@ function fetchFromOrigin() {
   } else {
     displayModal('No Path Found.');
   }
+}
+
+function hasChanges() {
+  return changes;
+}
+
+function hasUnpushedCommits() {
+  return unpushedCommits;
+}
+
+function clear() {
+  changes = false;
+  unpushedCommits = false;
 }
