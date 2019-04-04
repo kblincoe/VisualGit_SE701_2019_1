@@ -25,7 +25,7 @@ import { RepositoryService } from '../services/repository.service';
             </li>
             <li><img src="./assets/RightArrow.svg" class="right-arrow"></li>
             <li class="branch-name dropdown">
-              <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="switchToMainPanel()">
+              <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="clearBranchSearchField()">
                 branch<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">

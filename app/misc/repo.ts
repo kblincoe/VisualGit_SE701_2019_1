@@ -409,6 +409,14 @@ function displayBranch(name, id, onclick) {
   ul.appendChild(li);
 }
 
+function clearBranchSearchField() {
+  // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
+  // selects the branch droplist to change branches on the repo
+  const textField = document.getElementById("branchName");
+  textField.value = '';
+  sortBranches();
+}
+
 function sortBranches() {
   let txtValue;
   let i;
