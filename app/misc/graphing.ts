@@ -298,17 +298,24 @@ function makeBasicNode(c, column: number) {
 
   if (flag) {
     id = basicNodeId++;
+
     const title = 'Number of Commits: ' + count;
-    bsNodes.add({
+    const node = {
       id: id,
       shape: 'circularImage',
       title: title,
-      image: img4User(name),
+      image: '',
       physics: false,
       fixed: (id === 1),
       x: (column - 1) * spacingX,
       y: (id - 1) * spacingY,
+    };
+
+    node.image = getProfilePictureURL(name, email, function(url) {
+      node.image = url;
     });
+
+    bsNodes.add(node);
 
     const shaList = [];
     shaList.push(c.toString());
@@ -380,17 +387,23 @@ function makeAbsNode(c, column: number) {
     const id = absNodeId++;
     const title = 'Author: ' + name + '<br>' + 'Number of Commits: ' + count;
 
-    abNodes.add({
+    const node = {
       email: email,
       id: id,
-      image: img4User(name),
+      image: '',
       shape: 'circularImage',
       title: title,
       physics: false,
       fixed: (id === 1),
       x: (column - 1) * spacingX,
       y: (id - 1) * spacingY,
+    };
+
+    node.image = getProfilePictureURL(name, email, function(url) {
+      node.image = url;
     });
+
+    abNodes.add(node);
 
     if (c.toString() in bname) {
       for (let i = 0; i < bname[c.toString()].length; i++) {
@@ -443,16 +456,23 @@ function makeNode(c, column: number) {
   const email = stringer.split('%')[1];
   const title = 'Author: ' + name + '<br>' + 'Message: ' + c.message();
   let flag = false;
-  nodes.add({
+
+  const node = {
     id: id,
     shape: 'circularImage',
     title: title,
-    image: img4User(name),
+    image: '',
     physics: false,
     fixed: true,
     x: (column - 1) * spacingX,
     y: (id - 1) * spacingY,
+  };
+
+  node.image = getProfilePictureURL(name, email, function(url) {
+    node.image = url;
   });
+
+  nodes.add(node);
 
   if (c.toString() in bname) {
     for (let i = 0; i < bname[c.toString()].length; i++) {
