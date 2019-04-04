@@ -10,7 +10,6 @@ import opn = require('opn');
 const green = '#84db00';
 let index;
 let oid;
-let remote;
 let commitMessage;
 let filesToAdd = [];
 let theirCommit = null;
@@ -92,7 +91,7 @@ function addAndCommit() {
     for (let i = 0; i < filesToAdd.length; i++) {
       addCommand('git add ' + filesToAdd[i]);
     }
-    addCommand('git commit -m "' + commitMessage + '"');
+    addCommand('git commit -m ' + commitMessage);
     refreshAll(repository);
   }, function(err) {
     console.log(`Error in git.ts. Attempting to commit, the error is: ${err}`);
@@ -248,8 +247,9 @@ function pullFromRemote() {
       refreshAll(repository);
     }
   }, function(err) {
-    if (err == 'Error: String path is required.'){
-      updateModalText('Failed to pull from remote as no repository is currently open. Either clone one from a remote location or open one locally.');
+    if (err === 'Error: String path is required.'){
+      updateModalText(`Failed to pull from remote as no repository is currently open.
+      Either clone one from a remote location or open one locally.`);
     } else {
       updateModalText(`${err} Failed to pull from remote`);
     }
@@ -261,21 +261,17 @@ function pullFromRemote() {
 // });
 }
 
-
-
-
-
 function pushToRemote() {
   const branchElement = document.getElementById('branch-name');
-  // Saftey checking there is a repo and a branch to push to
-  if(!branchElement || !repoFullPath) {
+  if (!branchElement || !repoFullPath) {
+    // Safety checking there is a repo and a branch to push to
     return;
   }
   const branch = branchElement.innerText;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
-    getCommitCountDifference(repo, branch, result => {
-      if(result.ahead === 0) {  // Repo is not ahead by any commits i.e. no changes
+    getCommitCountDifference(repo, branch, (result) => {
+      if (result.ahead === 0) {  //  Repo is not ahead by any commits i.e. no changes
         displayModal('No changes to push');
         return;
       }
@@ -288,7 +284,6 @@ function pushToRemote() {
 
       })
       .then(function(remote) {
-        
         return remote.push(
           ['refs/heads/' + branch + ':refs/heads/' + branch],
           {
@@ -307,7 +302,7 @@ function pushToRemote() {
         refreshAll(repo);
       });
     });
-  })
+  });
 }
 
 function createBranch() {
@@ -317,14 +312,14 @@ function createBranch() {
 
   // Check if there's a repo open
   if (repoFullPath == null) {
-    displayModal(`No repository has been found. Please open or clone a repository and try again.`);
+    displayModal('No repository has been found. Please open or clone a repository and try again.');
   } else {
     Git.Repository.open(repoFullPath)
         .then(function(repo) {
 
           // Create a new branch on head
           repos = repo;
-          addCommand("git branch " + branchName);
+          addCommand('git branch ' + branchName);
           return repo.getHeadCommit()
               .then(function(commit) {
                 return repo.createBranch(
@@ -332,18 +327,18 @@ function createBranch() {
                     commit,
                     0,
                     repo.defaultSignature(),
-                    "Created new-branch on HEAD");
+                    'Created new-branch on HEAD');
               }, function(err) {
                 console.log(`Error in git.ts. Attempting to create a branch, the error is: ${err}`);
               });
         }).done(function() {
       refreshAll(repos);
-      console.log("Branch successfully created.");
+      console.log('Branch successfully created.');
     });
   }
 
   // Clear branch creation text field
-  document.getElementById("branchName").value = "";
+  document.getElementById('branchName').value = '';
 }
 
 function mergeLocalBranches(element) {
