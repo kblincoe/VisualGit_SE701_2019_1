@@ -7,7 +7,7 @@ const { app, BrowserWindow, ipcMain, Menu, } = electron;
 require('electron-debug')();
 
 // Add library for triggering hot electron reloads
-require('electron-reload')([`${__dirname}/app`,  `${__dirname}/stylesheets`], {
+require('electron-reload')(['./app/**/*.{js,ts,html,css}', './stylesheets**/*.css'], {
 	electron: require('${__dirname}/../../node_modules/electron'),
 	hardResetMethod: 'exit',
 	ignored: /recents.json|[\/\\]\./, // avoid reload when we write to recents

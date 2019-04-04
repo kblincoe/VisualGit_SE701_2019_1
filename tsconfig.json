@@ -22,7 +22,7 @@
         "node_modules"
     ],
     "include": [
-        "**/*"
+        "app/**/*"
     ],
     "compileOnSave": true,
     "buildOnSave": false,
