@@ -74,6 +74,26 @@ ipcRenderer.on('change-to-default-style', function() {
     changeColor('default');
 });
 
+ipcRenderer.on('push-to-remote', function() {
+    pushToRemote();
+});
+
+ipcRenderer.on('pull-from-remote', function() {
+    pullFromRemote();
+});
+
+ipcRenderer.on('clone-from-remote', function() {
+    cloneFromRemote();
+});
+
+ipcRenderer.on('clean-repo', function() {
+    cleanRepo();
+});
+
+ipcRenderer.on('request-link-modal', function() {
+    requestLinkModal();
+});
+
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
     // Add click event to Commit button

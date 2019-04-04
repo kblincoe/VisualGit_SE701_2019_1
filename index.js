@@ -1,9 +1,7 @@
 'use strict';
 
 const electron = require('electron');
-const app = electron.app;
-const Menu = electron.Menu;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, ipcMain, Menu, } = electron;
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
@@ -38,161 +36,205 @@ function createMainWindow() {
 	return win;
 }
 
-function setMyMenu() {
-	const myMenu = [
-		{
-			label: 'View',
-			submenu: [
-				{role: 'togglefullscreen'},
-			]
-		},
-		{
-			label: 'Window',
-			submenu: [
-				{role: 'minimize'},
-				{type: 'separator'},
-				{role: 'close'}
-			]
-		},
-		{
-			label: 'Style',
-			submenu: [
-				{
-					label: 'White',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-white-style');
-					}
-				},
-				{
-					label: 'Pink',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-pink-style');
-					}
-				},
-				{
-					label: 'Blue',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-blue-style');
-					}
-				},
-				{
-					label: 'Navy',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-navy-style');
-					}
-				},
-				{
-					label: 'Green',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-green-style');
-					}
-				},
-				{
-					label: 'Default',
-					click() {
-						var focusedWindow = BrowserWindow.getFocusedWindow();
-						focusedWindow.webContents.send('change-to-default-style');
-					}
-				}]
-		},
-		{
-			label: 'Help',
-			submenu: [
-				{
-					label: require('./package.json').name + ': ' + require('./package.json').description,
-					enabled: false
-				},
-				{type: 'separator'},
-				{
-					label: 'Version ' + require('./package.json').version,
-					enabled: false
-				},
-				{
-					label: 'GitHub Homepage',
-					click () { 
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1'); 
-					}
-				},
-				{
-					label: 'Features',
-					submenu: [
-						{
-							label: 'Opening/Cloning Repositories',
-							click () { 
-								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories'); 
-							}
+const myMenu = [
+	{
+		label: 'View',
+		submenu: [
+			{role: 'togglefullscreen'},
+		]
+	},
+	{
+		label: 'Window',
+		submenu: [
+			{role: 'minimize'},
+			{type: 'separator'},
+			{role: 'close'}
+		]
+	},
+	{
+		label: 'Tools',
+		submenu: [
+			{
+				label: 'Git',
+				submenu: [
+					{
+						label: 'Push',
+						click() {
+							var focusedWindow = BrowserWindow.getFocusedWindow();
+							focusedWindow.webContents.send('push-to-remote');
 						},
-						{
-							label: 'Adding and Committing',
-							click () { 
-								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Adding-&-Committing'); 
-							}
+					},
+					{
+						label: 'Pull',
+						click() {
+							var focusedWindow = BrowserWindow.getFocusedWindow();
+							focusedWindow.webContents.send('pull-from-remote');
 						},
-						{
-							label: 'Pushing and Pulling from Remote',
-							click () { 
-								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Pushing-&-Pulling-from-Remote'); 
-							}
+					},
+					{
+						label: 'Clone',
+						click() {
+							var focusedWindow = BrowserWindow.getFocusedWindow();
+							focusedWindow.webContents.send('clone-from-remote');
 						},
-						{
-							label: 'Complete List of Features',
-							click () { 
-								require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Features'); 
-							}
+					},
+					{
+						label: 'Clean',
+						click() {
+							var focusedWindow = BrowserWindow.getFocusedWindow();
+							focusedWindow.webContents.send('clean-repo');
+						},
+					},
+					{
+						label: 'Sync',
+						click() {
+							var focusedWindow = BrowserWindow.getFocusedWindow();
+							focusedWindow.webContents.send('request-link-modal');
 						}
-						
-					]	
-				},
-				{
-					label: 'Report Bugs or Request New Features',
-					click () { 
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/issues'); 
-					}
-				},
-				{
-					label: 'Offline Support',
-					click () { 
-						require('electron').shell.openItem(__dirname + '/README.pdf');   
-					}
-				},
-				{
-					label: 'Learn More',
-					click () { 
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki'); 
-					}  
-				},
-				{type: 'separator'},
-				{
-					label: 'More Info on External Libraries',
-					click () { 
-						require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help'); 
-					}
+					},
+				],
+				enabled: false,
+			},
+		]
+	},
+	{
+		label: 'Style',
+		submenu: [
+			{
+				label: 'White',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-white-style');
 				}
-			]
-		}, {
-			label: "Edit",
-			submenu: [
-				{label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
-				{label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
-				{label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
-				{label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"},
-				{label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
-				{label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"}
-			]
-		}, {
-			label: "Mac_Application",
-			submenu: [
-				{label: "Quit", accelerator: "Command+Q", click: function () {app.quit();}}
-			]
-		}];
+			},
+			{
+				label: 'Pink',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-pink-style');
+				}
+			},
+			{
+				label: 'Blue',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-blue-style');
+				}
+			},
+			{
+				label: 'Navy',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-navy-style');
+				}
+			},
+			{
+				label: 'Green',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-green-style');
+				}
+			},
+			{
+				label: 'Default',
+				click() {
+					var focusedWindow = BrowserWindow.getFocusedWindow();
+					focusedWindow.webContents.send('change-to-default-style');
+				}
+			}]
+	},
+	{
+		label: 'Help',
+		submenu: [
+			{
+				label: require('./package.json').name + ': ' + require('./package.json').description,
+				enabled: false
+			},
+			{type: 'separator'},
+			{
+				label: 'Version ' + require('./package.json').version,
+				enabled: false
+			},
+			{
+				label: 'GitHub Homepage',
+				click () { 
+					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1'); 
+				}
+			},
+			{
+				label: 'Features',
+				submenu: [
+					{
+						label: 'Opening/Cloning Repositories',
+						click () { 
+							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories'); 
+						}
+					},
+					{
+						label: 'Adding and Committing',
+						click () { 
+							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Adding-&-Committing'); 
+						}
+					},
+					{
+						label: 'Pushing and Pulling from Remote',
+						click () { 
+							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Pushing-&-Pulling-from-Remote'); 
+						}
+					},
+					{
+						label: 'Complete List of Features',
+						click () { 
+							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Features'); 
+						}
+					}
+					
+				]	
+			},
+			{
+				label: 'Report Bugs or Request New Features',
+				click () { 
+					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/issues'); 
+				}
+			},
+			{
+				label: 'Offline Support',
+				click () { 
+					require('electron').shell.openItem(__dirname + '/README.pdf');   
+				}
+			},
+			{
+				label: 'Learn More',
+				click () { 
+					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki'); 
+				}  
+			},
+			{type: 'separator'},
+			{
+				label: 'More Info on External Libraries',
+				click () { 
+					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help'); 
+				}
+			}
+		]
+	}, {
+		label: "Edit",
+		submenu: [
+			{label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:"},
+			{label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:"},
+			{label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:"},
+			{label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"},
+			{label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
+			{label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"}
+		]
+	}, {
+		label: "Mac_Application",
+		submenu: [
+			{label: "Quit", accelerator: "Command+Q", click: function () {app.quit();}}
+		]
+	}
+];
 
-	return myMenu;
-}
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
@@ -208,5 +250,11 @@ app.on('activate', () => {
 
 app.on('ready', () => {
 	mainWindow = createMainWindow();
-	Menu.setApplicationMenu(Menu.buildFromTemplate(setMyMenu()));
+	Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
+});
+
+ipcMain.on('authenticate', (event, signedIn) => {
+	const authMenu = myMenu;
+	authMenu[2].submenu[0].enabled = signedIn;
+	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
