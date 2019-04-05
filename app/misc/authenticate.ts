@@ -5,8 +5,8 @@
 // import NodeGit, { Status } from 'nodegit';
 
 const { ipcRenderer } = require('electron');
-let Git = require("nodegit");
-let repo;
+import Git = require("nodegit");
+const repo;
 
 import github = require('octonode');
 const aid;
@@ -114,6 +114,8 @@ function getUserInfo(callback) {
           }
         }
     });
+  }
+});
 }
 
 /**
