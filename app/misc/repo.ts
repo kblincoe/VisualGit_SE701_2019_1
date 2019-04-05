@@ -418,7 +418,7 @@ function clearBranchSearchField() {
     textField.value = '';
     sortBranches();
   } else {
-    displayModal('Unable to change branch while attempting to add, create or change repository. \n\r' +
+    displayModal('Unable to change branch while attempting to add, create or change repository.' +
     'Please ready a repository before changing branches');
   }
 }
