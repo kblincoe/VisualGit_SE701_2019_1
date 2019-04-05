@@ -245,12 +245,12 @@ body .body-panel {
 
 body .body-panel .project-panel {
   float: right;
-  height: 100%;
+  height: 100vh;
   width: 20%;
 }
 
 body .body-panel .project-panel .project-window {
-  width: 200px;
+  width: 100%;
   height: 100%;
   background-color: #404040;
   overflow-y: scroll;
@@ -307,7 +307,7 @@ body .body-panel .diff-panel .diff-panel-minimise:hover {
 }
 
 body .body-panel .graph-panel {
-  width: 100%;
+  width: 80%;
   float: right;
 }
 
