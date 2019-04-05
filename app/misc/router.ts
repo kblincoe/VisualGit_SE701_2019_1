@@ -39,10 +39,8 @@ function wait(ms){
 }
 
 function displayClonePanel(){
-
   const vals = 'add-repository-panel';
   document.getElementById('add-repository-panel').style.zIndex = '10';
-  $('#open-local-repository').hide();
 }
 
 function displayFilePanel() {
