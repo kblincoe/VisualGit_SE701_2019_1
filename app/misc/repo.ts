@@ -19,7 +19,7 @@ import readFile = require('fs-sync');
 const repoCurrentBranch = 'master';
 const modal;
 const span;
-const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = 10;
+const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = '10';
 
 let progressBar;
 let isErrorOpeningRepo;
@@ -413,7 +413,7 @@ function displayBranch(name, id, onclick) {
 function clearBranchSearchField() {
   // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
   // selects the branch droplist to change branches on the repo
-  if (document.getElementById('add-repository-panel').style.zIndex === REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
+  if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
     const textField = document.getElementById("branchName");
     textField.value = '';
     sortBranches();
