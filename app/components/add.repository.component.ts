@@ -31,7 +31,7 @@ import { AddGitignoreComponent } from './add.gitignore.component';
           </div>
           <div class="form-group" style="max-width: 700px;">
               <div class="input-group">
-                <input type="text" class="form-control" name="repositoryLocal" 
+                <input type="text" class="form-control" name="repositoryLocal"
                       placeholder="Clone destination" id="newRepoSaveLocal" readonly/>
                 <div class="input-group-btn">
                   <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
