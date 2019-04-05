@@ -22,12 +22,18 @@ import githubUsername = require('github-username');
 const avatarUrls = {};
 const branchIds = {};
 
-function processGraph(commits: nodegit.Commit[]) {
-  commitHistory = [];
-  numOfCommits = commits.length;
-  sortCommits(commits);
-  makeBranchColor();
-  populateCommits();
+function processGraph(commits: nodegit.Commit[], cb?: () => void) {
+  try {
+    commitHistory = [];
+    numOfCommits = commits.length;
+    sortCommits(commits);
+    makeBranchColor();
+    populateCommits();
+  } finally {
+    if (cb) {
+      cb();
+    }
+  }
 }
 
 function sortCommits(commits) {

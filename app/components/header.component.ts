@@ -50,7 +50,7 @@ import { RepositoryService } from '../services/repository.service';
               title="Clone"></i></a></li>
             <li class="eraser"><a href="#"><i class="iconbar fa fa-eraser fa-lg col-md-2" aria-hidden="true" onclick="cleanRepo()"
               title="Clean"></i></a></li>
-            <li class="sync"><a href="#"><i class="iconbar fa fa-refresh fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
+            <li class="sync"><a href="#"><i class="iconbar fa fa-sync-alt fa-lg col-md-2" aria-hidden="true" onclick="requestLinkModal()"
               title="Sync"></i></a></li>
           </ul>
 
@@ -59,13 +59,13 @@ import { RepositoryService } from '../services/repository.service';
             <li class="account_group"><p id="github_name"></p></li>
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-            onclick="confirmSignOut()"></a></li>
+            (click)="signOut()"></a></li>
           </ul>
 
           <ul id="return_main_menu" class="navbar-nav navbar-right hidden-xs">
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-            onclick="confirmSignOut()" title="Back to Login"></a></li>
+            (click)="signOut()" title="Back to Login"></a></li>
           </ul>
 
           <ul class="nav navbar-nav visible-xs">
@@ -295,7 +295,7 @@ export class HeaderComponent   {
   }
 
   signOut(): void {
-    redirectToHomePage();
+    ipcRenderer.send('authenticate', false);
   }
 
 }
