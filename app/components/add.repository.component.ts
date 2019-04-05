@@ -7,7 +7,7 @@ import { AddGitignoreComponent } from './add.gitignore.component';
     <div class="add-repository-panel" id="add-repository-panel">
       <img src="./assets/Back.svg" (click)="returnToMainPanel()" class="back-button">
       <div class="add-repository-body flex-container-col">
-      <h1>Clone or Create Repository</h1>
+      <h1>Open or Create Repository</h1>
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#openRecentTab">Recent</a></li>
         <li><a data-toggle="tab" href="#openNewTab">Create New Repo</a></li>
