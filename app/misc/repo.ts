@@ -19,10 +19,10 @@ import readFile = require('fs-sync');
 const repoCurrentBranch = 'master';
 const modal;
 const span;
+const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = '10';
 
 let progressBar;
 let isErrorOpeningRepo;
-
 
 function downloadRepository() {
   // Full path is always in repoSave
@@ -138,12 +138,11 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
   .then(function(repository) {
     isErrorOpeningRepo = false;
     console.log('Repo successfully cloned');
-    refreshAll(repository);
     updateModalText('Clone Successful, repository saved under: ' + fullLocalPath);
     addCommand('git clone ' + cloneURL + ' ' + fullLocalPath);
     repoFullPath = fullLocalPath;
     repoLocalPath = fullLocalPath;
-    refreshAll(repository);
+    openRepository(repoFullPath, repoLocalPath);
   },
   function(err) {
     updateModalText('Clone Failed - ' + err);
@@ -253,9 +252,14 @@ function openRepository(fullLocalPath: string, localPath: string) {
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
       const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
     }
-    refreshAll(repository);
-    console.log('Repo successfully opened');
-    updateModalText('Repository successfully opened');
+
+    const windowAny: any = window;
+    windowAny.graphComponent.setLoading(true);
+    refreshAll(repository, () => {
+      console.log('Repo successfully opened');
+      updateModalText('Repository successfully opened');
+      windowAny.graphComponent.setLoading(false);
+    });
   },
   function(err) {
     updateModalText('Opening Failed - ' + err);
@@ -280,7 +284,7 @@ function addBranchestoNode(thisB: string) {
   }
 }
 
-function refreshAll(repository) {
+function refreshAll(repository, cb?: () => void) {
   let branch;
   bname = [];
   repository.getCurrentBranch()
@@ -326,7 +330,7 @@ function refreshAll(repository) {
   })
   .then(function() {
     console.log('Updating the graph and the labels');
-    drawGraph();
+    drawGraph(cb);
     document.getElementById('repo-name').innerHTML = repoLocalPath;
     document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
   });
@@ -406,19 +410,34 @@ function displayBranch(name, id, onclick) {
   ul.appendChild(li);
 }
 
+function clearBranchSearchField() {
+  // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
+  // selects the branch droplist to change branches on the repo
+  if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
+    const textField = document.getElementById("branchName");
+    textField.value = '';
+    sortBranches();
+  } else {
+    displayModal('Unable to change branch while attempting to add, create or change repository.' +
+    'Please ready a repository before changing branches');
+  }
+}
+
 function sortBranches() {
-  let txtValue, i, a;
-  const input = document.getElementById("branchName");
+  let txtValue;
+  let i;
+  let a;
+  const input = document.getElementById('branchName');
   const filter = input.value.toUpperCase();
-  const ul = document.getElementById("branch-dropdown");
-  const li = ul.getElementsByTagName("li");
+  const ul = document.getElementById('branch-dropdown');
+  const li = ul.getElementsByTagName('li');
   for (i = 1; i < li.length; i++) {
     a = li[i].firstChild;
     txtValue = a.textContent || a.innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        li[i].style.display = "";
+        li[i].style.display = '';
     } else {
-        li[i].style.display = "none";
+        li[i].style.display = 'none';
     }
   }
 }
@@ -442,7 +461,7 @@ function checkoutLocalBranch(element) {
   });
 
   // Clear branch creation text field
-  document.getElementById("branchName").value = "";
+  document.getElementById('branchName').value = '';
 }
 
 function checkoutRemoteBranch(element) {

@@ -14,6 +14,7 @@ require('electron-reload')(__dirname, {
 
 // prevent window being garbage collected
 let mainWindow;
+let bgProcess;
 
 function onClosed() {
 	// dereference the window
@@ -251,6 +252,26 @@ app.on('activate', () => {
 app.on('ready', () => {
 	mainWindow = createMainWindow();
 	Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
+
+	// start background process to initialize graph
+	ipcMain.on('initGraph', (event, param) => {
+		bgProcess = new electron.BrowserWindow({ show: false });
+		bgProcess.loadURL('file://' + __dirname + '/app/backgroundTasks/initializeGraph.html');
+
+		ipcMain.on('ready', () => {
+			bgProcess.webContents.send('initGraph', param);
+		});
+	});
+
+	// notify main window when background graph initialization is finished
+	ipcMain.on('finishGraph', (event, param) => {
+		mainWindow.webContents.send('finishGraph', param);
+	});
+
+	// pass any messages back to the main window to display in console.
+	ipcMain.on('log', (event, params) => {
+		log(params);
+	});
 });
 
 ipcMain.on('authenticate', (event, signedIn) => {
@@ -258,3 +279,8 @@ ipcMain.on('authenticate', (event, signedIn) => {
 	authMenu[2].submenu[0].enabled = signedIn;
 	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
+
+
+function log(msg) {
+	mainWindow.webContents.send('log', msg);
+}
