@@ -281,7 +281,6 @@ function pushToRemote() {
       repo.getRemotes()
       .then(function(remotes) {
         return repo.getRemote(remotes[0]);
-
       })
       .then(function(remote) {
         return remote.push(
