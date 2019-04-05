@@ -4,7 +4,7 @@
 // import * as nodegit from 'git';
 // import NodeGit, { Status } from 'nodegit';
 
-const { ipcRenderer } = require('electron');
+import { ipcRenderer } from 'electron';
 import Git = require("nodegit");
 const repo;
 
@@ -113,9 +113,9 @@ function getUserInfo(callback) {
               repoList[rep['full_name']] = rep['html_url'];
           }
         }
-    });
-  }
-});
+      });
+    }
+  });
 }
 
 /**
