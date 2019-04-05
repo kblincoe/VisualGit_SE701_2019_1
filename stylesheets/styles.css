@@ -275,6 +275,12 @@ body .editor-component {
   color: #00990D;
 }
 
+body .editor-component .input {
+  height: 98%;
+  width: 98%;
+  margin: 2%;
+}
+
 body .body-panel .diff-panel {
   width: 0;
   height: 100%;

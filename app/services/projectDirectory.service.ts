@@ -40,7 +40,11 @@ export class ProjectDirectoryService {
         return fileList;
     }
 
-    searchDirectory(dirPath:string, type:string): string[] {
+    getFullPathName(fileName:string): string {
+        return this.currentDir + this.fileSep + fileName;
+    }
+
+    private searchDirectory(dirPath:string, type:string): string[] {
         let fileList = [''];
         var files = fs.readdirSync(dirPath);
         for (var i in files) {

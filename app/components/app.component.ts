@@ -15,8 +15,8 @@ import { EditorComponent } from './editor.component';
     <file-panel></file-panel>
     <body-panel></body-panel>
     <add-repository-panel></add-repository-panel>
-    <app-footer></app-footer>
     <editor-component></editor-component>
+    <app-footer></app-footer>
   `,
   directives: [AddRepositoryComponent, AuthenticateComponent, BodyPanelComponent, FilePanelComponent,  FooterComponent, HeaderComponent, EditorComponent],
 })

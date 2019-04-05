@@ -49,6 +49,10 @@ export class ProjectPanelComponent {
 
   handleClickedFile(file:string):void {
     switchToEditorPanel();
+    // Read the contents of the file specified
+    fileLocation = this.projectDirectoryService.getFullPathName(file);
+    fileOpenInEditor = fileLocation;
+    readFromFileEditor(fileLocation);
   }
 
   handleClickedDir(dir:string):void {

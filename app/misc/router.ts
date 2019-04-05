@@ -28,6 +28,7 @@ function switchToMainPanel() {
 }
 
 function switchToEditorPanel() {
+  document.getElementById('editor').value = '';
   hideAuthenticatePanel();
   hideFilePanel();
   hideProjectPanel();
