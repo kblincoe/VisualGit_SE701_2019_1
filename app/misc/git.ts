@@ -341,10 +341,7 @@ function createBranch(obj) {
       refreshAll(repos);
       console.log("Branch successfully created.");
     });
-  }).done(function() {
-    refreshAll(repos);
-    console.log("Branch successfully created.");
-  });
+  }
 }
 
 function mergeLocalBranches(element) {
