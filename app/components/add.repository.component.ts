@@ -25,7 +25,9 @@ import { AddGitignoreComponent } from './add.gitignore.component';
               <button class="btn" type="button" (click)="selectDirOnlyLocal()">Browse</button>
             </div>
           </div>
-          <input type="file" id="dirPickerSaveNewLocal" name="dirListSave" (change)="updateDirLocal()" style="display: none;" webkitdirectory />
+          <input type="file" id="dirPickerSaveNewLocal"
+          name="dirListSave" (change)="updateDirLocal()"
+          style="display: none;" webkitdirectory />
       </div>
     </div>
     <div class="form-group">
