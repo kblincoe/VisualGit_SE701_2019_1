@@ -59,13 +59,13 @@ import { RepositoryService } from '../services/repository.service';
             <li class="account_group"><p id="github_name"></p></li>
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-            onclick="confirmSignOut()"></a></li>
+            (click)="signOut()"></a></li>
           </ul>
 
           <ul id="return_main_menu" class="navbar-nav navbar-right hidden-xs">
             <li class="account_group"><p class="divider">|</p></li>
             <li class="account_group" style="padding-left: 12px;"><a href="" id="signOut" class="fas fa-sign-out-alt"
-            onclick="confirmSignOut()" title="Back to Login"></a></li>
+            (click)="signOut()" title="Back to Login"></a></li>
           </ul>
 
           <ul class="nav navbar-nav visible-xs">
@@ -295,7 +295,7 @@ export class HeaderComponent   {
   }
 
   signOut(): void {
-    redirectToHomePage();
+    ipcRenderer.send('authenticate', false);
   }
 
 }
