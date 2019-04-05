@@ -5,7 +5,7 @@ import { BodyPanelComponent } from './body.panel.component';
 import { FilePanelComponent } from './file.panel.component';
 import { FooterComponent } from './footer.component';
 import { HeaderComponent } from './header.component';
-import { ProjectPanelComponent } from './project.panel.component';
+import { EditorComponent } from './editor.component';
 
 @Component({
   selector: 'my-app',
@@ -16,8 +16,9 @@ import { ProjectPanelComponent } from './project.panel.component';
     <body-panel></body-panel>
     <add-repository-panel></add-repository-panel>
     <app-footer></app-footer>
+    <editor-component></editor-component>
   `,
-  directives: [AddRepositoryComponent, AuthenticateComponent, BodyPanelComponent, FilePanelComponent,  FooterComponent, HeaderComponent],
+  directives: [AddRepositoryComponent, AuthenticateComponent, BodyPanelComponent, FilePanelComponent,  FooterComponent, HeaderComponent, EditorComponent],
 })
 
 export class AppComponent { }

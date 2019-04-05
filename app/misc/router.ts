@@ -14,15 +14,25 @@ function switchToClonePanel(){
   hideFilePanel();
   hideProjectPanel();
   hideGraphPanel();
+  hideEditorPanel();
   displayClonePanel();
 }
 
 function switchToMainPanel() {
   hideAuthenticatePanel();
   hideAddRepositoryPanel();
+  hideEditorPanel();
   displayFilePanel();
   displayProjectPanel();
   displayGraphPanel();
+}
+
+function switchToEditorPanel() {
+  hideAuthenticatePanel();
+  hideFilePanel();
+  hideProjectPanel();
+  hideGraphPanel();
+  displayEditorPanel();
 }
 
 function switchToAddRepositoryPanel() {
@@ -30,6 +40,7 @@ function switchToAddRepositoryPanel() {
   hideFilePanel();
   hideProjectPanel();
   hideGraphPanel();
+  hideEditorPanel();
   displayAddRepositoryPanel();
 }
 
@@ -39,6 +50,14 @@ function wait(ms){
   while (end < start + ms) {
     end = new Date().getTime();
   }
+}
+
+function displayEditorPanel() {
+  document.getElementById('editor-component').style.zIndex = '10';
+}
+
+function hideEditorPanel() {
+  document.getElementById('editor-component').style.zIndex = '-10';
 }
 
 function displayClonePanel(){

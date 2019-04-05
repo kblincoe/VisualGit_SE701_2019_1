@@ -48,7 +48,7 @@ export class ProjectPanelComponent {
   }
 
   handleClickedFile(file:string):void {
-    console.log('OPEN: ' + file);
+    switchToEditorPanel();
   }
 
   handleClickedDir(dir:string):void {

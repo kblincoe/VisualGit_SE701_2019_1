@@ -266,6 +266,15 @@ body .body-panel .project-panel .project-window .dir-cell {
   cursor: pointer;
 }
 
+body .editor-component {
+  z-index: -10;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #404040;
+  color: #00990D;
+}
+
 body .body-panel .diff-panel {
   width: 0;
   height: 100%;

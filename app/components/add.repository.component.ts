@@ -168,13 +168,11 @@ export class AddRepositoryComponent {
   }
 
   initRepository(): void {
-    console.log('heyyyyyyyyyyyyyy')
     initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }
 
   returnToMainPanel(): void {
-    console.log('heyyyyyyyyyyyyyy')
     switchToMainPanel();
   }
 }
