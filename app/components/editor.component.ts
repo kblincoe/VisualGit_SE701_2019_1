@@ -8,16 +8,16 @@ import { Component } from '@angular/core';
         <button class="save-button" (click)="handleSaveClick()">Save</button>
         <textarea class="input" id="editor"></textarea>
     </div>
-  `
+  `,
 })
 
-export class EditorComponent { 
+export class EditorComponent {
 
-    handleBackClick():void {
+    handleBackClick(): void {
         switchToMainPanel();
     }
 
-    handleSaveClick():void {
+    handleSaveClick(): void {
         saveFileFromEditor();
     }
 }

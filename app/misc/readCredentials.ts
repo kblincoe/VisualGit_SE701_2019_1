@@ -1,30 +1,30 @@
-var CryptoJS = require("crypto-js");
+let CryptoJS = require('crypto-js');
 const os = require('os');
-var jsonfile = require('jsonfile');
-var fs = require('fs');
-var file;
+let jsonfile = require('jsonfile');
+let fs = require('fs');
+let file;
 
-var encryptedPassword;
-var encryptedUsername;
+let encryptedPassword;
+let encryptedUsername;
 
-  function decrypt() {
+function decrypt() {
 
     file = 'data.json';
-    
-    var objRead = jsonfile.readFileSync(file); //JSON Object containing credentials
-        
+
+    let objRead = jsonfile.readFileSync(file); // JSON Object containing credentials
+
     encryptedUsername = objRead.username;
-    encryptedPassword = objRead.password;    
+    encryptedPassword = objRead.password;
 
   }
 
-  function getUsername() {
+function getUsername() {
 
-    var decryptedUsernameBytes = CryptoJS.AES.decrypt(encryptedUsername.toString(), os.hostname());
+    let decryptedUsernameBytes = CryptoJS.AES.decrypt(encryptedUsername.toString(), os.hostname());
     return decryptedUsernameBytes.toString(CryptoJS.enc.Utf8);
   }
 
-  function getPassword() {    
-    var decryptedPasswordBytes = CryptoJS.AES.decrypt(encryptedPassword.toString(), os.hostname());
+function getPassword() {
+    let decryptedPasswordBytes = CryptoJS.AES.decrypt(encryptedPassword.toString(), os.hostname());
     return decryptedPasswordBytes.toString(CryptoJS.enc.Utf8);
   }

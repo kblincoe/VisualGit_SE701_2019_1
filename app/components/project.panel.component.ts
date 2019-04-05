@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ProjectDirectoryService } from '../services/projectDirectory.service';
 
 @Component({
@@ -24,30 +24,30 @@ import { ProjectDirectoryService } from '../services/projectDirectory.service';
 
   </div>
   `,
-  providers: [ProjectDirectoryService]
+  providers: [ProjectDirectoryService],
 })
 
 export class ProjectPanelComponent {
 
-  changeDetectorRef:ChangeDetectorRef;
-  projectDirectoryService:ProjectDirectoryService;
+  changeDetectorRef: ChangeDetectorRef;
+  projectDirectoryService: ProjectDirectoryService;
 
-  constructor(changeDecetctoeref:ChangeDetectorRef, projectDirectoryService:ProjectDirectoryService) {
+  files;
+  dirs;
+
+  constructor(changeDecetctoeref: ChangeDetectorRef, projectDirectoryService: ProjectDirectoryService) {
     projectPanelComponent = this;
     this.changeDetectorRef = changeDecetctoeref;
     this.projectDirectoryService = projectDirectoryService;
   }
 
-  files;
-  dirs;
-
-  updateProjectWindow():void {
+  updateProjectWindow(): void {
     this.files = this.projectDirectoryService.getFiles();
     this.dirs = this.projectDirectoryService.getDirectories();
     this.changeDetectorRef.detectChanges();
   }
 
-  handleClickedFile(file:string):void {
+  handleClickedFile(file: string): void {
     switchToEditorPanel();
     // Read the contents of the file specified
     fileLocation = this.projectDirectoryService.getFullPathName(file);
@@ -55,14 +55,14 @@ export class ProjectPanelComponent {
     readFromFileEditor(fileLocation);
   }
 
-  handleClickedDir(dir:string):void {
+  handleClickedDir(dir: string): void {
     this.projectDirectoryService.moveDownInDirectory(dir);
     this.files = this.projectDirectoryService.getFiles();
     this.dirs = this.projectDirectoryService.getDirectories();
     this.changeDetectorRef.detectChanges();
   }
 
-  handleBackClick():void {
+  handleBackClick(): void {
     this.projectDirectoryService.moveUpInDirectory();
     this.files = this.projectDirectoryService.getFiles();
     this.dirs = this.projectDirectoryService.getDirectories();

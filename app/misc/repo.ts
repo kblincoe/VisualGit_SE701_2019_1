@@ -9,7 +9,7 @@ import ProgressBar = require('progressbar.js');
 
 let repoFullPath;
 let repoLocalPath;
-let projectPanelComponent:ProjectPanelComponent;
+let projectPanelComponent: ProjectPanelComponent;
 let bname = {};
 const branchCommit = [];
 const remoteName = {};
@@ -418,7 +418,7 @@ function clearBranchSearchField() {
   // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
   // selects the branch droplist to change branches on the repo
   if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
-    const textField = document.getElementById("branchName");
+    const textField = document.getElementById('branchName');
     textField.value = '';
     sortBranches();
   } else {

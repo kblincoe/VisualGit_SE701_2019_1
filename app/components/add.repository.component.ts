@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { AddGitignoreComponent } from './add.gitignore.component';
-import { ProjectDirectoryService } from '../services/projectDirectory.service';
 import { ProjectPanelComponent } from './project.panel.component';
 
 @Component({
@@ -107,8 +106,9 @@ export class AddRepositoryComponent {
 
   @ViewChild(ProjectPanelComponent)
   projectPanel: ProjectPanelComponent;
- 
+
   addRepository(): void {
+
     downloadRepository();
     switchToMainPanel();
   }
