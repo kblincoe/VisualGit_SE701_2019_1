@@ -7,7 +7,7 @@ const { app, BrowserWindow, ipcMain, Menu, } = electron;
 require('electron-debug')();
 
 // Add library for triggering hot electron reloads
-require('electron-reload')(['./app/**/*.{js,ts,html,css}', './stylesheets**/*.css'], {
+require('electron-reload')(['./app/**/*.{js,ts,html,css}', './stylesheets**/*.css', './index.html', './index.js'], {
 	hardResetMethod: 'exit',
 });
 
