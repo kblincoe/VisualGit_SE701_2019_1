@@ -49,7 +49,6 @@ const myMenu = [
 		submenu: [
 			{role: 'minimize'},
 			{type: 'separator'},
-			// {role: 'close'},
 			{label: "Quit", accelerator: "CmdOrCtrl+Q", click: function () {app.quit();}}
 		]
 	},
