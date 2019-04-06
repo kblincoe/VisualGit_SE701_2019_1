@@ -7,9 +7,8 @@ const { app, BrowserWindow, ipcMain, Menu, } = electron;
 require('electron-debug')();
 
 // Add library for triggering hot electron reloads
-require('electron-reload')(__dirname, {
-	electron: require('${__dirname}/../../node_modules/electron'),
-	ignored: /recents.json|[\/\\]\./, // avoid reload when we write to recents
+require('electron-reload')(['./app/**/*.{js,ts,html,css}', './stylesheets**/*.css', './index.html', './index.js'], {
+	hardResetMethod: 'exit',
 });
 
 // prevent window being garbage collected
@@ -23,17 +22,17 @@ function onClosed() {
 }
 
 function createMainWindow() {
-	const win = new electron.BrowserWindow({
+	const win = new BrowserWindow({
 		backgroundColor : "#000",
-		icon: __dirname + '/assets/VisualGit_Logo.png'
+		icon: __dirname + '/assets/VisualGit_Logo.png',
+		show: false,
 	});
 
-	
 	win.maximize();
-
 	win.setTitle(require('./package.json').name);
 	win.loadURL(`file://${__dirname}/index.html`);
 	win.on('closed', onClosed);
+	win.show();
 	return win;
 }
 
@@ -61,35 +60,35 @@ const myMenu = [
 					{
 						label: 'Push',
 						click() {
-							var focusedWindow = BrowserWindow.getFocusedWindow();
+							let focusedWindow = BrowserWindow.getFocusedWindow();
 							focusedWindow.webContents.send('push-to-remote');
 						},
 					},
 					{
 						label: 'Pull',
 						click() {
-							var focusedWindow = BrowserWindow.getFocusedWindow();
+							let focusedWindow = BrowserWindow.getFocusedWindow();
 							focusedWindow.webContents.send('pull-from-remote');
 						},
 					},
 					{
 						label: 'Clone',
 						click() {
-							var focusedWindow = BrowserWindow.getFocusedWindow();
+							let focusedWindow = BrowserWindow.getFocusedWindow();
 							focusedWindow.webContents.send('clone-from-remote');
 						},
 					},
 					{
 						label: 'Clean',
 						click() {
-							var focusedWindow = BrowserWindow.getFocusedWindow();
+							let focusedWindow = BrowserWindow.getFocusedWindow();
 							focusedWindow.webContents.send('clean-repo');
 						},
 					},
 					{
 						label: 'Sync',
 						click() {
-							var focusedWindow = BrowserWindow.getFocusedWindow();
+							let focusedWindow = BrowserWindow.getFocusedWindow();
 							focusedWindow.webContents.send('request-link-modal');
 						}
 					},
@@ -104,42 +103,42 @@ const myMenu = [
 			{
 				label: 'White',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-white-style');
 				}
 			},
 			{
 				label: 'Pink',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-pink-style');
 				}
 			},
 			{
 				label: 'Blue',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-blue-style');
 				}
 			},
 			{
 				label: 'Navy',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-navy-style');
 				}
 			},
 			{
 				label: 'Green',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-green-style');
 				}
 			},
 			{
 				label: 'Default',
 				click() {
-					var focusedWindow = BrowserWindow.getFocusedWindow();
+					let focusedWindow = BrowserWindow.getFocusedWindow();
 					focusedWindow.webContents.send('change-to-default-style');
 				}
 			}]
@@ -158,8 +157,8 @@ const myMenu = [
 			},
 			{
 				label: 'GitHub Homepage',
-				click () { 
-					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1'); 
+				click () {
+					electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1');
 				}
 			},
 			{
@@ -167,54 +166,54 @@ const myMenu = [
 				submenu: [
 					{
 						label: 'Opening/Cloning Repositories',
-						click () { 
-							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories'); 
+						click () {
+                            electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Opening-or-Cloning-Repositories');
 						}
 					},
 					{
 						label: 'Adding and Committing',
-						click () { 
-							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Adding-&-Committing'); 
+						click () {
+                            electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Adding-&-Committing');
 						}
 					},
 					{
 						label: 'Pushing and Pulling from Remote',
-						click () { 
-							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Pushing-&-Pulling-from-Remote'); 
+						click () {
+                            electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Pushing-&-Pulling-from-Remote');
 						}
 					},
 					{
 						label: 'Complete List of Features',
-						click () { 
-							require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Features'); 
+						click () {
+                            electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Features');
 						}
 					}
-					
-				]	
+
+				]
 			},
 			{
 				label: 'Report Bugs or Request New Features',
-				click () { 
-					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/issues'); 
+				click () {
+                    electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/issues');
 				}
 			},
 			{
 				label: 'Offline Support',
-				click () { 
-					require('electron').shell.openItem(__dirname + '/README.pdf');   
+				click () {
+                    electron.shell.openItem(__dirname + '/README.pdf');
 				}
 			},
 			{
 				label: 'Learn More',
-				click () { 
-					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki'); 
-				}  
+				click () {
+                    electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki');
+				}
 			},
 			{type: 'separator'},
 			{
 				label: 'More Info on External Libraries',
-				click () { 
-					require('electron').shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help'); 
+				click () {
+                    electron.shell.openExternal('https://github.com/kblincoe/VisualGit_SE701_2019_1#help');
 				}
 			}
 		]
@@ -245,8 +244,13 @@ app.on('activate', () => {
 });
 
 app.on('ready', () => {
-	mainWindow = createMainWindow();
-	Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
+	// Wait for tsc to finish initial compile, then show window
+	// Avoids double load for when electron reloads on js compilation
+	let delay = new Promise(resolve => setTimeout(resolve, 1000));
+	delay.then(_ => {
+		mainWindow = createMainWindow();
+		Menu.setApplicationMenu(Menu.buildFromTemplate(myMenu));
+	});
 
 	// start background process to initialize graph
 	ipcMain.on('initGraph', (event, param) => {
