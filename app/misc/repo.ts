@@ -1,41 +1,100 @@
-import { parse } from 'path';
 import fetch from 'node-fetch';
-const NetworkSpeed = require('network-speed');
-const ProgressBar = require('progressbar.js');
-let Git = require("nodegit");
-let $ = require('jQuery');
+import { parse } from 'path';
+
+import $ = require('jQuery');
+import jsonfile = require('jsonfile');
+import NetworkSpeed = require('network-speed');
+import Git = require('nodegit');
+import ProgressBar = require('progressbar.js');
+
 let repoFullPath;
 let repoLocalPath;
 let bname = {};
-let branchCommit = [];
-let remoteName = {};
-let localBranches = [];
-let readFile = require("fs-sync");
-let checkFile = require("fs");
-let repoCurrentBranch = "master";
-let modal;
-let span;
+const branchCommit = [];
+const remoteName = {};
+const localBranches = [];
+const recentsFile = 'recents.json';
+import checkFile = require('fs');
+import readFile = require('fs-sync');
+const repoCurrentBranch = 'master';
+const modal;
+const span;
+const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = '10';
 
 let progressBar;
 let isErrorOpeningRepo;
 
-
 function downloadRepository() {
   // Full path is always in repoSave
-  let localPath = document.getElementById("repoSave").value;
-  let cloneURL = document.getElementById("repoClone").value;
+  const localPath = document.getElementById('repoSave').value;
+  const cloneURL = document.getElementById('repoClone').value;
 
   if (!cloneURL || cloneURL.length === 0) {
-      updateModalText("Clone Failed - Empty URL Given");
+      updateModalText('Clone Failed - Empty URL Given');
   } else {
       downloadFunc(cloneURL, localPath);
   }
+}
 
+function getRecentRepositories(): string[] {
+  if (checkFile.existsSync(recentsFile)) {
+    const objRead = jsonfile.readFileSync(recentsFile);
+    if (objRead.recents == null) {
+      return [];
+    } else {
+      return objRead.recents;
+    }
+  } else {
+    return [];
+  }
+}
+
+function saveRecentRepository(path: string) {
+  const recentsArray = getRecentRepositories();
+  // Remove path from array if it's already there (so we move it back to the front)
+  const recentsArrayFiltered = recentsArray.filter((e) => e !== path);
+  // Append new path and write back to JSON
+  recentsArrayFiltered.push(path);
+  if (recentsArrayFiltered.length > 10) {
+    // Max length of 10
+    recentsArrayFiltered.shift();
+  }
+  const JSONobj = {
+    recents: recentsArrayFiltered,
+  };
+  jsonfile.writeFileSync(recentsFile, JSONobj);
+}
+
+function populateRecents(): void {
+  // Populates the recents list
+  const list = document.getElementById('recents-list');
+
+  while (list.firstChild) {
+    // Remove all children
+    list.removeChild(list.firstChild);
+  }
+
+  // Reverse so we have newly accessed first
+  getRecentRepositories().reverse().forEach((element) => {
+    const entry = document.createElement('a');
+    entry.href = '#';
+    entry.addEventListener('click', () => {
+      if (checkFile.existsSync(element)) {
+        openRepository(element, element);
+        switchToMainPanel();
+      } else {
+        displayModal('Repository no longer exists on disk');
+      }
+    });
+    entry.className = 'list-group-item';
+    entry.innerHTML = element as string;
+    list.appendChild(entry);
+  });
 }
 
 function downloadFunc(cloneURL: string, fullLocalPath) {
   let options = {};
-  
+
   // Get user host of the repo and the name of the repo from the url
   const urlParts = cloneURL.split('/');
   const repoUser = urlParts[3];
@@ -46,12 +105,13 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
       function(response) {
         if (response.status === 200) {  // OK
           response.json().then(function(data) {
-            if(!isErrorOpeningRepo) {
+            if (!isErrorOpeningRepo) {
+              saveRecentRepository(fullLocalPath);
               setCloneStatistics(`${repoUser}/${repoName}`, data.size);
             }
-          }); 
-        };
-      }
+          });
+        }
+      },
     )
     .catch(function(err) {
       console.log('Fetch Error :-S', err);
@@ -68,105 +128,184 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
           const progress = (100 * (stats.receivedObjects() + stats.indexedObjects())) / (stats.totalObjects() * 2);
           updateDownloadPercentage(progress);
           getNetworkDownloadSpeed();
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
-  console.log("Cloning into " + fullLocalPath);
-  let repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
+  console.log('Cloning into ' + fullLocalPath);
+  const repository = Git.Clone.clone(cloneURL, fullLocalPath, options)
   .then(function(repository) {
     isErrorOpeningRepo = false;
-    console.log("Repo successfully cloned");
-    refreshAll(repository);
-    updateModalText("Clone Successful, repository saved under: " + fullLocalPath);
-    addCommand("git clone " + cloneURL + " " + fullLocalPath);
+    console.log('Repo successfully cloned');
+    updateModalText('Clone Successful, repository saved under: ' + fullLocalPath);
+    addCommand('git clone ' + cloneURL + ' ' + fullLocalPath);
     repoFullPath = fullLocalPath;
     repoLocalPath = fullLocalPath;
-    refreshAll(repository);
+    openRepository(repoFullPath, repoLocalPath);
   },
   function(err) {
-    updateModalText("Clone Failed - " + err);
+    updateModalText('Clone Failed - ' + err);
     console.log(`Error in repo.ts. Attempting to clone repo, the error is: ${err}`);
     isErrorOpeningRepo = true;
   });
 }
 
-function openRepository() {
-  // Full path is determined by either handwritten directory or selected by file browser
-  if (document.getElementById("repoOpen").value == null || document.getElementById("repoOpen").value == "") {
-    let localPath = document.getElementById("dirPickerOpenLocal").files[0].webkitRelativePath;
-    let fullLocalPath = document.getElementById("dirPickerOpenLocal").files[0].path;
-    document.getElementById("repoOpen").value = fullLocalPath;
-    document.getElementById("repoOpen").text = fullLocalPath;
+function initRepo(gitignoreTypes: string[]){
+  let fullLocalPath;
+
+  const localPath = document.getElementById('newRepoSaveLocal').value;
+  if (checkFile.existsSync(localPath)) {
+    fullLocalPath = localPath;
   } else {
-    let localPath = document.getElementById("repoOpen").value;
-    let fullLocalPath;
+    fullLocalPath = require('path').join(__dirname, localPath);
+  }
+
+  const createAndAdd = function(){
+    let repository;
+    let index;
+    // Most of this part is based off of
+    // https://github.com/nodegit/nodegit/blob/master/examples/create-new-repo.js
+    Git.Repository.init(fullLocalPath, 0).then(function(repo) {
+      repository = repo;
+    })
+    .then(function(){
+      return repository.refreshIndex();
+    })
+    .then(function(idx: any) {
+      index = idx;
+    })
+    .then(function() {
+      return index.addByPath('.gitignore');
+    })
+    .then(function() {
+      return index.write();
+    })
+    .then(function() {
+      return index.writeTree();
+    })
+    .then(function(oid: any) {
+      const sign = Git.Signature.default(repository);
+      // Since we're creating an inital commit, it has no parents. Note that unlike
+      // normal we don't get the head either, because there isn't one yet.
+      return repository.createCommit('HEAD', sign, sign, 'add gitignore', oid, []);
+    })
+    .done(function(commitId) {
+      console.log('New Commit: ', commitId);
+      openRepository(fullLocalPath, localPath);
+    });
+  };
+
+  const fs = require('fs');
+  // There is a race condition if you try to init the repo while the .gitignore is being written
+  // which is why we have this callback
+  const onWrite = function(err: any){
+    if (err) {
+      return console.log(err);
+    }
+    console.log('.gitignore created');
+    if (fs.existsSync(fullLocalPath + '/.git')) {
+      openRepository(fullLocalPath, localPath);
+    }else{
+      createAndAdd();
+    }
+  };
+  if (gitignoreTypes.length > 0){
+    queryGitignore(gitignoreTypes, function(gitignore) {
+      fs.appendFile(fullLocalPath + '/.gitignore', gitignore, onWrite);
+    });
+  }else{
+    fs.appendFile(fullLocalPath + '/.gitignore', '', onWrite);
+  }
+
+}
+
+function openLocalRepository() {
+  // Full path is determined by either handwritten directory or selected by file browser
+  let localPath: string;
+  let fullLocalPath: string;
+  if (document.getElementById('repoOpen').value === null || document.getElementById('repoOpen').value === '') {
+    localPath = document.getElementById('dirPickerOpenLocal').files[0].webkitRelativePath;
+    fullLocalPath = document.getElementById('dirPickerOpenLocal').files[0].path;
+    document.getElementById('repoOpen').value = fullLocalPath;
+    document.getElementById('repoOpen').text = fullLocalPath;
+  } else {
+    localPath = document.getElementById('repoOpen').value;
     if (checkFile.existsSync(localPath)) {
       fullLocalPath = localPath;
     } else {
-      fullLocalPath = require("path").join(__dirname, localPath);
+      fullLocalPath = require('path').join(__dirname, localPath);
     }
   }
+  openRepository(fullLocalPath, localPath);
+}
 
+function openRepository(fullLocalPath: string, localPath: string) {
+  // Open a reponsitory for which we have the file path for
   console.log(`Trying to open repository at ${fullLocalPath}`);
-  displayModal("Opening Local Repository...");
+  saveRecentRepository(fullLocalPath);
+  displayModal('Opening Local Repository...');
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
     repoFullPath = fullLocalPath;
     repoLocalPath = localPath;
-    if (readFile.exists(repoFullPath + "/.git/MERGE_HEAD")) {
-      let tid = readFile.read(repoFullPath + "/.git/MERGE_HEAD", null);
+    if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
+      const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
     }
-    refreshAll(repository);
-    console.log("Repo successfully opened");
-    updateModalText("Repository successfully opened");
+
+    const windowAny: any = window;
+    windowAny.graphComponent.setLoading(true);
+    refreshAll(repository, () => {
+      console.log('Repo successfully opened');
+      updateModalText('Repository successfully opened');
+      windowAny.graphComponent.setLoading(false);
+    });
   },
   function(err) {
-    updateModalText("Opening Failed - " + err);
+    updateModalText('Opening Failed - ' + err);
     console.log(`Error in repo.ts. Attempting to open repo, the error is: ${err}`);
     isErrorOpeningRepo = true;
   });
 }
 
 function addBranchestoNode(thisB: string) {
-  let elem = document.getElementById("otherBranches");
+  const elem = document.getElementById('otherBranches');
   elem.innerHTML = '';
   for (let i = 0; i < localBranches.length; i++) {
     if (localBranches[i] !== thisB) {
-      let li = document.createElement("li");
-      let a = document.createElement("a");
+      const li = document.createElement('li');
+      const a = document.createElement('a');
       a.appendChild(document.createTextNode(localBranches[i]));
-      a.setAttribute("tabindex", "0");
-      a.setAttribute("href", "#");
+      a.setAttribute('tabindex', '0');
+      a.setAttribute('href', '#');
       li.appendChild(a);
       elem.appendChild(li);
     }
   }
 }
 
-function refreshAll(repository) {
+function refreshAll(repository, cb?: () => void) {
   let branch;
   bname = [];
   repository.getCurrentBranch()
   .then(function(reference) {
-    let branchParts = reference.name().split("/");
+    const branchParts = reference.name().split('/');
     branch = branchParts[branchParts.length - 1];
-  },function(err) {
+  }, function(err) {
     console.log(`Error in repo.ts. Attempting to refresh branch, the error is: ${err}`); // TODO show error on screen
   })
   .then(function() {
     return repository.getReferences(Git.Reference.TYPE.LISTALL);
   })
   .then(function(branchList) {
-    let count = 0;
+    const count = 0;
     clearBranchElement();
     for (let i = 0; i < branchList.length; i++) {
-      let bp = branchList[i].name().split("/");
+      const bp = branchList[i].name().split('/');
       Git.Reference.nameToId(repository, branchList[i].name()).then(function(oid) {
         // Use oid
         if (branchList[i].isRemote()) {
-          remoteName[bp[bp.length-1]] = oid;
+          remoteName[bp[bp.length - 1]] = oid;
         } else {
           branchCommit.push(branchList[i]);
           if (oid.tostrS() in bname) {
@@ -180,20 +319,20 @@ function refreshAll(repository) {
       });
       if (branchList[i].isRemote()) {
         if (localBranches.indexOf(bp[bp.length - 1]) < 0) {
-          displayBranch(bp[bp.length - 1], "branch-dropdown", "checkoutRemoteBranch(this)");
+          displayBranch(bp[bp.length - 1], 'branch-dropdown', 'checkoutRemoteBranch(this)');
         }
       } else {
         localBranches.push(bp[bp.length - 1]);
-        displayBranch(bp[bp.length - 1], "branch-dropdown", "checkoutLocalBranch(this)");
+        displayBranch(bp[bp.length - 1], 'branch-dropdown', 'checkoutLocalBranch(this)');
       }
 
     }
   })
   .then(function() {
-    console.log("Updating the graph and the labels");
-    drawGraph();
-    document.getElementById("repo-name").innerHTML = repoLocalPath;
-    document.getElementById("branch-name").innerHTML = branch + '<span class="caret"></span>';
+    console.log('Updating the graph and the labels');
+    drawGraph(cb);
+    document.getElementById('repo-name').innerHTML = repoLocalPath;
+    document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
   });
 }
 
@@ -207,11 +346,13 @@ function getAllBranches() {
   .then(function(branchList) {
     clearBranchElement();
     for (let i = 0; i < branchList.length; i++) {
-      let bp = branchList[i].split("/");
-      if (bp[1] !== "remotes") {
-        displayBranch(bp[bp.length - 1], "branch-dropdown", "checkoutLocalBranch(this)");
+      const bp = branchList[i].split('/');
+      if (bp[1] !== 'remotes') {
+        displayBranch(bp[bp.length - 1], 'branch-dropdown', 'checkoutLocalBranch(this)');
       }
       Git.Reference.nameToId(repos, branchList[i]).then(function(oid) {
+        // linter is complaining about this method call being empty so i added this here
+        console.log('getting name to Id');
       });
     }
   });
@@ -230,29 +371,28 @@ function getOtherBranches() {
     list = branchList;
   })
   .then(function() {
-    return repos.getCurrentBranch()
+    return repos.getCurrentBranch();
   })
   .then(function(ref) {
-    let name = ref.name().split("/");
+    const name = ref.name().split('/');
     clearBranchElement();
     for (let i = 0; i < list.length; i++) {
-      let bp = list[i].split("/");
-      if (bp[1] !== "remotes" && bp[bp.length - 1] !== name[name.length - 1]) {
-        displayBranch(bp[bp.length - 1], "merge-dropdown", "mergeLocalBranches(this)");
+      const bp = list[i].split('/');
+      if (bp[1] !== 'remotes' && bp[bp.length - 1] !== name[name.length - 1]) {
+        displayBranch(bp[bp.length - 1], 'merge-dropdown', 'mergeLocalBranches(this)');
       }
     }
-  })
-
+  });
 }
 
 function clearMergeElement() {
-  let ul = document.getElementById("merge-dropdown");
+  const ul = document.getElementById('merge-dropdown');
   ul.innerHTML = '';
 }
 
 function clearBranchElement() {
-  let ul = document.getElementById("branch-dropdown");
-  let li = document.getElementById("create-branch");
+  const ul = document.getElementById('branch-dropdown');
+  const li = document.getElementById('create-branch');
   ul.innerHTML = '';
   ul.appendChild(li);
 }
@@ -262,7 +402,7 @@ function displayBranch(name, id, onclick) {
   var parent = name.split('/')[1];
   parent = parent.replace(/\./g, '-');
   console.log('parent = ', parent);
-  const fork = name.split('/')[0];
+  const fork = name.split('/')[0];  
   console.log('parent', parent, 'fork', fork);
   const whole_list = document.getElementById(id);
 
@@ -301,28 +441,63 @@ function displayBranch(name, id, onclick) {
 
 }
 
+function clearBranchSearchField() {
+  // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
+  // selects the branch droplist to change branches on the repo
+  if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
+    const textField = document.getElementById("branchName");
+    textField.value = '';
+    sortBranches();
+  } else {
+    displayModal('Unable to change branch while attempting to add, create or change repository.' +
+    'Please ready a repository before changing branches');
+  }
+}
+
+function sortBranches() {
+  let txtValue;
+  let i;
+  let a;
+  const input = document.getElementById('branchName');
+  const filter = input.value.toUpperCase();
+  const ul = document.getElementById('branch-dropdown');
+  const li = ul.getElementsByTagName('li');
+  for (i = 1; i < li.length; i++) {
+    a = li[i].firstChild;
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = '';
+    } else {
+        li[i].style.display = 'none';
+    }
+  }
+}
+
 function checkoutLocalBranch(element) {
   let bn;
-  if (typeof element === "string") {
+  if (typeof element === 'string') {
     bn = element;
   } else {
     bn = element.innerHTML;
   }
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
-    addCommand("git checkout " + bn);
-    repo.checkoutBranch("refs/heads/" + bn)
+    addCommand('git checkout ' + bn);
+    repo.checkoutBranch('refs/heads/' + bn)
     .then(function() {
       refreshAll(repo);
     }, function(err) {
       console.log(`Error in repo.ts. Attempting to checkout branch, the error is: ${err}`);
     });
-  })
+  });
+
+  // Clear branch creation text field
+  document.getElementById('branchName').value = '';
 }
 
 function checkoutRemoteBranch(element) {
   let bn;
-  if (typeof element === "string") {
+  if (typeof element === 'string') {
     bn = element;
   } else {
     bn = element.innerHTML;
@@ -331,66 +506,66 @@ function checkoutRemoteBranch(element) {
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repos = repo;
-    addCommand("git fetch");
-    addCommand("git checkout -b " + bn);
-    let cid = remoteName[bn];
+    addCommand('git fetch');
+    addCommand('git checkout -b ' + bn);
+    const cid = remoteName[bn];
     return Git.Commit.lookup(repo, cid);
   })
   .then(function(commit) {
     return Git.Branch.create(repos, bn, commit, 0);
   })
   .then(function(code) {
-    repos.mergeBranches(bn, "origin/" + bn)
+    repos.mergeBranches(bn, 'origin/' + bn)
     .then(function() {
         refreshAll(repos);
-        console.log("Pull successful");
+        console.log('Pull successful');
     });
   }, function(err) {
     console.log(`Error in repo.ts. Attempting to checkout remote branch, the error is: ${err}`);
-  })
+  });
 }
 
 function updateLocalPath() {
-  let text = document.getElementById("repoClone").value;
-  let splitText = text.split(/\.|:|\//);
+  const text = document.getElementById('repoClone').value;
+  const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     // Calculate full path by joining working dir + repo name
-    let fullLocalPath = require("path").join(__dirname, splitText[splitText.length - 2]);
-    document.getElementById("repoSave").value = fullLocalPath;
+    const fullLocalPath = require('path').join(__dirname, splitText[splitText.length - 2]);
+    document.getElementById('repoSave').value = fullLocalPath;
   }
 }
 
-function updateCustomPath(userPath: String) {
-  let text = document.getElementById("repoClone").value;
-  let splitText = text.split(/\.|:|\//);
+function updateCustomPath(userPath: string) {
+  const text = document.getElementById('repoClone').value;
+  const splitText = text.split(/\.|:|\//);
   if (splitText.length >= 2) {
     // Calculate full path by joining working dir + repo name
-    let fullLocalPath = require("path").join(userPath, splitText[splitText.length - 2]);
-    document.getElementById("repoSave").value = fullLocalPath;
+    const fullLocalPath = require('path').join(userPath, splitText[splitText.length - 2]);
+    document.getElementById('repoSave').value = fullLocalPath;
   } else {
     // Couldn't compute path
-    document.getElementById("repoSave").value = userPath;
+    document.getElementById('repoSave').value = userPath;
   }
 }
 
 // function initModal() {
-//   modal = document.getElementById("modal");
-//   btn = document.getElementById("new-repo-button");
-//   confirmBtn = document.getElementById("confirm-button");
-//   span = document.getElementsByClassName("close")[0];
+//   modal = document.getElementById('modal');
+//   btn = document.getElementById('new-repo-button');
+//   confirmBtn = document.getElementById('confirm-button');
+//   span = document.getElementsByClassName('close')[0];
 // }
 
 // function handleModal() {
 //   // When the user clicks on <span> (x), close the modal
 //   span.onclick = function() {
-//     modal.style.display = "none";
+//     modal.style.display = 'none';
 //   };
 //
 //   // When the user clicks anywhere outside of the modal, close it
 //   window.onclick = function(event) {
 //
 //     if (event.target === modal) {
-//       modal.style.display = "none";
+//       modal.style.display = 'none';
 //     }
 //   };
 // }
@@ -398,13 +573,13 @@ function updateCustomPath(userPath: String) {
 function displayModal(text) {
 //  initModal();
 //  handleModal();
-  document.getElementById("modal-text-box").innerHTML = text;
+  document.getElementById('modal-text-box').innerHTML = text;
   $('#modal').modal('show');
 }
 
 function updateModalText(text) {
-  const modal = document.getElementById("modal-text-box");
-  if(modal) {
+  const modal = document.getElementById('modal-text-box');
+  if (modal) {
     modal.innerHTML = text;
     $('#modal').modal('show');
   }
@@ -433,9 +608,9 @@ function setCloneStatistics(repoName: string, repoSize: number) {
         bottom: '5px',
         padding: 0,
         margin: 0,
-        transform: null
+        transform: null,
       },
-      autoStyleContainer: false
+      autoStyleContainer: false,
     },
     // Changes colour from a starting colour to a final colour
     from: {color: '#39C0BA' },
@@ -443,20 +618,20 @@ function setCloneStatistics(repoName: string, repoSize: number) {
     step: (state, bar) => {
       bar.path.setAttribute('stroke', state.color); // Colour transition
       bar.setText(`${(bar.value() * 100).toFixed(2)}%`); // Percentage Label
-    }
+    },
   });
 }
 
 function updateDownloadPercentage(percentage: number) {
-  if(progressBar) {
+  if (progressBar) {
     progressBar.animate((percentage / 100)); // Supply a number between 0 and 1
   }
 }
 
 function updateDownloadSpeed(speed: number) {
   const speedRounded = Math.round(speed);
-  if(!isNaN(speedRounded) && document.getElementById("download-speed")) {
-    document.getElementById("download-speed")!.innerHTML = `${speedRounded} kB/s`;
+  if (!isNaN(speedRounded) && document.getElementById('download-speed')) {
+    document.getElementById('download-speed')!.innerHTML = `${speedRounded} kB/s`;
   }
 }
 
@@ -465,9 +640,10 @@ function updateDownloadSpeed(speed: number) {
  */
 async function getNetworkDownloadSpeed() {
   const networkSpeed = new NetworkSpeed();
-  // Retrieve 250kB binaries from server host, same as speedtest https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
-  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000'; 
+  // Retrieve 250kB binaries from server host, same as speedtest
+  // https://support.ookla.com/hc/en-us/articles/234575968-Speedtest-Configuration-Options
+  const baseUrl = 'http://eu.httpbin.org/stream-bytes/250000';
   const fileSize = 250000;  // Size of the file retrived from the website, for calcs
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
-}  
+}

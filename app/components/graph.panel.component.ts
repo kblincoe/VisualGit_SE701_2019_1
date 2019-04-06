@@ -1,9 +1,14 @@
-import { Component } from "@angular/core";
+import { Component, NgZone } from '@angular/core';
+
+const GRAPH_COMPONENT_REF: string = 'graphComponent';
 
 @Component({
-  selector: "graph-panel",
+  selector: 'graph-panel',
   template: `
   <div class="graph-panel" id="graph-panel">
+    <div *ngIf="isLoading" class="network loadingContainer">
+    <div class="lds-css ng-scope"><div class="lds-rolling"><div></div></div></div>
+    </div>
     <div class="network" id="my-network">
     </div>
     <ul class="dropdown-menu" role="menu" id="branchOptions">
@@ -51,18 +56,36 @@ import { Component } from "@angular/core";
       </div><!-- /.modal-dialog -->
     </div>
   </div>
-  `
+  `,
 })
 
 export class GraphPanelComponent {
+  isLoading: boolean;
+  zone: NgZone;
+
+  constructor(zone: NgZone) {
+    this.zone = zone;
+    this.isLoading = false;
+
+    window[GRAPH_COMPONENT_REF] = {
+      setLoading: (state: boolean) => this.setLoading(state),
+    };
+  }
+
+  setLoading(loading: boolean) {
+    this.zone.run(() => {
+      this.isLoading = loading;
+    });
+  }
+
   mergeBranches(): void {
-    let p1 = document.getElementById('fromMerge').innerHTML;
+    const p1 = document.getElementById('fromMerge').innerHTML;
     mergeCommits(p1);
   }
 
   rebaseBranches(): void {
-    let p1 = document.getElementById('fromRebase').innerHTML;
-    let p2 = document.getElementById('toRebase').innerHTML;
+    const p1 = document.getElementById('fromRebase').innerHTML;
+    const p2 = document.getElementById('toRebase').innerHTML;
     rebaseCommits(p1, p2);
   }
 }

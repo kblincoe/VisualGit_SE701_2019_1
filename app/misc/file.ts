@@ -1,48 +1,50 @@
 let fileLocation;
 
 function readFromFile(filePath) {
-    fileLocation = require("path").join(repoFullPath, filePath);
+  fileLocation = require('path').join(repoFullPath, filePath);
 
-    let lineReader = require("readline").createInterface({
-      input: fs.createReadStream(fileLocation)
-    });
+  const lineReader = require('readline').createInterface({
+    input: fs.createReadStream(fileLocation),
+  });
 
-    let doc = document.getElementById("diff-panel-body");
-    lineReader.on("line", function (line) {
-      appendLineToDoc(doc,line);
-    });
-  }
+  const doc = document.getElementById('diff-panel-body');
+  lineReader.on('line', function(line) {
+    appendLineToDoc(doc, line);
+  });
+}
 
-  function appendLineToDoc(doc,line){
-    let element = document.createElement("div");
-    element.textContent = line;
-    doc.appendChild(element);
-  }
+function appendLineToDoc(doc, line){
+  const element = document.createElement('div');
+  element.textContent = line;
+  doc.appendChild(element);
+}
 
-  function saveFile() {
-    let fileContent = generateFileContent();
-    fs.writeFile(fileLocation, fileContent, 'utf8', function(err) {
-        if (err) throw err;
-        saveSuccess();
-    });
+function saveFile() {
+  const fileContent = generateFileContent();
+  fs.writeFile(fileLocation, fileContent, 'utf8', function(err) {
+    if (err) {
+      throw err;
+    }
+    saveSuccess();
+  });
 }
 
 function generateFileContent(){
-    let doc = document.getElementById("diff-panel-body");
-    let children = doc.childNodes;
-    
-    let content = "";
-    children.forEach(function (child) {
-        content += child.textContent + "\n";
-    });
-    return content;
+  const doc = document.getElementById('diff-panel-body');
+  const children = doc.childNodes;
+
+  let content = '';
+  children.forEach(function(child) {
+    content += child.textContent + '\n';
+  });
+  return content;
 }
 
 function saveSuccess(){
-    displayModal("File saved!");
+  displayModal('File saved!');
 }
 
 function cancelEdit(){
-    hideDiffPanel();
+  hideDiffPanel();
 }
 
