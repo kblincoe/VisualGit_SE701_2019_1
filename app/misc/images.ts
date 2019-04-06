@@ -1,40 +1,49 @@
-const images = {};
-// let imageFiles = ['dog1.jpg', 'dog2.jpg', 'dog3.jpg', 'dog4.jpg', 'dog5.jpg'];
-const imageFiles = ['jarjar.jpg', 'yoda.png', 'obiwan.jpg'];
-const imageCount = 0;
-import githubAvatarUrl = require('github-avatar-url');
 
 function getName(author: string) {
   const name = author.split('<')[0];
   return name;
 }
 
-function img4User(name: string) {
-  let pic;
-  const first = name.trim().charAt(0).toUpperCase();
-  pic =  'node_modules/material-letter-icons/dist/png/' + first + '.png';
-  return pic;
+// convert a github username into a profile picture url
+function getGitHubProfilePictureURL(username: string) {
+  return 'https://github.com/' + encodeURI(username) + '.png';
 }
 
-function imageForUser(name: string, email: string, callback) {
-  let pic;
-  githubAvatarUrl(email, {token: 'foo'}, function(err, avatarURL){
-    if (!err) {
-      console.log(`Avatar obtained from: ${avatarURL}`);
-      pic = avatarURL;
-    } else {
-      const first = name.trim().charAt(0).toUpperCase();
-      pic =  'node_modules/material-letter-icons/dist/png/' + first + '.png';
-    }
-    callback(pic);
-  });
+// convert the first letter of a string into a profile (letter) picture url
+function getLetterProfilePictureURL(letter: string) {
+  return 'node_modules/material-letter-icons/dist/png/' + letter[0] + '.png';
+}
 
-  // if (images[email] === undefined) {
-  //   images[email] = 'assets/img/starwars/' + imageFiles[imageCount];
-  //   imageCount++;
-  //   if (imageCount >= imageFiles.length) {
-  //     imageCount = 0;
+// convert to a github username if the email is a github no reply email.
+function usernameFromEmail(email: string) {
+  if (email.includes('noreply.github.com')) {
+    return email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
+  } else {
+    return null;
+  }
+}
+
+function getProfilePictureURL(name: string, email: string, callback) {
+  // try to construct username from github email
+  const username = usernameFromEmail( email );
+
+  // this code block was left in in-case we open an issue to
+  // enable non-github emails to resolve to github usernames.
+
+  // if not possible, try to fetch the github username from github.
+  // if( username == null ) {
+  //   if( callback != null ) { // only if we have provided a callback...
+  //     githubUsername( email ).then( uname => {
+  //       callback( getGitHubProfilePictureURL( uname ) );
+  //     });
   //   }
   // }
-  // return images[email];
+
+  // if all else fails, resort to letters
+  if ( username == null ) {
+    return getLetterProfilePictureURL(name.toUpperCase());
+  } else {
+    // success! return the profile picture url
+    return getGitHubProfilePictureURL(username);
+  }
 }
