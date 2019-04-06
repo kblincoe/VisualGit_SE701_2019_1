@@ -258,16 +258,47 @@ function clearBranchElement() {
 }
 
 function displayBranch(name, id, onclick) {
-  let ul = document.getElementById(id);
-  let li = document.createElement("li");
-  let a = document.createElement("a");
-  a.setAttribute("href", "#");
-  a.setAttribute("class", "list-group-item");
-  a.setAttribute("onclick", onclick);
-  li.setAttribute("role", "presentation");
-  a.appendChild(document.createTextNode(name));
+
+  var parent = name.split('/')[1];
+  parent = parent.replace(/\./g, '-');
+  console.log('parent = ', parent);
+  const fork = name.split('/')[0];
+  console.log('parent', parent, 'fork', fork);
+  const whole_list = document.getElementById(id);
+
+  if(document.getElementById(parent) == null){
+    const li_parent = document.createElement('li');
+
+    const parent_title = document.createElement('a');
+    parent_title.setAttribute('class', 'list-group-item collapsed');
+    parent_title.appendChild(document.createTextNode(parent));
+    parent_title.setAttribute('data-toggle', 'collapse');
+    parent_title.setAttribute('data-target', '#'+parent);
+    parent_title.setAttribute('aria-expanded', 'false');
+    parent_title.setAttribute('href', '#');
+    li_parent.appendChild(parent_title);
+
+    var ul_parent = document.createElement('ul');
+    ul_parent.setAttribute('aria-expanded', 'false');
+    ul_parent.setAttribute('class', 'collapse');
+    ul_parent.setAttribute('style', 'height: 0px;');
+    ul_parent.setAttribute('id', parent);
+    li_parent.appendChild(ul_parent);
+    whole_list.appendChild(li_parent);
+    console.log('adding parent repo');
+  }
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  var parent_ul = document.getElementById(parent);
+
+  a.setAttribute('href', '#');
+  a.setAttribute('class', 'list-group-item');
+  a.setAttribute('onclick', onclick);
+  li.setAttribute('role', 'presentation');
+  a.appendChild(document.createTextNode(fork));
   li.appendChild(a);
-  ul.appendChild(li);
+  parent_ul.appendChild(li);
+
 }
 
 function checkoutLocalBranch(element) {
