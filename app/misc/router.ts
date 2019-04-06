@@ -2,6 +2,8 @@ let cred;
 let blue = '#39c0ba';
 let gray = '#5b6969';
 
+const {authenticate} = require('authenticate');
+
 function collapseSignPanel() {
   $('#nav-collapse1').collapse('hide');
   // Clear sign in input fields
@@ -39,10 +41,8 @@ function wait(ms){
 }
 
 function displayClonePanel(){
-
   const vals = 'add-repository-panel';
   document.getElementById('add-repository-panel').style.zIndex = '10';
-  $('#open-local-repository').hide();
 }
 
 function displayFilePanel() {
@@ -130,6 +130,6 @@ function disableDiffPanelEditOnHide(){
   doc.contentEditable = 'false';
 }
 
-function useSaved() {
-  loginWithSaved(switchToMainPanel);
+async function useSaved() {
+  await loginWithSaved(switchToMainPanel);
 }

@@ -4,9 +4,9 @@
 // import * as nodegit from 'git';
 // import NodeGit, { Status } from 'nodegit';
 
-const { ipcRenderer } = require('electron');
-let Git = require("nodegit");
-let repo;
+import { ipcRenderer } from 'electron';
+import Git = require("nodegit");
+const repo;
 
 import github = require('octonode');
 const aid;
@@ -109,18 +109,33 @@ function getUserInfo(callback) {
           for (let i = 0; i < data.length; i++) {
               const rep = Object.values(data)[i];
               console.log(`Getting repo info from: ${rep['html_url']}`);
-              displayBranch(rep['full_name'], 'repo-dropdown', 'selectRepo(this)');
+              displayRepo(rep['full_name'], 'repo-dropdown');
               repoList[rep['full_name']] = rep['html_url'];
           }
         }
-    });
+      });
+    }
+  });
 }
 
-function selectRepo(ele) {
-  url = repoList[ele.innerHTML];
-  const butt = document.getElementById('cloneButton');
-  butt.innerHTML = 'Clone ' + ele.innerHTML;
-  butt.setAttribute('class', 'btn btn-primary');
+/**
+ * Populates the repository list
+ */
+function displayRepo(name, id) {
+  const ul = document.getElementById(id);
+  const entry = document.createElement('a');
+  entry.href = '#';
+  entry.className = 'list-group-item';
+  entry.append(document.createTextNode(name));
+  entry.addEventListener('click', () => {
+    // Set button to clone selected repo
+    url = repoList[name];
+    const button = document.getElementById('cloneButton');
+    button.innerHTML = 'Clone ' + name;
+    button.setAttribute('class', 'btn btn-primary');
+    button.onclick = function() {cloneRepo()};
+  });
+  ul.appendChild(entry);
 }
 
 function cloneRepo() {

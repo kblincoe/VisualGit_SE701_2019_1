@@ -8,10 +8,8 @@ import $ = require('jquery');
 import Git = require('nodegit');
 import opn = require('opn');
 const green = '#84db00';
-const repo;
 let index;
 let oid;
-const remote;
 let commitMessage;
 let filesToAdd = [];
 let theirCommit = null;
@@ -93,7 +91,7 @@ function addAndCommit() {
     for (let i = 0; i < filesToAdd.length; i++) {
       addCommand('git add ' + filesToAdd[i]);
     }
-    addCommand('git commit -m "' + commitMessage + '"');
+    addCommand('git commit -m ' + commitMessage);
     refreshAll(repository);
   }, function(err) {
     console.log(`Error in git.ts. Attempting to commit, the error is: ${err}`);
@@ -263,20 +261,27 @@ function pullFromRemote() {
 // });
 }
 
-
-
-
-
 function pushToRemote() {
-  const branch = document.getElementById('branch-name').innerText;
+  const branchElement = document.getElementById('branch-name');
+  if (!branchElement || !repoFullPath) {
+    // Safety checking there is a repo and a branch to push to
+    return;
+  }
+  const branch = branchElement.innerText;
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
-    console.log('Pushing changes to remote...');
-    displayModal('Pushing changes to remote...');
-    addCommand('git push -u origin ' + branch);
-    repo.getRemotes()
-    .then(function(remotes) {
-      repo.getRemote(remotes[0])
+    getCommitCountDifference(repo, branch, (result) => {
+      if (result.ahead === 0) {  //  Repo is not ahead by any commits i.e. no changes
+        displayModal('No changes to push');
+        return;
+      }
+      displayModal('Pushing changes to remote...');
+      addCommand('git push -u origin ' + branch);
+
+      repo.getRemotes()
+      .then(function(remotes) {
+        return repo.getRemote(remotes[0]);
+      })
       .then(function(remote) {
         return remote.push(
           ['refs/heads/' + branch + ':refs/heads/' + branch],
@@ -292,7 +297,6 @@ function pushToRemote() {
       .then(function() {
         unpushedCommits = false;
         window.onbeforeunload = Confirmed;
-        console.log('Push successful');
         updateModalText('Push successful');
         refreshAll(repo);
       });
@@ -883,4 +887,22 @@ function hasUnpushedCommits() {
 function clear() {
   changes = false;
   unpushedCommits = false;
+}
+
+function getCommitCountDifference(repo, branch: string, callback: (result: ICommitDifferences) => void) {
+  repo.getReferenceCommit(`refs/remotes/origin/${branch}`).then(function(remoteCommit) {
+    const remoteID = remoteCommit.id();
+    repo.getReferenceCommit(branch).then(function(localCommit) {
+      return localCommit.id();
+    }).then(function(localID) {
+      Git.Graph.aheadBehind(repo, localID, remoteID).then(function(result) {
+        callback(result);
+      });
+    });
+  });
+}
+
+export interface ICommitDifferences {
+  ahead: number;
+  behind: number;
 }

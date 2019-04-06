@@ -25,7 +25,7 @@ import { RepositoryService } from '../services/repository.service';
             </li>
             <li><img src="./assets/RightArrow.svg" class="right-arrow"></li>
             <li class="branch-name dropdown">
-              <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="switchToMainPanel()">
+              <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="clearBranchSearchField()">
                 branch<span class="caret"></span>
               </a>
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
@@ -100,8 +100,8 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="merge-dropdown" role="menu" >
               </ul>
             </li>
-            <li class="upload" onclick="pushToRemote()"><a href="#">&nbsp;&nbsp;pull</a></li>
-            <li class="download"onclick="pullFromRemote()"><a href="#">&nbsp;&nbsp;push</a></li>
+            <li class="upload" onclick="pushToRemote()"><a href="#">&nbsp;&nbsp;push</a></li>
+            <li class="download"onclick="pullFromRemote()"><a href="#">&nbsp;&nbsp;pull</a></li>
             <li class="clone"onclick="cloneFromRemote()"><a href="#">&nbsp;&nbsp;clone</a></li>
             <li class="clean" onclick="cleanRepo()"><a href="#">&nbsp;&nbsp;clean</a></li>
             <li class="sync" onclick="requestLinkModal()"><a href="#">&nbsp;&nbsp;sync</a></li>

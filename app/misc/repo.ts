@@ -19,6 +19,7 @@ import readFile = require('fs-sync');
 const repoCurrentBranch = 'master';
 const modal;
 const span;
+const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = '10';
 
 let progressBar;
 let isErrorOpeningRepo;
@@ -407,6 +408,19 @@ function displayBranch(name, id, onclick) {
   a.appendChild(document.createTextNode(name));
   li.appendChild(a);
   ul.appendChild(li);
+}
+
+function clearBranchSearchField() {
+  // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
+  // selects the branch droplist to change branches on the repo
+  if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
+    const textField = document.getElementById("branchName");
+    textField.value = '';
+    sortBranches();
+  } else {
+    displayModal('Unable to change branch while attempting to add, create or change repository.' +
+    'Please ready a repository before changing branches');
+  }
 }
 
 function sortBranches() {

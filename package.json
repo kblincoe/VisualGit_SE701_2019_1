@@ -13,7 +13,7 @@
     "postinstall": "electron-builder install-app-deps",
     "createjs": "tsc",
     "build": "electron-packager . --out=dist --app-version=$npm_package_version --prune --asar --overwrite --all",
-    "lint": "tslint -q app/**/*.ts && echo Linter completed with no linting errors",
+    "lint": "tslint -q --fix app/**/*.ts && echo Linter completed with no linting errors",
     "lintAllSeverities": "tslint app/**/*.ts"
   },
   "keywords": [
@@ -42,8 +42,6 @@
     "crypto-js": "3.1.9-1",
     "electron-debug": "1.0.0",
     "fs-sync": "1.0.3",
-    "github-avatar-url": "1.0.0",
-    "github-username": "3.0.0",
     "jquery": "^3.3.1",
     "jquery-contextmenu": "2.4.2",
     "keytar": "^4.4.1",
