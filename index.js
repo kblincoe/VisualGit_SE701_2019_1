@@ -49,7 +49,8 @@ const myMenu = [
 		submenu: [
 			{role: 'minimize'},
 			{type: 'separator'},
-			{role: 'close'}
+			// {role: 'close'},
+			{label: "Quit", accelerator: "CmdOrCtrl+Q", click: function () {app.quit();}}
 		]
 	},
 	{
@@ -227,11 +228,6 @@ const myMenu = [
 			{label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:"},
 			{label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:"},
 			{label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:"}
-		]
-	}, {
-		label: "Mac_Application",
-		submenu: [
-			{label: "Quit", accelerator: "Command+Q", click: function () {app.quit();}}
 		]
 	}
 ];
