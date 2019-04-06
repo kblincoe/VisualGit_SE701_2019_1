@@ -101,14 +101,14 @@ function hideAddRepositoryPanel() {
 }
 
 function displayDiffPanel() {
-  document.getElementById('graph-panel').style.width = '60%';
+  document.getElementById('graph-panel').style.width = '40%';
   document.getElementById('diff-panel').style.width = '40%';
   displayDiffPanelButtons();
 }
 
 function hideDiffPanel() {
   document.getElementById('diff-panel').style.width = '0';
-  document.getElementById('graph-panel').style.width = '100%';
+  document.getElementById('graph-panel').style.width = '80%';
   disableDiffPanelEditOnHide();
   hideDiffPanelButtons();
 }
