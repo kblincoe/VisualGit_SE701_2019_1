@@ -1,4 +1,4 @@
-p, h1 {
+p, h1, h2, h3 {
   color: #ccc;
   font-family: 'Montserrat', sans-serif;
 }
@@ -458,6 +458,10 @@ body .footer .git-command {
 .input-group-btn:first-child > .btn:not(:first-child),
 .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
   border-radius: 4px;
+}
+
+.nav-tabs>li>a {
+  color: gray;
 }
 
 .account_group {
