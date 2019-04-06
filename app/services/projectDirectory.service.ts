@@ -21,7 +21,9 @@ export class ProjectDirectoryService {
     }
 
     moveUpInDirectory(): void {
-        this.currentDir = this.currentDir.substr(0, this.currentDir.lastIndexOf(this.fileSep));
+        if (this.currentDir != repoFullPath) {
+            this.currentDir = this.currentDir.substr(0, this.currentDir.lastIndexOf(this.fileSep));
+        }
     }
 
     getDirectories(): string[] {
