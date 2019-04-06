@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AddGitignoreComponent } from './add.gitignore.component';
+import { ProjectPanelComponent } from './project.panel.component';
 
 @Component({
   selector: 'add-repository-panel',
@@ -103,7 +104,11 @@ export class AddRepositoryComponent {
   @ViewChild(AddGitignoreComponent)
   gitignore: AddGitignoreComponent;
 
+  @ViewChild(ProjectPanelComponent)
+  projectPanel: ProjectPanelComponent;
+
   addRepository(): void {
+
     downloadRepository();
     switchToMainPanel();
   }
@@ -157,6 +162,7 @@ export class AddRepositoryComponent {
   }
 
   openRepository(): void {
+    this.projectPanel.updateProjectWindow();
     openLocalRepository();
     switchToMainPanel();
   }
