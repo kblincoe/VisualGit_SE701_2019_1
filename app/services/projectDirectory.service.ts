@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as path from 'path'
 import Git = require('nodegit');
 
 @Injectable()
@@ -7,22 +8,14 @@ export class ProjectDirectoryService {
     currentDir: string;
     fileSep: string;
 
-    constructor() {
-        if (process.platform === 'win32') {
-            this.fileSep = '\\';
-        } else {
-            this.fileSep = '/';
-        }
-    }
-
     moveDownInDirectory(dir: string): void {
         if (!this.currentDir) { this.currentDir = repoFullPath; }
-        this.currentDir = this.currentDir + this.fileSep + dir;
+        this.currentDir = this.currentDir + path.sep + dir;
     }
 
     moveUpInDirectory(): void {
         if (this.currentDir != repoFullPath) {
-            this.currentDir = this.currentDir.substr(0, this.currentDir.lastIndexOf(this.fileSep));
+            this.currentDir = this.currentDir.substr(0, this.currentDir.lastIndexOf(path.sep));
         }
     }
 
@@ -43,7 +36,7 @@ export class ProjectDirectoryService {
     }
 
     getFullPathName(fileName: string): string {
-        return this.currentDir + this.fileSep + fileName;
+        return this.currentDir + path.sep + fileName;
     }
 
     private searchDirectory(dirPath: string, type: string): string[] {
@@ -51,11 +44,11 @@ export class ProjectDirectoryService {
         const files = fs.readdirSync(dirPath);
         for (const i in files) {
             if (!files.hasOwnProperty(i)) { continue; }
-            const fullName = dirPath + this.fileSep + files[i];
+            const fullName = dirPath + path.sep + files[i];
             if (fs.statSync(fullName).isDirectory() && type === 'directories'){
-                fileList.push(fullName.replace(dirPath + this.fileSep, ''));
+                fileList.push(fullName.replace(dirPath + path.sep, ''));
             } else if (!fs.statSync(fullName).isDirectory() && type === 'files') {
-                fileList.push(fullName.replace(dirPath + this.fileSep, ''));
+                fileList.push(fullName.replace(dirPath + path.sep, ''));
             }
         }
 
