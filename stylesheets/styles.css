@@ -673,3 +673,7 @@ div#listhere {
   transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
 }
 /* end of loading animation */
+
+#left-icon {
+  margin-left: 0;
+}
