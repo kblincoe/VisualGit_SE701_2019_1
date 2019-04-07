@@ -70,7 +70,7 @@
 
       <ul class="nav navbar-nav visible-xs">
         <li (click)="promptUserToAddRepository()"><a>&nbsp;&nbsp;add repository</a></li>
-        <li class="dropdown">
+        <li class="dropdown" onclick="clearCloneButtonCache()">
           <a id="repo-name" data-toggle="modal" data-target="#repo-modal" href="#">
             &nbsp;&nbsp;repository
             <span class="caret"></span>
