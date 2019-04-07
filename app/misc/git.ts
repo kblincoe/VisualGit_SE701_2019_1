@@ -195,26 +195,37 @@ function PullBuffer() {
 
 function pullFromRemote() {
   let repository;
-  const branch = document.getElementById('branch-name').innerText;
+  const branchElement = document.getElementById('branch-name')
+  if (!branchElement || !repoFullPath) {
+    // Safety check - that there is a repo and a branch to pull from
+    return;
+  }
+  const branch = branchElement.innerText;
   if (modifiedFiles.length > 0) {
     updateModalText('Please commit before pulling from remote!');
   }
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repository = repo;
-    console.log('Pulling changes from remote...');
-    addCommand('git pull');
-    displayModal('Pulling new changes from the remote repository');
+    getCommitCountDifference(repository, branch, (result) => {
+      if (result.behind === 0) {  //  Repo is not behind by any commits i.e. no changes on remote
+        displayModal('No changes to pull');
+        return;
+      }
+      console.log('Pulling changes from remote...');
+      addCommand('git pull');
+      displayModal('Pulling new changes from the remote repository');
 
-    return repository.fetchAll({
-      callbacks: {
-        credentials: function() {
-          return cred;
+      return repository.fetchAll({
+        callbacks: {
+          credentials: function() {
+            return cred;
+          },
+          certificateCheck: function() {
+            return 1;
+          },
         },
-        certificateCheck: function() {
-          return 1;
-        },
-      },
+      });
     });
   })
   // Now that we're finished fetching, go ahead and merge our local branch
