@@ -161,6 +161,12 @@ function disableDiffPanelEditOnHide(){
   doc.contentEditable = 'false';
 }
 
+function clearCloneButtonCache() {
+  var butt = document.getElementById("cloneButton");
+  butt.innerHTML = 'Clone';
+  butt.setAttribute('class', 'btn btn-primary disabled');
+}
+
 async function useSaved() {
   await loginWithSaved(switchToMainPanel);
 }
