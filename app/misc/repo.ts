@@ -399,37 +399,37 @@ function clearBranchElement() {
 
 function displayBranch(name, id, onclick) {
 
-  var parent = name.split('/')[1];
+  let parent = name.split('/')[1];
   parent = parent.replace(/\./g, '-');
   console.log('parent = ', parent);
-  const fork = name.split('/')[0];  
+  const fork = name.split('/')[0];
   console.log('parent', parent, 'fork', fork);
-  const whole_list = document.getElementById(id);
+  const branchList = document.getElementById(id);
 
-  if(document.getElementById(parent) == null){
-    const li_parent = document.createElement('li');
+  if (document.getElementById(parent) == null){
+    const liParent = document.createElement('li');
 
-    const parent_title = document.createElement('a');
-    parent_title.setAttribute('class', 'list-group-item collapsed');
-    parent_title.appendChild(document.createTextNode(parent));
-    parent_title.setAttribute('data-toggle', 'collapse');
-    parent_title.setAttribute('data-target', '#'+parent);
-    parent_title.setAttribute('aria-expanded', 'false');
-    parent_title.setAttribute('href', '#');
-    li_parent.appendChild(parent_title);
+    const titleParent = document.createElement('a');
+    titleParent.setAttribute('class', 'list-group-item collapsed');
+    titleParent.appendChild(document.createTextNode(parent));
+    titleParent.setAttribute('data-toggle', 'collapse');
+    titleParent.setAttribute('data-target', '#' + parent);
+    titleParent.setAttribute('aria-expanded', 'false');
+    titleParent.setAttribute('href', '#');
+    liParent.appendChild(titleParent);
 
-    var ul_parent = document.createElement('ul');
-    ul_parent.setAttribute('aria-expanded', 'false');
-    ul_parent.setAttribute('class', 'collapse');
-    ul_parent.setAttribute('style', 'height: 0px;');
-    ul_parent.setAttribute('id', parent);
-    li_parent.appendChild(ul_parent);
-    whole_list.appendChild(li_parent);
+    const ulParent = document.createElement('ul');
+    ulParent.setAttribute('aria-expanded', 'false');
+    ulParent.setAttribute('class', 'collapse');
+    ulParent.setAttribute('style', 'height: 0px;');
+    ulParent.setAttribute('id', parent);
+    liParent.appendChild(ulParent);
+    branchList.appendChild(liParent);
     console.log('adding parent repo');
   }
   const li = document.createElement('li');
   const a = document.createElement('a');
-  var parent_ul = document.getElementById(parent);
+  const ulParent = document.getElementById(parent);
 
   a.setAttribute('href', '#');
   a.setAttribute('class', 'list-group-item');
@@ -437,7 +437,7 @@ function displayBranch(name, id, onclick) {
   li.setAttribute('role', 'presentation');
   a.appendChild(document.createTextNode(fork));
   li.appendChild(a);
-  parent_ul.appendChild(li);
+  ulParent.appendChild(li);
 
 }
 
@@ -445,7 +445,7 @@ function clearBranchSearchField() {
   // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
   // selects the branch droplist to change branches on the repo
   if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
-    const textField = document.getElementById("branchName");
+    const textField = document.getElementById('branchName');
     textField.value = '';
     sortBranches();
   } else {

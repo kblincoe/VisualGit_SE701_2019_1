@@ -244,6 +244,7 @@ import { RepositoryService } from '../services/repository.service';
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="modal-title">Repositories</h4>
+            <h8>Click to expand forks</h8>
           </div>
           <ul class="list-group"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
             <li class="list-group-item" id="empty-message">

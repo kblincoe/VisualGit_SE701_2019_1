@@ -129,36 +129,38 @@ function displayRepo(name, id) {
 
   const fork = name.split('/')[0];
 
-  const branch_list = document.getElementById(id);
+  const branchList = document.getElementById(id);
 
   if (document.getElementById(parent) == null){ // If main repository isnt in lsit yet, add it
-    const li_parent = document.createElement('li');
+    const liParent = document.createElement('li');
 
-    const title_parent = document.createElement('a');
-    title_parent.setAttribute('class', 'list-group-item collapsed');
-    title_parent.appendChild(document.createTextNode(parent));
+    const titleParent = document.createElement('a');
+    titleParent.setAttribute('class', 'list-group-item collapsed');
+    titleParent.appendChild(document.createTextNode(parent));
 
     // Start drop down as closed
-    title_parent.setAttribute('data-toggle', 'collapse');
-    title_parent.setAttribute('data-target', '#' + parent);
-    title_parent.setAttribute('aria-expanded', 'false');
-    title_parent.setAttribute('href', '#');
-    li_parent.appendChild(title_parent);
+    titleParent.setAttribute('data-toggle', 'collapse');
+    titleParent.setAttribute('data-target', '#' + parent);
+    titleParent.setAttribute('aria-expanded', 'false');
+    titleParent.setAttribute('href', '#');
+    liParent.appendChild(titleParent);
 
-    let ul_parent = document.createElement('ul');
-    ul_parent.setAttribute('aria-expanded', 'false');
-    ul_parent.setAttribute('class', 'collapse');
-    ul_parent.setAttribute('style', 'height: 0px;');
-    ul_parent.setAttribute('id', parent);
-    li_parent.appendChild(ul_parent);
-    branch_list.appendChild(li_parent);
+    const ulParent = document.createElement('ul');
+    ulParent.setAttribute('aria-expanded', 'false');
+    ulParent.setAttribute('class', 'collapse');
+    ulParent.setAttribute('style', 'height: 0px;');
+    ulParent.setAttribute('id', parent);
+    liParent.appendChild(ulParent);
+    if (branchList != null){
+      branchList.appendChild(liParent);
+    }
     console.log('adding parent repo');
   }
 
   // Now create a fork option for the main repo
   const li = document.createElement('li');
   const a = document.createElement('a');
-  let parent_ul = document.getElementById(parent);
+  const ulParent = document.getElementById(parent);
 
   a.setAttribute('href', '#');
   a.setAttribute('class', 'list-group-item');
@@ -173,7 +175,9 @@ function displayRepo(name, id) {
   li.setAttribute('role', 'presentation');
   a.appendChild(document.createTextNode(fork));
   li.appendChild(a);
-  parent_ul.appendChild(li);
+  if (ulParent != null){
+    ulParent.appendChild(li);
+  }
 }
 
 function cloneRepo() {
