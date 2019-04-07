@@ -17,7 +17,7 @@ const localBranches = [];
 const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
-import { ProjectPanelComponent } from '../components/project.panel.component';
+import { ProjectPanelComponent } from '../components/project.panel/project.panel.component';
 const repoCurrentBranch = 'master';
 const modal;
 const span;
