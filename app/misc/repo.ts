@@ -9,7 +9,7 @@ import ProgressBar = require('progressbar.js');
 
 let repoFullPath;
 let repoLocalPath;
-let projectPanelComponent: ProjectPanelComponent;
+const projectPanelComponent: ProjectPanelComponent;
 let bname = {};
 const branchCommit = [];
 const remoteName = {};
@@ -623,23 +623,23 @@ async function getNetworkDownloadSpeed() {
 
 /**
  * When creating branch, checks whether name is valid
-  */
+ */
 function checkBranch(input) {
-  let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/])$/gi;
-  let valid = regex.test(input.value);
+  const regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/])$/gi;
+  const valid = regex.test(input.value);
 
   // If branch name is valid enables button, otherwise disables
   if (valid) {
-    if (input.id == 'branchName') {
-      $("#branch-btn").attr("disabled",false);
+    if (input.id === 'branchName') {
+      $('#branch-btn').attr('disabled', false);
     } else {
-      $("#branch-btn2").attr("disabled",false);
+      $('#branch-btn2').attr('disabled', false);
     }
   } else {
-    if (input.id == 'branchName') {
-      $("#branch-btn").attr("disabled",true);
+    if (input.id === 'branchName') {
+      $('#branch-btn').attr('disabled', true);
     } else {
-      $("#branch-btn2").attr("disabled",true);
+      $('#branch-btn2').attr('disabled', true);
     }
   }
 }

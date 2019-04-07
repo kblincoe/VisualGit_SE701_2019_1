@@ -308,13 +308,13 @@ function createBranch(obj) {
 
   let branchName;
   // Checking where the branch is being created from, clears its text field and disables button associated button
-  if (obj.id == 'branch-btn') {
-    branchName = document.getElementById("branchName").value;
-    document.getElementById("branchName").value = "";
+  if (obj.id === 'branch-btn') {
+    branchName = document.getElementById('branchName').value;
+    document.getElementById('branchName').value = '';
     obj.disabled = true;
   } else {
-    branchName = document.getElementById("branchName2").value;
-    document.getElementById("branchName2").value = "";
+    branchName = document.getElementById('branchName2').value;
+    document.getElementById('branchName2').value = '';
     obj.disabled = true;
   }
 
