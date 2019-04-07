@@ -72,7 +72,6 @@ export class AddRepositoryComponent {
   }
 
   openRepository(): void {
-    this.projectPanel.updateProjectWindow();
     openLocalRepository();
     switchToMainPanel();
   }
