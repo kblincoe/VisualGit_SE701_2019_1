@@ -1,29 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ProjectDirectoryService } from '../services/projectDirectory.service';
+import { ProjectDirectoryService } from '../../services/projectDirectory.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'project-panel',
-  template: `
-  <div class="project-panel" id="project-panel">
-
-    <button class="project-back-button" (click)="handleBackClick()">
-      &lt;
-    </button>
-    <div class="project-window">
-      <div class="dir-cell" *ngFor="let dir of dirs" (click)="handleClickedDir(dir)">
-        <p>
-          <b>{{ dir }}</b>
-        </p>
-      </div>
-      <div class="file-cell" *ngFor="let file of files" (click)="handleClickedFile(file)">
-        <p>
-          {{ file }}
-        </p>
-      </div>
-    </div>
-
-  </div>
-  `,
+  templateUrl: './project.panel.component.html',
   providers: [ProjectDirectoryService],
 })
 
