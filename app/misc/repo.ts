@@ -170,6 +170,7 @@ function initRepo(gitignoreTypes: string[]){
     // Most of this part is based off of
     // https://github.com/nodegit/nodegit/blob/master/examples/create-new-repo.js
     Git.Repository.init(fullLocalPath, 0).then(function(repo) {
+      addCommand('git init');
       repository = repo;
     })
     .then(function(){
@@ -179,6 +180,7 @@ function initRepo(gitignoreTypes: string[]){
       index = idx;
     })
     .then(function() {
+      addCommand('git add .gitignore');
       return index.addByPath('.gitignore');
     })
     .then(function() {
@@ -195,6 +197,7 @@ function initRepo(gitignoreTypes: string[]){
     })
     .done(function(commitId) {
       console.log('New Commit: ', commitId);
+      addCommand('git commit');
       openRepository(fullLocalPath, localPath);
     });
   };
