@@ -5,7 +5,7 @@
 // import NodeGit, { Status } from 'nodegit';
 
 import { ipcRenderer } from 'electron';
-import Git = require("nodegit");
+import Git = require('nodegit');
 const repo;
 
 import github = require('octonode');
@@ -122,20 +122,58 @@ function getUserInfo(callback) {
  * Populates the repository list
  */
 function displayRepo(name, id) {
-  const ul = document.getElementById(id);
-  const entry = document.createElement('a');
-  entry.href = '#';
-  entry.className = 'list-group-item';
-  entry.append(document.createTextNode(name));
-  entry.addEventListener('click', () => {
+  console.log('displaying branch ', name, id);
+
+  let parent = name.split('/')[1];
+  parent = parent.replace(/\./g, '-'); // Remove invalid characters for a data-togle name
+
+  const fork = name.split('/')[0];
+
+  const branch_list = document.getElementById(id);
+
+  if (document.getElementById(parent) == null){ // If main repository isnt in lsit yet, add it
+    const li_parent = document.createElement('li');
+
+    const title_parent = document.createElement('a');
+    title_parent.setAttribute('class', 'list-group-item collapsed');
+    title_parent.appendChild(document.createTextNode(parent));
+
+    // Start drop down as closed
+    title_parent.setAttribute('data-toggle', 'collapse');
+    title_parent.setAttribute('data-target', '#' + parent);
+    title_parent.setAttribute('aria-expanded', 'false');
+    title_parent.setAttribute('href', '#');
+    li_parent.appendChild(title_parent);
+
+    let ul_parent = document.createElement('ul');
+    ul_parent.setAttribute('aria-expanded', 'false');
+    ul_parent.setAttribute('class', 'collapse');
+    ul_parent.setAttribute('style', 'height: 0px;');
+    ul_parent.setAttribute('id', parent);
+    li_parent.appendChild(ul_parent);
+    branch_list.appendChild(li_parent);
+    console.log('adding parent repo');
+  }
+
+  // Now create a fork option for the main repo
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  let parent_ul = document.getElementById(parent);
+
+  a.setAttribute('href', '#');
+  a.setAttribute('class', 'list-group-item');
+  a.addEventListener('click', () => {
     // Set button to clone selected repo
     url = repoList[name];
     const button = document.getElementById('cloneButton');
     button.innerHTML = 'Clone ' + name;
     button.setAttribute('class', 'btn btn-primary');
-    button.onclick = function() {cloneRepo()};
+    button.onclick = function() {cloneRepo(); };
   });
-  ul.appendChild(entry);
+  li.setAttribute('role', 'presentation');
+  a.appendChild(document.createTextNode(fork));
+  li.appendChild(a);
+  parent_ul.appendChild(li);
 }
 
 function cloneRepo() {

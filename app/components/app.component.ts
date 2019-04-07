@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     if (sessionStorage.getItem('firstLogin') === null){
         sessionStorage.setItem('firstLogin', 'firstLogin');
-        useSaved().then(_  => {
+        useSaved().then((_)  => {
             this.authComp.switchToMainPanel();
         });
     }
