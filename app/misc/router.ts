@@ -2,6 +2,8 @@ let cred;
 let blue = '#39c0ba';
 let gray = '#5b6969';
 
+const {authenticate} = require('authenticate');
+
 function collapseSignPanel() {
   $('#nav-collapse1').collapse('hide');
   // Clear sign in input fields
@@ -12,21 +14,36 @@ function collapseSignPanel() {
 function switchToClonePanel(){
   hideAuthenticatePanel();
   hideFilePanel();
+  hideProjectPanel();
   hideGraphPanel();
+  hideEditorPanel();
   displayClonePanel();
 }
 
 function switchToMainPanel() {
   hideAuthenticatePanel();
   hideAddRepositoryPanel();
+  hideEditorPanel();
   displayFilePanel();
+  displayProjectPanel();
   displayGraphPanel();
+}
+
+function switchToEditorPanel() {
+  document.getElementById('editor').value = '';
+  hideAuthenticatePanel();
+  hideFilePanel();
+  hideProjectPanel();
+  hideGraphPanel();
+  displayEditorPanel();
 }
 
 function switchToAddRepositoryPanel() {
   hideAuthenticatePanel();
   hideFilePanel();
+  hideProjectPanel();
   hideGraphPanel();
+  hideEditorPanel();
   displayAddRepositoryPanel();
 }
 
@@ -38,11 +55,17 @@ function wait(ms){
   }
 }
 
-function displayClonePanel(){
+function displayEditorPanel() {
+  document.getElementById('editor-component').style.zIndex = '10';
+}
 
+function hideEditorPanel() {
+  document.getElementById('editor-component').style.zIndex = '-10';
+}
+
+function displayClonePanel(){
   const vals = 'add-repository-panel';
   document.getElementById('add-repository-panel').style.zIndex = '10';
-  $('#open-local-repository').hide();
 }
 
 function displayFilePanel() {
@@ -51,6 +74,10 @@ function displayFilePanel() {
 
 function displayGraphPanel() {
   document.getElementById('graph-panel').style.zIndex = '10';
+}
+
+function displayProjectPanel() {
+  document.getElementById('project-panel').style.zIndex = '10';
 }
 
 function displayAddRepositoryPanel() {
@@ -67,19 +94,23 @@ function hideGraphPanel() {
   document.getElementById('graph-panel').style.zIndex = '-10';
 }
 
+function hideProjectPanel() {
+  document.getElementById('project-panel').style.zIndex = '-10';
+}
+
 function hideAddRepositoryPanel() {
   document.getElementById('add-repository-panel').style.zIndex = '-10';
 }
 
 function displayDiffPanel() {
-  document.getElementById('graph-panel').style.width = '60%';
+  document.getElementById('graph-panel').style.width = '40%';
   document.getElementById('diff-panel').style.width = '40%';
   displayDiffPanelButtons();
 }
 
 function hideDiffPanel() {
   document.getElementById('diff-panel').style.width = '0';
-  document.getElementById('graph-panel').style.width = '100%';
+  document.getElementById('graph-panel').style.width = '80%';
   disableDiffPanelEditOnHide();
   hideDiffPanelButtons();
 }
@@ -130,6 +161,6 @@ function disableDiffPanelEditOnHide(){
   doc.contentEditable = 'false';
 }
 
-function useSaved() {
-  loginWithSaved(switchToMainPanel);
+async function useSaved() {
+  await loginWithSaved(switchToMainPanel);
 }

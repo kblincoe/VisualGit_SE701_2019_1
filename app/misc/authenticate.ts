@@ -121,7 +121,7 @@ function getUserInfo(callback) {
 /**
  * Populates the repository list
  */
-function displayRepo(name, id) {
+    function displayRepo(name, id) {
   const ul = document.getElementById(id);
   const entry = document.createElement('a');
   entry.href = '#';
@@ -133,12 +133,12 @@ function displayRepo(name, id) {
     const button = document.getElementById('cloneButton');
     button.innerHTML = 'Clone ' + name;
     button.setAttribute('class', 'btn btn-primary');
-    button.onclick = function() {cloneRepo()};
+    button.onclick = function() {cloneRepo();};
   });
   ul.appendChild(entry);
 }
 
-function cloneRepo() {
+    function cloneRepo() {
   if (url === null) {
     updateModalText(
       'Web URL for repo could not be found. Try cloning by providing the repo\'s web URL directly in the \'Add repository\' window');
@@ -162,7 +162,7 @@ function cloneRepo() {
   $('#repo-modal').modal('hide');
 }
 
-function confirmSignOut() {
+    function confirmSignOut() {
   if (signedIn) {
     if (hasChanges()) {
       $('#modalWarnNotCommittedLogout').modal();
@@ -174,7 +174,7 @@ function confirmSignOut() {
   }
 }
 
-function redirectToHomePage() {
+    function redirectToHomePage() {
   window.onbeforeunload = Confirmed;
   window.location.href = 'index.html';
   signedIn = false;
@@ -182,7 +182,7 @@ function redirectToHomePage() {
   // LogInAfterConfirm();
 }
 
-function setAccountInfo(data) {
+    function setAccountInfo(data) {
     if (data != null) {
         // As were logged in, we display account
         const accountGroup = document.getElementById('github_account');
@@ -198,7 +198,7 @@ function setAccountInfo(data) {
     }
 }
 
-function continueWithoutSignIn() {
+    function continueWithoutSignIn() {
   const returnMainMenu = document.getElementById('return_main_menu');
   returnMainMenu.style.display = 'block';
-}
+};

@@ -8,7 +8,14 @@ import { RepositoryService } from '../services/repository.service';
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid row">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+          <button
+            type="button"
+            id="navbarToggle"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+          >
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -31,9 +38,9 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" onkeyup="sortBranches()" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName" onkeyup="sortBranches(); checkBranch(this)" class="form-control" placeholder="Search or create branch">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
+                      <button class="btn btn-default masterTooltip" id = "branch-btn" type="button" disabled="disabled" onclick="createBranch(this)" title="Must meet Git branch standards">OK</button>
                     </span>
                   </div>
                 </li>
@@ -84,9 +91,9 @@ import { RepositoryService } from '../services/repository.service';
               <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name" style="margin: 5px 20px">
                 <li role="presentation" id="create-branch">
                   <div class="input-group menuitem">
-                    <input type="text" id="branchName" onkeyup="sortBranches()" class="form-control" placeholder="Search or create branch">
+                    <input type="text" id="branchName2" onkeyup="sortBranches(); checkBranch(this)" class="form-control" placeholder="Search or create branch">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" onclick="createBranch()">OK</button>
+                      <button class="btn btn-default masterTooltip" id = "branch-btn2" type="button" disabled="disabled" title="Must meet Git branch standards" onclick="createBranch(this)">OK</button>
                     </span>
                   </div>
                 </li>

@@ -32,7 +32,7 @@ If you have homebrew installed:
 ````
 brew install npm
 ````
-Otherwise download and install the latest version of [Node.j](https://nodejs.org/en/) (v6.2.1 or later)
+Otherwise download and install the latest version of [Node.js](https://nodejs.org/en/) (v6.2.1 or later)
 
 #### Windows
 Download and install the latest version of  [Node.js](https://nodejs.org/en/) (v6.2.1 or later)
@@ -73,7 +73,7 @@ To run the compiler use the following command:
 npm run-script createjs
 ````
 
-###Angular2
+### Angular2
 [Angular](https://angular.io/) is a framework that combines declarative templates, dependency injections, end to end tooling, and integrated best practices. The original source code was written using AngularJS and then reworked to use Angular2 instead, which was a complete rewrite of the former. As a result, note that the source code still retains conventions and code fragments from AngularJS in some places.
 
 # Features
@@ -102,7 +102,7 @@ The pulling and pushing currently works for changes which are made on master and
 We are open to pull requests with new features or improvements.
 
 # Help
-Visualgit utilises a range of libraries and frameworks, more information on them can be found below:
+VisualGit utilises a range of libraries and frameworks, more information on them can be found below:
 
  - [Electron](http://electron.atom.io/)
  - [Node.js](https://nodejs.org/en/about/)

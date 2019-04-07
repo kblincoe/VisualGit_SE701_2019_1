@@ -107,16 +107,23 @@ function makeAbsNode(c, column: number, count: number) {
   const reference;
   const email = getEmail(c);
   const title = 'Author: ' + email + '<br>' + 'Number of Commits: ' + count;
-  nodes.add({
+  const node = {
     fixed: (id === 1),
     id: id,
-    image: imageForUser(email),
+    image: '',
     physics: false,
     shape: 'circularImage',
     title: title,
     x: (column - 1) * spacingX,
     y: (id - 1) * spacingY,
+  };
+
+  node.image = getProfilePictureURL( email, email, function(url) {
+    node.image = url;
   });
+
+  nodes.add(node);
+
   commitList.push({
     column: column,
     email: email,

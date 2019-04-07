@@ -9,6 +9,7 @@ import ProgressBar = require('progressbar.js');
 
 let repoFullPath;
 let repoLocalPath;
+let projectPanelComponent: ProjectPanelComponent;
 let bname = {};
 const branchCommit = [];
 const remoteName = {};
@@ -16,6 +17,7 @@ const localBranches = [];
 const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
+import { ProjectPanelComponent } from '../components/project.panel.component';
 const repoCurrentBranch = 'master';
 const modal;
 const span;
@@ -141,6 +143,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
     updateModalText('Clone Successful, repository saved under: ' + fullLocalPath);
     addCommand('git clone ' + cloneURL + ' ' + fullLocalPath);
     repoFullPath = fullLocalPath;
+    projectPanelComponent.updateProjectWindow();
     repoLocalPath = fullLocalPath;
     openRepository(repoFullPath, repoLocalPath);
   },
@@ -248,6 +251,7 @@ function openRepository(fullLocalPath: string, localPath: string) {
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
     repoFullPath = fullLocalPath;
+    projectPanelComponent.updateProjectWindow();
     repoLocalPath = localPath;
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
       const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
@@ -414,7 +418,7 @@ function clearBranchSearchField() {
   // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
   // selects the branch droplist to change branches on the repo
   if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
-    const textField = document.getElementById("branchName");
+    const textField = document.getElementById('branchName');
     textField.value = '';
     sortBranches();
   } else {
@@ -615,4 +619,27 @@ async function getNetworkDownloadSpeed() {
   const fileSize = 250000;  // Size of the file retrived from the website, for calcs
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
+}
+
+/**
+ * When creating branch, checks whether name is valid
+  */
+function checkBranch(input) {
+  let regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/])$/gi;
+  let valid = regex.test(input.value);
+
+  // If branch name is valid enables button, otherwise disables
+  if (valid) {
+    if (input.id == 'branchName') {
+      $("#branch-btn").attr("disabled",false);
+    } else {
+      $("#branch-btn2").attr("disabled",false);
+    }
+  } else {
+    if (input.id == 'branchName') {
+      $("#branch-btn").attr("disabled",true);
+    } else {
+      $("#branch-btn2").attr("disabled",true);
+    }
+  }
 }
