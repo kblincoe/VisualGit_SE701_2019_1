@@ -20,6 +20,10 @@ ul{
   z-index: 2;
 }
 
+.navbar-toggle .icon-bar {
+  background-color: white;
+}
+
 .btn.btn-circle {
   border-radius: 50px;
 }
