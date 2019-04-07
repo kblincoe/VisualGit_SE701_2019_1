@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
+  moduleId: module.id,
   selector: 'app-footer',
-  template: `
-  <div class="footer" id="footer">
-  </div>
-  `,
+  templateUrl: './footer.component.html',
 })
 
 export class FooterComponent {

@@ -5,7 +5,7 @@
 // import NodeGit, { Status } from 'nodegit';
 
 import { ipcRenderer } from 'electron';
-import Git = require("nodegit");
+import Git = require('nodegit');
 const repo;
 
 import github = require('octonode');
@@ -133,7 +133,7 @@ function displayRepo(name, id) {
     const button = document.getElementById('cloneButton');
     button.innerHTML = 'Clone ' + name;
     button.setAttribute('class', 'btn btn-primary');
-    button.onclick = function() {cloneRepo()};
+    button.onclick = function() {cloneRepo(); };
   });
   ul.appendChild(entry);
 }

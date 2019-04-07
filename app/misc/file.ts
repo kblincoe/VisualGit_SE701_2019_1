@@ -1,4 +1,5 @@
 let fileLocation;
+let fileOpenInEditor;
 
 function readFromFile(filePath) {
   fileLocation = require('path').join(repoFullPath, filePath);
@@ -46,5 +47,27 @@ function saveSuccess(){
 
 function cancelEdit(){
   hideDiffPanel();
+}
+
+function readFromFileEditor(filePath) {
+  fileLocation = require('path').join(filePath);
+
+  const lineReader = require('readline').createInterface({
+    input: fs.createReadStream(fileLocation),
+  });
+
+  lineReader.on('line', function(line) {
+    document.getElementById('editor').value += line + '\n';
+  });
+}
+
+function saveFileFromEditor() {
+  const fileContent = document.getElementById('editor').value;
+  fs.writeFile(fileOpenInEditor, fileContent, 'utf8', function(err) {
+    if (err) {
+      throw err;
+    }
+    saveSuccess();
+  });
 }
 
