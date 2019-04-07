@@ -18,6 +18,8 @@ function changeColor(color) {
   const footer = document.getElementById('footer');
   const arp = document.getElementById('add-repository-panel');
   const auth = document.getElementById('authenticate');
+  const navbarToggle = document.getElementById('navbarToggle');
+
   if (color === 'white') {
     for (let i = 0; i < head.length; i++) {
       head[i].className = 'navbar navbar-white';
@@ -51,6 +53,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#D1D1D1';
     auth.style.backgroundColor = '#D6D6D6';
     before = 'white';
+    navbarToggle.style.borderColor = 'white';
   }
   else if (color === 'pink') {
     for (let i = 0; i < head.length; i++) {
@@ -86,6 +89,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#FFD7D7';
     auth.style.backgroundColor = '#FFE5E5';
     before = 'pink';
+    navbarToggle.style.borderColor = '#FFD7D7';
   }
   else if (color === 'blue') {
     for (let i = 0; i < head.length; i++) {
@@ -121,6 +125,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#DAEEFF';
     auth.style.backgroundColor = '#DAEEFF';
     before = 'blue';
+    navbarToggle.style.borderColor = '#B6DEFF';
   }
   else if (color === 'navy') {
     for (let i = 0; i < head.length; i++) {
@@ -156,6 +161,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#4D94FF';
     auth.style.backgroundColor = '#4D94FF';
     before = 'navy';
+    navbarToggle.style.borderColor = "#4D94FF";
   }
   else if (color === 'green') {
     for (let i = 0; i < head.length; i++) {
@@ -189,6 +195,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#ADEBAD';
     auth.style.backgroundColor = '#ADEBAD';
     before = 'green';
+    navbarToggle.style.borderColor = "#ADEBAD"
   }
   else if (color === 'default') {
     for (let i = 0; i < head.length; i++) {
@@ -222,5 +229,6 @@ function changeColor(color) {
     arp.style.backgroundColor = '#282828';
     auth.style.backgroundColor = '#282828';
     before = 'default';
+    navbarToggle.style.borderColor = '#333';
   }
 }
