@@ -161,7 +161,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#4D94FF';
     auth.style.backgroundColor = '#4D94FF';
     before = 'navy';
-    navbarToggle.style.borderColor = "#4D94FF";
+    navbarToggle.style.borderColor = '#4D94FF';
   }
   else if (color === 'green') {
     for (let i = 0; i < head.length; i++) {
@@ -195,7 +195,7 @@ function changeColor(color) {
     arp.style.backgroundColor = '#ADEBAD';
     auth.style.backgroundColor = '#ADEBAD';
     before = 'green';
-    navbarToggle.style.borderColor = "#ADEBAD"
+    navbarToggle.style.borderColor = '#ADEBAD';
   }
   else if (color === 'default') {
     for (let i = 0; i < head.length; i++) {
