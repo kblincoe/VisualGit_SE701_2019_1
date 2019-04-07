@@ -117,12 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }, 3000);
 }, false);
 
-$('#repo-modal').on('hidden.bs.modal', function (e) {
-  var butt = document.getElementById("cloneButton");
-  butt.innerHTML = 'Clone';
-  butt.setAttribute('class', 'btn btn-primary disabled');
- });
-
  $.contextMenu({
    selector: ".file",
    build: function($trigger) {

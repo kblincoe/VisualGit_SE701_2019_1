@@ -9,6 +9,7 @@ import ProgressBar = require('progressbar.js');
 
 let repoFullPath;
 let repoLocalPath;
+const projectPanelComponent: ProjectPanelComponent;
 let bname = {};
 const branchCommit = [];
 const remoteName = {};
@@ -16,6 +17,7 @@ const localBranches = [];
 const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
+import { ProjectPanelComponent } from '../components/project.panel/project.panel.component';
 const repoCurrentBranch = 'master';
 const modal;
 const span;
@@ -141,6 +143,7 @@ function downloadFunc(cloneURL: string, fullLocalPath) {
     updateModalText('Clone Successful, repository saved under: ' + fullLocalPath);
     addCommand('git clone ' + cloneURL + ' ' + fullLocalPath);
     repoFullPath = fullLocalPath;
+    projectPanelComponent.updateProjectWindow();
     repoLocalPath = fullLocalPath;
     openRepository(repoFullPath, repoLocalPath);
   },
@@ -167,6 +170,7 @@ function initRepo(gitignoreTypes: string[]){
     // Most of this part is based off of
     // https://github.com/nodegit/nodegit/blob/master/examples/create-new-repo.js
     Git.Repository.init(fullLocalPath, 0).then(function(repo) {
+      addCommand('git init');
       repository = repo;
     })
     .then(function(){
@@ -176,6 +180,7 @@ function initRepo(gitignoreTypes: string[]){
       index = idx;
     })
     .then(function() {
+      addCommand('git add .gitignore');
       return index.addByPath('.gitignore');
     })
     .then(function() {
@@ -192,6 +197,7 @@ function initRepo(gitignoreTypes: string[]){
     })
     .done(function(commitId) {
       console.log('New Commit: ', commitId);
+      addCommand('git commit');
       openRepository(fullLocalPath, localPath);
     });
   };
@@ -248,6 +254,7 @@ function openRepository(fullLocalPath: string, localPath: string) {
 
   Git.Repository.open(fullLocalPath).then(function(repository) {
     repoFullPath = fullLocalPath;
+    projectPanelComponent.updateProjectWindow();
     repoLocalPath = localPath;
     if (readFile.exists(repoFullPath + '/.git/MERGE_HEAD')) {
       const tid = readFile.read(repoFullPath + '/.git/MERGE_HEAD', null);
@@ -646,4 +653,27 @@ async function getNetworkDownloadSpeed() {
   const fileSize = 250000;  // Size of the file retrived from the website, for calcs
   const speed = await networkSpeed.checkDownloadSpeed(baseUrl, fileSize);
   updateDownloadSpeed(speed.kbps);
+}
+
+/**
+ * When creating branch, checks whether name is valid
+ */
+function checkBranch(input) {
+  const regex = /^(?!^\.)(?!@)(?!\/|.*([/.]\.|\/\/|@\{|\\\\))[^\000-\037\177 ~^:?*\\[]+(?<!\.lock|[/])$/gi;
+  const valid = regex.test(input.value);
+
+  // If branch name is valid enables button, otherwise disables
+  if (valid) {
+    if (input.id === 'branchName') {
+      $('#branch-btn').attr('disabled', false);
+    } else {
+      $('#branch-btn2').attr('disabled', false);
+    }
+  } else {
+    if (input.id === 'branchName') {
+      $('#branch-btn').attr('disabled', true);
+    } else {
+      $('#branch-btn2').attr('disabled', true);
+    }
+  }
 }
