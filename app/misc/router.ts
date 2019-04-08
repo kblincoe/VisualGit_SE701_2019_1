@@ -162,7 +162,7 @@ function disableDiffPanelEditOnHide(){
 }
 
 function clearCloneButtonCache() {
-  let butt = document.getElementById('cloneButton');
+  const butt = document.getElementById('cloneButton');
   butt.innerHTML = 'Clone';
   butt.setAttribute('class', 'btn btn-primary disabled');
 }
