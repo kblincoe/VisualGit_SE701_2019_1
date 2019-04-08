@@ -82,6 +82,7 @@ function populateRecents(): void {
     entry.href = '#';
     entry.addEventListener('click', () => {
       if (checkFile.existsSync(element)) {
+        clearModifiedFilesList();
         openRepository(element, element);
         switchToMainPanel();
       } else {

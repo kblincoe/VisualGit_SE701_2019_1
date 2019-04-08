@@ -72,11 +72,13 @@ export class AddRepositoryComponent {
   }
 
   openRepository(): void {
+    clearModifiedFilesList();
     openLocalRepository();
     switchToMainPanel();
   }
 
   initRepository(): void {
+    clearModifiedFilesList();
     initRepo(this.gitignore.selectedItems);
     switchToMainPanel();
   }
