@@ -194,17 +194,17 @@ function PullBuffer() {
 }
 
 function pullFromRemote() {
-  const branchElement = document.getElementById('branch-name')
+  const branchElement = document.getElementById('branch-name');
   if (!branchElement || !repoFullPath) {
     // Safety check - that there is a repo and a branch to pull from
     return;
   }
   const branch = branchElement.innerText;
- 
+
   if (modifiedFiles.length > 0) {
     updateModalText('Please commit before pulling from remote!');
   }
-  
+
   Git.Repository.open(repoFullPath)
   .then(function(repository) {
     return repository.fetchAll({
@@ -215,7 +215,7 @@ function pullFromRemote() {
         certificateCheck: function() {
           return 1;
         },
-      }
+      },
     }).then(function() {
       getCommitCountDifference(repository, branch, (result) => {
         if (result.behind === 0) {  //  Repo is not behind by any commits i.e. no changes on remote
@@ -244,7 +244,7 @@ function pullFromRemote() {
             const tid = readFile.read(repoFullPath + '/.git/MERGE_MSG', null);
             conflictsExist = tid.indexOf('Conflicts') !== -1;
           }
-    
+
           if (conflictsExist) {
             updateModalText('Conflicts exists! Please check files list on right side and solve conflicts before you commit again!');
             refreshAll(repository);
@@ -262,7 +262,7 @@ function pullFromRemote() {
           console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
         });
       });
-    })
+    });
   });
 //   .then(function(updatedRepository) {
 //     refreshAll(updatedRepository);
