@@ -194,77 +194,75 @@ function PullBuffer() {
 }
 
 function pullFromRemote() {
-  let repository;
   const branchElement = document.getElementById('branch-name')
   if (!branchElement || !repoFullPath) {
     // Safety check - that there is a repo and a branch to pull from
     return;
   }
   const branch = branchElement.innerText;
+ 
   if (modifiedFiles.length > 0) {
     updateModalText('Please commit before pulling from remote!');
   }
+  
   Git.Repository.open(repoFullPath)
-  .then(function(repo) {
-    repository = repo;
-    getCommitCountDifference(repository, branch, (result) => {
-      if (result.behind === 0) {  //  Repo is not behind by any commits i.e. no changes on remote
-        displayModal('No changes to pull');
-        return;
-      }
-      console.log('Pulling changes from remote...');
-      addCommand('git pull');
-      displayModal('Pulling new changes from the remote repository');
-
-      return repository.fetchAll({
-        callbacks: {
-          credentials: function() {
-            return cred;
-          },
-          certificateCheck: function() {
-            return 1;
-          },
+  .then(function(repository) {
+    return repository.fetchAll({
+      callbacks: {
+        credentials: function() {
+          return cred;
         },
+        certificateCheck: function() {
+          return 1;
+        },
+      }
+    }).then(function() {
+      getCommitCountDifference(repository, branch, (result) => {
+        if (result.behind === 0) {  //  Repo is not behind by any commits i.e. no changes on remote
+          displayModal('There are no changes to pull');
+          return;
+        }
+        console.log('Pulling changes from remote...');
+        addCommand('git pull');
+        displayModal('Pulling new changes from the remote repository');
+
+        // Now that we're finished fetching, go ahead and merge our local branch
+        // with the new one
+        Git.Reference.nameToId(repository, 'refs/remotes/origin/' + branch)
+        .then(function(oid) {
+          return Git.AnnotatedCommit.lookup(repository, oid);
+        })
+        .then(function(annotated) {
+          Git.Merge.merge(repository, annotated, null, {
+            checkoutStrategy: Git.Checkout.STRATEGY.FORCE,
+          });
+          theirCommit = annotated;
+        })
+        .then(function() {
+          let conflictsExist = false;
+          if (readFile.exists(repoFullPath + '/.git/MERGE_MSG')) {
+            const tid = readFile.read(repoFullPath + '/.git/MERGE_MSG', null);
+            conflictsExist = tid.indexOf('Conflicts') !== -1;
+          }
+    
+          if (conflictsExist) {
+            updateModalText('Conflicts exists! Please check files list on right side and solve conflicts before you commit again!');
+            refreshAll(repository);
+          } else {
+            updateModalText('Successfully pulled from remote branch ' + branch + ', and your repo is up to date now!');
+            refreshAll(repository);
+          }
+        }, function(err) {
+          if (err === 'Error: String path is required.'){
+            updateModalText('Failed to pull from remote as no repository is currently open. \
+            Either clone one from a remote location or open one locally.');
+          } else {
+            updateModalText(`${err} Failed to pull from remote`);
+          }
+          console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
+        });
       });
-    });
-  })
-  // Now that we're finished fetching, go ahead and merge our local branch
-  // with the new one
-  .then(function() {
-    return Git.Reference.nameToId(repository, 'refs/remotes/origin/' + branch);
-  })
-  .then(function(oid) {
-    return Git.AnnotatedCommit.lookup(repository, oid);
-  })
-  .then(function(annotated) {
-    Git.Merge.merge(repository, annotated, null, {
-      checkoutStrategy: Git.Checkout.STRATEGY.FORCE,
-    });
-    theirCommit = annotated;
-  })
-  .then(function() {
-    let conflicsExist = false;
-
-    if (readFile.exists(repoFullPath + '/.git/MERGE_MSG')) {
-      const tid = readFile.read(repoFullPath + '/.git/MERGE_MSG', null);
-      conflicsExist = tid.indexOf('Conflicts') !== -1;
-    }
-
-    if (conflicsExist) {
-      updateModalText('Conflicts exists! Please check files list on right side and solve conflicts before you commit again!');
-      refreshAll(repository);
-    } else {
-      updateModalText('Successfully pulled from remote branch ' + branch + ', and your repo is up to date now!');
-      refreshAll(repository);
-    }
-  }, function(err) {
-    if (err === 'Error: String path is required.'){
-      updateModalText('Failed to pull from remote as no repository is currently open. \
-      Either clone one from a remote location or open one locally.');
-    } else {
-      updateModalText(`${err} Failed to pull from remote`);
-    }
-    console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
+    })
   });
 //   .then(function(updatedRepository) {
 //     refreshAll(updatedRepository);
