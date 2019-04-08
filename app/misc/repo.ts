@@ -408,9 +408,7 @@ function displayBranch(name, id, onclick) {
 
   let parent = name.split('/')[1];
   parent = parent.replace(/\./g, '-');
-  console.log('parent = ', parent);
   const fork = name.split('/')[0];
-  console.log('parent', parent, 'fork', fork);
   const branchList = document.getElementById(id);
 
   if (document.getElementById(parent) == null){
@@ -432,7 +430,6 @@ function displayBranch(name, id, onclick) {
     ulParent.setAttribute('id', parent);
     liParent.appendChild(ulParent);
     branchList.appendChild(liParent);
-    console.log('adding parent repo');
   }
   const li = document.createElement('li');
   const a = document.createElement('a');

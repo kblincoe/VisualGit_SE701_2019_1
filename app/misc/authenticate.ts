@@ -122,7 +122,6 @@ function getUserInfo(callback) {
  * Populates the repository list
  */
 function displayRepo(name, id) {
-  console.log('displaying branch ', name, id);
 
   let parent = name.split('/')[1];
   parent = parent.replace(/\./g, '-'); // Remove invalid characters for a data-togle name
@@ -154,7 +153,6 @@ function displayRepo(name, id) {
     if (branchList != null){
       branchList.appendChild(liParent);
     }
-    console.log('adding parent repo');
   }
 
   // Now create a fork option for the main repo
