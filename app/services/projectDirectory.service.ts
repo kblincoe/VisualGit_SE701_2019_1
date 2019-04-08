@@ -51,11 +51,14 @@ export class ProjectDirectoryService {
         const files = fs.readdirSync(dirPath);
         for (const i in files) {
             if (!files.hasOwnProperty(i)) { continue; }
-            const fullName = dirPath + this.fileSep + files[i];
-            if (fs.statSync(fullName).isDirectory() && type === 'directories'){
-                fileList.push(fullName.replace(dirPath + this.fileSep, ''));
-            } else if (!fs.statSync(fullName).isDirectory() && type === 'files') {
-                fileList.push(fullName.replace(dirPath + this.fileSep, ''));
+            const isUnixHiddenPath = files[i].startsWith(".");
+            if (!isUnixHiddenPath) {
+                const fullName = dirPath + this.fileSep + files[i];
+                if (fs.statSync(fullName).isDirectory() && type === 'directories'){
+                    fileList.push(fullName.replace(dirPath + this.fileSep, ''));
+                } else if (!fs.statSync(fullName).isDirectory() && type === 'files') {
+                    fileList.push(fullName.replace(dirPath + this.fileSep, ''));
+                }
             }
         }
 
