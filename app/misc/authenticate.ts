@@ -122,12 +122,47 @@ function getUserInfo(callback) {
  * Populates the repository list
  */
 function displayRepo(name, id) {
-  const ul = document.getElementById(id);
-  const entry = document.createElement('a');
-  entry.href = '#';
-  entry.className = 'list-group-item';
-  entry.append(document.createTextNode(name));
-  entry.addEventListener('click', () => {
+
+  let parent = name.split('/')[1];
+  parent = parent.replace(/\./g, '-'); // Remove invalid characters for a data-togle name
+
+  const fork = name.split('/')[0];
+
+  const branchList = document.getElementById(id);
+
+  if (document.getElementById(parent) == null){ // If main repository isnt in lsit yet, add it
+    const liParent = document.createElement('li');
+
+    const titleParent = document.createElement('a');
+    titleParent.setAttribute('class', 'list-group-item collapsed');
+    titleParent.appendChild(document.createTextNode(parent));
+
+    // Start drop down as closed
+    titleParent.setAttribute('data-toggle', 'collapse');
+    titleParent.setAttribute('data-target', '#' + parent);
+    titleParent.setAttribute('aria-expanded', 'false');
+    titleParent.setAttribute('href', '#');
+    liParent.appendChild(titleParent);
+
+    const ulParent = document.createElement('ul');
+    ulParent.setAttribute('aria-expanded', 'false');
+    ulParent.setAttribute('class', 'collapse');
+    ulParent.setAttribute('style', 'height: 0px;');
+    ulParent.setAttribute('id', parent);
+    liParent.appendChild(ulParent);
+    if (branchList != null){
+      branchList.appendChild(liParent);
+    }
+  }
+
+  // Now create a fork option for the main repo
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  const ulParent = document.getElementById(parent);
+
+  a.setAttribute('href', '#');
+  a.setAttribute('class', 'list-group-item');
+  a.addEventListener('click', () => {
     // Set button to clone selected repo
     url = repoList[name];
     const button = document.getElementById('cloneButton');
@@ -135,7 +170,12 @@ function displayRepo(name, id) {
     button.setAttribute('class', 'btn btn-primary');
     button.onclick = function() {cloneRepo(); };
   });
-  ul.appendChild(entry);
+  li.setAttribute('role', 'presentation');
+  a.appendChild(document.createTextNode(fork));
+  li.appendChild(a);
+  if (ulParent != null){
+    ulParent.appendChild(li);
+  }
 }
 
 function cloneRepo() {
