@@ -51,7 +51,7 @@ export class ProjectDirectoryService {
         const files = fs.readdirSync(dirPath);
         for (const i in files) {
             if (!files.hasOwnProperty(i)) { continue; }
-            const isUnixHiddenPath = files[i].startsWith(".");
+            const isUnixHiddenPath = files[i].startsWith('.');
             if (!isUnixHiddenPath) {
                 const fullName = dirPath + this.fileSep + files[i];
                 if (fs.statSync(fullName).isDirectory() && type === 'directories'){
