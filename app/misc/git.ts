@@ -260,7 +260,7 @@ function pullFromRemote() {
         Either clone one from a remote location or open one locally.');
       } else if (err.message === 'request failed with status code: 401'){
         updateModalText('You are unauthorised to pull from this repository. \
-        Sign in or contact the owner of the repository for pulling access.')
+        Sign in or contact the owner of the repository for pulling access.');
       }
       else {
         updateModalText(`${err} Failed to pull from remote`);
