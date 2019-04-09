@@ -283,6 +283,7 @@ body .editor-component .input {
   height: 98%;
   width: 98%;
   margin: 2%;
+  font-family: monospace;
 }
 
 body .body-panel .diff-panel {
