@@ -165,7 +165,7 @@ body .navbar .dropdown-toggle {
 
 body .file-panel {
   width: 20%;
-  height: 70vh;
+  height: 100%;
   background-color: #282828;
   float: left;
   z-index: 0;
@@ -349,7 +349,7 @@ body .authenticate .input-group {
 
 body .add-repository-panel {
   position: absolute;
-  height: 80vh;
+  height: 100%;
   width: 100%;
   background-color: #181818;
   z-index: -10;
