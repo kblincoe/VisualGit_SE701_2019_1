@@ -9,6 +9,10 @@ import { Component } from '@angular/core';
 export class AuthenticateComponent {
 
   switchToMainPanel(): void {
+    if (document.getElementById('auth-username').value == ''){
+      displayModal('Please enter your username to sign in');
+    }
+
     signInPage(switchToAddRepositoryPanel);
   }
 
