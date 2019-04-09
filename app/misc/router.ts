@@ -105,8 +105,19 @@ function hideAddRepositoryPanel() {
 <<<<<<< HEAD
 =======
 function displayDiffPanel() {
+<<<<<<< HEAD
   document.getElementById('graph-panel').style.width = '20%';
   document.getElementById('diff-panel').style.width = '60%';
+=======
+<<<<<<< HEAD
+  document.getElementById('graph-panel').style.width = '40%';
+  document.getElementById('diff-panel').style.width = '40%';
+=======
+  document.getElementById('graph-panel').style.width = '20%';
+  document.getElementById('diff-panel').style.width = '60%';
+  displayDiffPanelButtons();
+>>>>>>> Increased width of line changes panel to view lines more easily.
+>>>>>>> Increased width of line changes panel to view lines more easily.
 }
 
 function hideDiffPanel() {
