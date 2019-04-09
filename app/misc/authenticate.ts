@@ -89,7 +89,14 @@ function getUserInfo(callback) {
 
         document.getElementById('personalAccessTokenMsg').style.display = 'block';
       } else {
-        displayModal(err);
+        /*
+        Again, this is a bit of a hack but unfortunately due to the encapsulation in the octonode module, there is
+        no other way to implement this. Without this, when the user inputs no username but inputs a password, the message
+        in the modal switches between two messages and is not helpful to the user.
+          */
+        if (err.toString() !== 'Error: Requires authentication') {
+          displayModal(err);
+        }
       }
     } else {
       setAccountInfo(data);
