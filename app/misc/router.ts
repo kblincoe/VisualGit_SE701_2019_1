@@ -124,24 +124,6 @@ function displayAuthenticatePanel() {
   document.getElementById('authenticate').style.zIndex = '20';
 }
 
-function disableSaveCancelButton() {
-  const saveButton = document.getElementById('save-button');
-  const cancelButton = document.getElementById('cancel-button');
-  saveButton.disabled = true;
-  saveButton.style.backgroundColor = gray;
-  cancelButton.disabled = true;
-  cancelButton.style.backgroundColor = gray;
-}
-
-function enableSaveCancelButton() {
-  const saveButton = document.getElementById('save-button');
-  const cancelButton = document.getElementById('cancel-button');
-  saveButton.disabled = false;
-  saveButton.style.backgroundColor = blue;
-  cancelButton.disabled = false;
-  cancelButton.style.backgroundColor = blue;
-}
-
 function disableDiffPanelEditOnHide(){
   const doc = document.getElementById('diff-panel-body');
   doc.contentEditable = 'false';
