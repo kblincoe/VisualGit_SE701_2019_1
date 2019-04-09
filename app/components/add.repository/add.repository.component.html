@@ -35,11 +35,13 @@
             name="dirListSave" (change)="updateDirLocal()"
             style="display: none;" webkitdirectory />
         </div>
+        <div class="form-group">
+          <add-gitignore-panel id="gitignore-selector"></add-gitignore-panel>
         </div>
         <div class="form-group">
-              <button class="btn btn-primary btn-lg" type="button" id="initButton" (click)="initRepository()">Init Repo</button>
+          <button class="btn btn-primary btn-lg" type="button" id="initButton" (click)="initRepository()">Init Repo</button>
         </div>
-        <add-gitignore-panel id="gitignore-selector"></add-gitignore-panel>
+      </div>
       </div>
       <div id="openInternetTab" class="tab-pane fade">
         <div class="title">
