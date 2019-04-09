@@ -252,16 +252,20 @@ function pullFromRemote() {
             updateModalText('Successfully pulled from remote branch ' + branch + ', and your repo is up to date now!');
             refreshAll(repository);
           }
-        }, function(err) {
-          if (err === 'Error: String path is required.'){
-            updateModalText('Failed to pull from remote as no repository is currently open. \
-            Either clone one from a remote location or open one locally.');
-          } else {
-            updateModalText(`${err} Failed to pull from remote`);
-          }
-          console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
         });
       });
+    }, function(err) {
+      if (err === 'Error: String path is required.'){
+        updateModalText('Failed to pull from remote as no repository is currently open. \
+        Either clone one from a remote location or open one locally.');
+      } else if (err.message === 'request failed with status code: 401'){
+        updateModalText('You are unauthorised to pull from this repository. \
+        Sign in or contact the owner of the repository for pulling access.')
+      }
+      else {
+        updateModalText(`${err} Failed to pull from remote`);
+      }
+      console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
     });
   });
 //   .then(function(updatedRepository) {
