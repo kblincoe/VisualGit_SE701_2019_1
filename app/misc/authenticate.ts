@@ -46,7 +46,9 @@ async function loginWithSaved(callback) {
   if (credentials) {
     document.getElementById('auth-username').value = credentials.username;
     document.getElementById('auth-password').value = credentials.password;
+    return true;
   }
+  return false;
 }
 
 /**
