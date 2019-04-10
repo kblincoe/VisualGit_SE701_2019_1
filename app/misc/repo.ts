@@ -419,12 +419,23 @@ function displayBranch(name, id, onclick) {
   ul.appendChild(li);
 }
 
-function clearBranchSearchField() {
-  // This funciton will take any input that is left over in the text field from pervious searches and clear it when the user
-  // selects the branch droplist to change branches on the repo
+/**
+ * This function will take any input that is left over in the text field from previous searches and clear it when the user
+ * selects the branch drop list to change branches on the repo
+ * @param input Which search field being used
+ */
+function clearBranchSearchField(input) {
+
+  // Make sure only create/search branch on correct panel
   if (document.getElementById('add-repository-panel').style.zIndex.toString() !== REPO_SCREEN_VISABLE_Z_INDEX_VALUE) {
-    const textField = document.getElementById('branchName');
-    textField.value = '';
+    if (input.id === 'branch-name') {
+      $('#branch-btn').attr('disabled', true);
+      $('#branchName').val('');
+    } else {
+      $('#branch-btn2').attr('disabled', true);
+      $('#branchName2').val('');
+    }
+
     sortBranches();
   } else {
     displayModal('Unable to change branch while attempting to add, create or change repository.' +
