@@ -376,6 +376,13 @@ body .flex-empty-space {
   max-width: 22%;
 }
 
+body .repo-list {
+  /*42px for origin repo name + 76px for modal header
+   + 2*42px for padding above and below */
+  max-height: calc(100vh - 126px - 76px);
+  overflow-y: scroll;
+}
+
 body .add-repository-panel .back-button {
   float: left;
   position: absolute;

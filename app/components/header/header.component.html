@@ -246,11 +246,13 @@ aria-hidden="true">
         <h4 class="modal-title">Repositories</h4>
         <h8>Click to expand forks</h8>
       </div>
-      <ul class="list-group"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
+      <div class="repo-list">
+      <ul class="list-group flex-container-col"id="repo-dropdown" role="menu" aria-labelledby="repo-name">
         <li class="list-group-item" id="empty-message">
           You have no repositories to view. You may not be logged in.
         </li>
       </ul>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary disabled" id="cloneButton" onclick="cloneRepo()">Clone</button>
       </div>
