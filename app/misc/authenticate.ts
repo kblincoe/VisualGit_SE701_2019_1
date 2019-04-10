@@ -148,6 +148,7 @@ function displayRepo(name, id) {
     ulParent.setAttribute('aria-expanded', 'false');
     ulParent.setAttribute('class', 'collapse');
     ulParent.setAttribute('style', 'height: 0px;');
+    ulParent.setAttribute('style', 'padding-left: 0px');
     ulParent.setAttribute('id', parent);
     liParent.appendChild(ulParent);
     if (branchList != null){
