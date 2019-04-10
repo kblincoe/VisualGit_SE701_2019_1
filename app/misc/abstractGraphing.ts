@@ -9,7 +9,7 @@ function populateAbstract() {
   commitList = [];
   parentCount = {};
   columns = [];
-  
+
   // Plot the graph
   for (let i = 0; i < commitHistory.length; i++) {
     const parents: string[] = commitHistory[i].parents();
