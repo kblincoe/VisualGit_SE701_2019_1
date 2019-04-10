@@ -25,14 +25,20 @@ import { HeaderComponent } from './header/header.component';
 
 export class AppComponent implements OnInit {
 
-    @ViewChild(AuthenticateComponent) authComp: AuthenticateComponent;
+  @ViewChild(AuthenticateComponent) authComp: AuthenticateComponent;
 
   ngOnInit(){
     if (sessionStorage.getItem('firstLogin') === null){
         sessionStorage.setItem('firstLogin', 'firstLogin');
-        useSaved().then((_)  => {
-            this.authComp.switchToMainPanel();
+        hasSavedCredentials().then((response)  => {
+            if (response) {
+                this.authComp.switchToMainPanel();
+            } else {
+                closeSplashScreen();
+            }
         });
+    } else {
+        closeSplashScreen();
     }
   }
 }

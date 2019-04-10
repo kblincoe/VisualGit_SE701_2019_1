@@ -1,5 +1,17 @@
 <div class="authenticate" id="authenticate">
-    <form role="form" style="text-align:center; margin-top:100px">
+
+  <div id="splash">
+    <div class="loading-animation">
+      <div class="first-cube">
+        <img class="cube-img" src="./assets/VisualGit_Logo.png"/>
+      </div>
+      <div class="second-cube">
+        <img class="cube-img" src="./assets/VisualGit_Logo.png"/>
+      </div>
+    </div>
+  </div>
+
+    <form id="content" role="form" style="text-align:center; margin-top:100px; display: none">
       <label>
           <h1><img src="./assets/VisualGit_Logo.png" class="auth-logo"> VisualGit</h1>
       </label>
@@ -26,7 +38,7 @@
       </div>
   
       <br>
-      <button type="submit" style="width:280px;" class="btn btn-primary" onclick="useSaved()">Load Saved Credentials</button>
+      <button type="submit" style="width:280px;" class="btn btn-primary" onclick="hasSavedCredentials()">Load Saved Credentials</button>
       <br>
       <br>
   
@@ -40,4 +52,4 @@
       <button type="submit" style="width:280px;" class="btn btn-primary" onclick="switchToAddRepositoryPanel();
        continueWithoutSignIn();">Continue without sign in</button>
     </form>
-  </div>
+</div>

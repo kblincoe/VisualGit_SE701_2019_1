@@ -135,6 +135,11 @@ function clearCloneButtonCache() {
   butt.setAttribute('class', 'btn btn-primary disabled');
 }
 
-async function useSaved() {
-  await loginWithSaved(switchToMainPanel);
+async function hasSavedCredentials() {
+  return await loginWithSaved(switchToMainPanel);
+}
+
+function closeSplashScreen(): void {
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("content").style.display = "block";
 }
