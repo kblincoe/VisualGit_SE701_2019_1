@@ -3,6 +3,8 @@
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain, Menu, } = electron;
 
+const credentials = require('./app/misc/credentials');
+
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
 
@@ -279,6 +281,9 @@ ipcMain.on('authenticate', (event, signedIn) => {
 	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
 
+ipcMain.on('signout', () => {
+	credentials.clearCredentials();
+})
 
 function log(msg) {
 	mainWindow.webContents.send('log', msg);

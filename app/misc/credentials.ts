@@ -19,3 +19,9 @@ async function readCredentials(): Promise<{ username: string, password: string }
     return null;
   }
 }
+
+function clearCredentials(): void {
+  keytar.deletePassword(SERVICE_NAME, ACCOUNT_NAME);
+}
+
+export { clearCredentials };

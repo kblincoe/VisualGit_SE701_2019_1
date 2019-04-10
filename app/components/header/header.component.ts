@@ -23,7 +23,8 @@ export class HeaderComponent   {
   }
 
   signOut(): void {
-    ipcRenderer.send('authenticate', false);
+    ipcRenderer.send('signout');
+    redirectToHomePage();
   }
 
 }
