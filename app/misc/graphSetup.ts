@@ -37,7 +37,6 @@ export const OPTIONS = {
     smooth: {
       enabled: true,
       type: 'cubicBezier',
-      // forceDirection: "horizontal",
       roundness: 0.5,
     },
     width: 3,
@@ -228,12 +227,10 @@ function drawGraph(cb?: () => void) {
       network.setData(data);
       flag = 'node';
       network.fit(moveOptions);
-      // network.redraw();
     } else if (network.getScale() < 0.4 && callback.direction === '-' && flag === 'node') {
       network.setData(abData);
       flag = 'abstract';
       network.fit(moveOptions);
-      // network.redraw();
     } else if (network.getScale() > 1.5 && callback.direction === '+' && flag === 'basic') {
       network.setData(abData);
       flag = 'abstract';
@@ -278,15 +275,15 @@ function drawGraph(cb?: () => void) {
     } else {
       toNode = undefined;
     }
-  //   if (toNode !== undefined) {
-  //     network.selectNodes([toNode], [false]);
-  //     addBranchestoNode(nodes.get(toNode)['label']);
-  //     $('#branchOptions').css({
-  //     display: 'block',
-  //     left: callback.pointer.DOM.x,
-  //     top: callback.pointer.DOM.y
-  //  });
-  //   }
+    // if (toNode !== undefined) {
+    //   network.selectNodes([toNode], [false]);
+    //   addBranchestoNode(nodes.get(toNode)['label']);
+    //   $('#branchOptions').css({
+    //   display: 'block',
+    //   left: callback.pointer.DOM.x,
+    //   top: callback.pointer.DOM.y
+    // });
+    // }
   });
 
   getAllCommits(function(commits) {

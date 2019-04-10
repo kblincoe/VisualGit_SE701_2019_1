@@ -1,6 +1,9 @@
 /// <reference path='git.ts' />
 
 
+import * as nodegit from 'git';
+import NodeGit, { Status } from 'nodegit';
+
 import { ipcRenderer } from 'electron';
 import Git = require('nodegit');
 
@@ -222,7 +225,6 @@ function redirectToHomePage() {
   window.location.href = 'index.html';
   signedIn = false;
   clear();
-  // LogInAfterConfirm();
 }
 
 function setAccountInfo(data) {
