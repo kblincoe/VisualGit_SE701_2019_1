@@ -1,7 +1,7 @@
 import { Blue } from './blue';
 import { Default } from './default';
 import { Green } from './green';
-import { Theme } from './itheme';
+import { ITheme } from './itheme';
 import { Navy } from './navy';
 import { Pink } from './pink';
 import { White } from './white';
@@ -13,7 +13,7 @@ export const Themes = {
   Default,
   Navy,
   Pink,
-  apply: function(theme: Theme) {
+  apply: function(theme: ITheme) {
     const navbarElements = document.getElementsByClassName('navbar');
     const icons = document.getElementsByClassName('fa');
     const filePanel = document.getElementById('file-panel');
