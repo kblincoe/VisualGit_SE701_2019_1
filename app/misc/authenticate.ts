@@ -12,7 +12,6 @@ import github = require('octonode');
 const aid;
 const atoken;
 let client;
-const avaterImg;
 const repoList = {};
 let url;
 let signedIn = false;
