@@ -23,7 +23,6 @@
     <script src="app/misc/credentials.js"></script>    
     <script src="app/misc/router.js"></script>
     <script src="app/misc/authenticate.js"></script>
-    <script src="app/misc/color.js"></script>
     <script src="app/misc/file.js"></script>
     <link href="node_modules/vis/dist/vis.min.css" rel="stylesheet" type="text/css">
     <script src="node_modules/jquery/dist/jquery.js"></script>
@@ -48,30 +47,31 @@
 </html>
 
 <script>
+const Themes = require('./app/misc/themes/themes.js').Themes;
 const ipcRenderer = require('electron').ipcRenderer;
 
 ipcRenderer.on('change-to-white-style', function() {
-    changeColor('white');
+    Themes.apply(Themes.White);
 });
     
 ipcRenderer.on('change-to-pink-style', function() {
-    changeColor('pink');
+    Themes.apply(Themes.Pink);
 });
 
 ipcRenderer.on('change-to-blue-style', function() {
-    changeColor('blue');
+    Themes.apply(Themes.Blue);
 });
     
 ipcRenderer.on('change-to-navy-style', function() {
-    changeColor('navy');
+    Themes.apply(Themes.Navy);
 });
 
 ipcRenderer.on('change-to-green-style', function() {
-    changeColor('green');
+    Themes.apply(Themes.Green);
 });
 
 ipcRenderer.on('change-to-default-style', function() {
-    changeColor('default');
+    Themes.apply(Themes.Default);
 });
 
 ipcRenderer.on('push-to-remote', function() {
