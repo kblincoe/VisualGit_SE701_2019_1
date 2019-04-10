@@ -4,17 +4,12 @@
 
 ### **Testing:**
 
-If your changes cannot be tested programmatically, add steps below so that the reviewer can manually tests your changes. Otherwise, list the names of the new unit tests you have added to the test suite.
+Add steps below so that the reviewer can manually tests your changes.
 
 **Steps for manual testing:**
 
 1. ...
 2. ...
-
-**Newly added unit tests:**
-
-- List the names of tests you've added to the test suite
-
 
 ### **Checklist:**
 
