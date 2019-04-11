@@ -182,14 +182,15 @@ function drawGraph(cb?: () => void) {
     }
 
     const email = abNodes._data[callback.nodes[0]]['email'];
-
+    const username = email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
+    let url = 'https://github.com/' + username;
+    
     if (email.includes('noreply.github.com')) {
-      const username = email.match(new RegExp('[0-9]*\\+*([^@]+)@'))[1];
-      updateModalText('Github Profile: <a onClick=\'window.open(\'https://github.com/' + username +
-        '\')\'>https://github.com/' + username + '</a>' +
-        '<br/><i><small>Note: this user has not made their email public</small></i>');
+      updateModalText('Github: <a href=\"javascript:void(0)\" onClick=\"window.open(\''  + url + '\')\">https://github.com/'
+          + username + '</a>' + '<br/><i><small>Note: this user has not made their email public</small></i>');
     } else {
-      updateModalText('Email: <a onClick=\'window.open(\'mailto:' + email + '\')\'>' + email + '</a>');
+      updateModalText('Github: <a href=\"javascript:void(0)\" onClick=\"window.open(\''  + 'url' + '\')\">https://github.com/'
+          + username + '</a>' +'<br/>Email: <i>' + email + '</i>');
     }
   }, false);
 
