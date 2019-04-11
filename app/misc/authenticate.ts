@@ -1,16 +1,10 @@
 /// <reference path='git.ts' />
 
 
-// import * as nodegit from 'git';
-// import NodeGit, { Status } from 'nodegit';
-
 import { ipcRenderer } from 'electron';
 import Git = require('nodegit');
-const repo;
 
 import github = require('octonode');
-const aid;
-const atoken;
 let client;
 const repoList = {};
 let url;

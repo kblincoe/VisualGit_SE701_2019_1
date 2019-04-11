@@ -1,7 +1,5 @@
 import * as nodegit from 'git';
 
-import github1 = require('octonode');
-import vis = require('vis');
 let nodeId = 1;
 let absNodeId = 1;
 let basicNodeId = 1;
@@ -15,11 +13,7 @@ const spacingX = 80;
 let parentCount = {};
 let columns: boolean[] = [];
 const edgeDic = {};
-const abstractCount = 0;
-const basicCount = 0;
 let numOfCommits = 0;
-import githubUsername = require('github-username');
-const avatarUrls = {};
 const branchIds = {};
 
 function processGraph(commits: nodegit.Commit[], cb?: () => void) {
