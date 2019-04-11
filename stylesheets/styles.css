@@ -598,7 +598,7 @@ body .footer .git-command {
   cursor: pointer;
   border: 1px solid lightgray;
   box-sizing: border-box;
-  
+
 }
 
 .dropdown-label, .dropdown-quantity {
@@ -672,7 +672,7 @@ div#listhere {
   animation: lds-rolling 1s linear infinite;
   top: 100px;
   left: 100px;
-  
+
 }
 .lds-rolling div:after {
   -webkit-transform: rotate(90deg);
