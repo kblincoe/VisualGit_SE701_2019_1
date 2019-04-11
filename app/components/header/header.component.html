@@ -25,7 +25,7 @@
         </li>
         <li><img src="./assets/RightArrow.svg" class="right-arrow"></li>
         <li class="branch-name dropdown">
-          <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="clearBranchSearchField()">
+          <a href="#" class="dropdown-toggle" id="branch-name" data-toggle="dropdown" onclick="clearBranchSearchField(this)">
             branch<span class="caret"></span>
           </a>
           <ul class="dropdown-menu" id="branch-dropdown" role="menu" aria-labelledby="branch-name">
@@ -77,7 +77,7 @@
           </a>
         </li>
         <li class="dropdown">
-          <a id="branch-name" data-toggle="dropdown" href="#">
+          <a id="branch-name2" data-toggle="dropdown" href="#" onclick="clearBranchSearchField(this)">
             &nbsp;&nbsp;branch
             <span class="caret"></span>
           </a>
