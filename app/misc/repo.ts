@@ -18,7 +18,6 @@ const recentsFile = 'recents.json';
 import checkFile = require('fs');
 import readFile = require('fs-sync');
 import { ProjectPanelComponent } from '../components/project.panel/project.panel.component';
-const repoCurrentBranch = 'master';
 const modal;
 const span;
 const REPO_SCREEN_VISABLE_Z_INDEX_VALUE = '10';

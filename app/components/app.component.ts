@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { AddRepositoryComponent } from './add.repository/add.repository.component';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { BodyPanelComponent } from './body.panel/body.panel.component';

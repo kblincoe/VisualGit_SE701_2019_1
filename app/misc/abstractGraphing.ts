@@ -1,5 +1,3 @@
-import vis = require('vis');
-
 function processAbstract(commits: nodegit.Commit[]) {
   sortCommits(commits);
   populateAbstract();
