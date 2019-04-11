@@ -82,7 +82,8 @@ function addAndCommit() {
     changes = false;
     unpushedCommits = true;
     console.log(`Commit successful:  + ${oid.tostrS()}`);
-    hideDiffPanel();
+    const windowAny : any = window;
+    windowAny.diffPanelComponent.close();
     clearModifiedFilesList();
     clearCommitMessage();
     clearSelectAllCheckbox();
@@ -547,7 +548,8 @@ function clearRemovedFiles() {
     if (!(fs.existsSync(createdFilePath))) {
       document.getElementsByClassName('file file-created')[i].remove();
       if (previousId !== createdFilePath) {
-        hideDiffPanel();
+        const windowAny : any = window;
+        windowAny.diffPanelComponent.close();
       }
     }
   };
@@ -656,15 +658,16 @@ function displayModifiedFiles() {
 
         fileElement.onclick = function() {
           const doc = document.getElementById(`file-path-id-${index}`);
+          const windowAny : any = window;
 
           if (previousId !== doc.innerHTML){
-            hideDiffPanel();
+            windowAny.diffPanelComponent.close();
           }
 
 
           const diffPanel = document.getElementById('diff-panel');
           if ((diffPanel.style.width === '0px' || diffPanel.style.width === '') && !checkbox.checked) {
-            displayDiffPanel();
+            windowAny.diffPanelComponent.open();
             document.getElementById('diff-panel-body').innerHTML = '';
 
             if (fileElement.className === 'file file-created') {
@@ -673,7 +676,7 @@ function displayModifiedFiles() {
               printFileDiff(file.filePath);
             }
           } else {
-            hideDiffPanel();
+            windowAny.diffPanelComponent.close();
           }
           previousId = doc.innerHTML;
         };

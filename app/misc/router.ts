@@ -102,17 +102,6 @@ function hideAddRepositoryPanel() {
   document.getElementById('add-repository-panel').style.zIndex = '-10';
 }
 
-function displayDiffPanel() {
-  document.getElementById('graph-panel').style.width = '40%';
-  document.getElementById('diff-panel').style.width = '40%';
-}
-
-function hideDiffPanel() {
-  document.getElementById('diff-panel').style.width = '0';
-  document.getElementById('graph-panel').style.width = '80%';
-  disableDiffPanelEditOnHide();
-}
-
 function hideAuthenticatePanel() {
   document.getElementById('authenticate').style.zIndex = '-20';
   // Clear sign in input fields
@@ -122,11 +111,6 @@ function hideAuthenticatePanel() {
 
 function displayAuthenticatePanel() {
   document.getElementById('authenticate').style.zIndex = '20';
-}
-
-function disableDiffPanelEditOnHide(){
-  const doc = document.getElementById('diff-panel-body');
-  doc.contentEditable = 'false';
 }
 
 function clearCloneButtonCache() {
