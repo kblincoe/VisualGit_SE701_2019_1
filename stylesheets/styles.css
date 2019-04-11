@@ -260,7 +260,6 @@ body .body-panel {
   float: right;
   z-index: 0;
   background-color: #181818;
-  bottom: 15vh;
 }
 
 body .body-panel .project-panel {
@@ -609,11 +608,9 @@ body .footer .git-command {
   width: 100%;
   background: whitesmoke;
   padding: 10px 12px;
-
   cursor: pointer;
   border: 1px solid lightgray;
   box-sizing: border-box;
-
 }
 
 .dropdown-label, .dropdown-quantity {
@@ -687,7 +684,6 @@ div#listhere {
   animation: lds-rolling 1s linear infinite;
   top: 100px;
   left: 100px;
-
 }
 .lds-rolling div:after {
   -webkit-transform: rotate(90deg);
@@ -758,5 +754,3 @@ div#listhere {
             -webkit-transform: rotate(-360deg);
           }
 }
-
-/* Splash Loading Animation End */
