@@ -99,7 +99,7 @@ This is used to allow users to see the different types of changes easily and onc
 The pulling and pushing currently works for changes which are made on master and origin/master by syncing these up. When the pull button is clicked, any changes on the remote repository will be added to the local repository and the graph will be updated. When pushing, the same process applies. The changes on master will be pushed to the remote repository.
 
 # Contributing
-We are open to pull requests with new features or improvements.
+We are open to pull requests with new features or improvements. Please check out the [project wiki](https://github.com/kblincoe/VisualGit_SE701_2019_1/wiki/Work-Flow) for more information and guidelines on how to contribute.
 
 # Help
 VisualGit utilises a range of libraries and frameworks, more information on them can be found below:
