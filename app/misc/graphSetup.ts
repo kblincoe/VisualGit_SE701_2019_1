@@ -189,7 +189,7 @@ function drawGraph(cb?: () => void) {
       updateModalText('Github: <a href=\"javascript:void(0)\" onClick=\"window.open(\''  + url + '\')\">https://github.com/'
           + username + '</a>' + '<br/><i><small>Note: this user has not made their email public</small></i>');
     } else {
-      updateModalText('Github: <a href=\"javascript:void(0)\" onClick=\"window.open(\''  + 'url' + '\')\">https://github.com/'
+      updateModalText('Github: <a href=\"javascript:void(0)\" onClick=\"window.open(\''  + url + '\')\">https://github.com/'
           + username + '</a>' +'<br/>Email: <i>' + email + '</i>');
     }
   }, false);
