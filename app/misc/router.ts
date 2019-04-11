@@ -102,38 +102,6 @@ function hideAddRepositoryPanel() {
   document.getElementById('add-repository-panel').style.zIndex = '-10';
 }
 
-<<<<<<< HEAD
-=======
-function displayDiffPanel() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  document.getElementById('graph-panel').style.width = '20%';
-  document.getElementById('diff-panel').style.width = '60%';
-=======
-<<<<<<< HEAD
-  document.getElementById('graph-panel').style.width = '40%';
-  document.getElementById('diff-panel').style.width = '40%';
-=======
-  document.getElementById('graph-panel').style.width = '20%';
-  document.getElementById('diff-panel').style.width = '60%';
-  displayDiffPanelButtons();
->>>>>>> Increased width of line changes panel to view lines more easily.
->>>>>>> Increased width of line changes panel to view lines more easily.
-=======
-  document.getElementById('graph-panel').style.width = '20%';
-  document.getElementById('diff-panel').style.width = '60%';
-  displayDiffPanelButtons();
->>>>>>> Increased width of line changes panel to view lines more easily.
-}
-
-function hideDiffPanel() {
-  document.getElementById('diff-panel').style.width = '0';
-  document.getElementById('graph-panel').style.width = '80%';
-  disableDiffPanelEditOnHide();
-  hideDiffPanelButtons();
-}
-
->>>>>>> Increased width of line changes panel to view lines more easily.
 function hideAuthenticatePanel() {
   document.getElementById('authenticate').style.zIndex = '-20';
   // Clear sign in input fields
