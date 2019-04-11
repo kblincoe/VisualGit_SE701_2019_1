@@ -38,7 +38,6 @@ function ready() {
 }
 
 function initGraph(params: InitGraphParams) {
-    // Perform graph initialization work here.
     // sendOutput(output);
 }
 

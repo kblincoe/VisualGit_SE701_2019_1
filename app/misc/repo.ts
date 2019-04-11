@@ -525,31 +525,7 @@ function updateCustomPath(userPath: string) {
   }
 }
 
-// function initModal() {
-//   modal = document.getElementById('modal');
-//   btn = document.getElementById('new-repo-button');
-//   confirmBtn = document.getElementById('confirm-button');
-//   span = document.getElementsByClassName('close')[0];
-// }
-
-// function handleModal() {
-//   // When the user clicks on <span> (x), close the modal
-//   span.onclick = function() {
-//     modal.style.display = 'none';
-//   };
-//
-//   // When the user clicks anywhere outside of the modal, close it
-//   window.onclick = function(event) {
-//
-//     if (event.target === modal) {
-//       modal.style.display = 'none';
-//     }
-//   };
-// }
-
 function displayModal(text) {
-//  initModal();
-//  handleModal();
   document.getElementById('modal-text-box').innerHTML = text;
   $('#modal').modal('show');
 }

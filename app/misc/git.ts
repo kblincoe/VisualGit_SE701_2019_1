@@ -124,19 +124,6 @@ function clearSelectAllCheckbox() {
 }
 
 function getAllCommits(callback) {
-  // Git.Repository.open(repoFullPath)
-  // .then(function(repo) {
-  //   return repo.getHeadCommit();
-  // })
-  // .then(function(firstCommitOnMaster){
-  //   let history = firstCommitOnMaster.history(Git.Revwalk.SORT.Time);
-  //
-  //   history.on('end', function(commits) {
-  //     callback(commits);
-  //   });
-  //
-  //   history.start();
-  // });
   let repos;
   const allCommits = [];
   const aclist = [];
@@ -266,10 +253,6 @@ function pullFromRemote() {
       console.log(`Error in git.ts. Attempting to pull from remote, the error is: ${err}`);
     });
   });
-//   .then(function(updatedRepository) {
-//     refreshAll(updatedRepository);
-
-// });
 }
 
 function pushToRemote() {
@@ -432,7 +415,6 @@ function rebaseCommits(from: string, to: string) {
   Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repos = repo;
-    // return repos.getCommit(fromSha);
     addCommand('git rebase ' + to);
     return Git.Reference.nameToId(repos, 'refs/heads/' + from);
   })

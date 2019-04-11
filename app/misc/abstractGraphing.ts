@@ -9,10 +9,6 @@ function populateAbstract() {
   commitList = [];
   parentCount = {};
   columns = [];
-  // Sort
-  // commitHistory = commits.sort(function(a, b) {
-  //   return a.timeMs() - b.timeMs();
-  // });
 
   // Plot the graph
   for (let i = 0; i < commitHistory.length; i++) {

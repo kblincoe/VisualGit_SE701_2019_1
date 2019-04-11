@@ -138,18 +138,6 @@ body .navbar .dropdown-menu a {
   overflow-x: auto;
 }
 
-/*body .navbar .repo-name {
-  margin-left: 30px;
-}*/
-
-/*body .navbar .branch-name {
-  margin-left: 15px;
-}*/
-
-/*body .navbar .merge {
-  margin-left: 20px;
-}*/
-
 body .navbar .fa-cloud-upload {
   margin-top: 8px;
 }
@@ -157,11 +145,6 @@ body .navbar .fa-cloud-upload {
 body .navbar .fa-cloud-download {
   margin-top: 8px;
 }
-/*
-body .navbar .dropdown-toggle {
-  margin-top: 10px;
-}*/
-
 
 body .file-panel {
   width: 20%;

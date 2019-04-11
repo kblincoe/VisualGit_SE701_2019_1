@@ -27,7 +27,7 @@ function getProfilePictureURL(name: string, email: string, callback) {
   // try to construct username from github email
   const username = usernameFromEmail( email );
 
-  // this code block was left in in-case we open an issue to
+  // this code block was left in-case we open an issue to
   // enable non-github emails to resolve to github usernames.
 
   // if not possible, try to fetch the github username from github.
