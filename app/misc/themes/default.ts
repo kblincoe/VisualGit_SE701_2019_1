@@ -6,7 +6,7 @@ export const Default: ITheme = {
   filePanelColor: '#282828',
   paragraphColor: '#CCCCCC',
   headingColor: '#CCCCCC',
-  diffPanelColor: 'white',
+  diffPanelColor: '#282828',
   diffPanelBackgroundColor: '#282828',
   networkColor: '#181818',
   footerColor: '#282828',
