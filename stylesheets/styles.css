@@ -246,25 +246,7 @@ body .body-panel {
   height: 78vh;
   float: right;
   z-index: 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   background-color: #181818;
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Removed whitespace and unused settings in css.
-=======
-  background-color: #181818;
->>>>>>> Changed background colours of panels to remove white gaps.
-=======
-  bottom: 15vh;
->>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
-=======
->>>>>>> Removed whitespace and unused settings in css.
-=======
-  background-color: #181818;
->>>>>>> c693c19c4bc8dea69964ad2fb363b0591eff46b7
 }
 
 body .body-panel .project-panel {
@@ -616,16 +598,6 @@ body .footer .git-command {
   cursor: pointer;
   border: 1px solid lightgray;
   box-sizing: border-box;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
-=======
->>>>>>> Removed whitespace and unused settings in css.
-=======
->>>>>>> c693c19c4bc8dea69964ad2fb363b0591eff46b7
 }
 
 .dropdown-label, .dropdown-quantity {
@@ -769,14 +741,3 @@ div#listhere {
             -webkit-transform: rotate(-360deg);
           }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-/* Splash Loading Animation End */
->>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
-=======
->>>>>>> Removed whitespace and unused settings in css.
-=======
->>>>>>> c693c19c4bc8dea69964ad2fb363b0591eff46b7
