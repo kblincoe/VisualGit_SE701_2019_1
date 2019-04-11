@@ -29,8 +29,8 @@ export class DiffPanelComponent {
   }
 
   displayDiffPanel(): void {
-    document.getElementById('graph-panel').style.width = '40%';
-    document.getElementById('diff-panel').style.width = '40%';
+    document.getElementById('graph-panel').style.width = '20%';
+    document.getElementById('diff-panel').style.width = '60%';
   }
 
   open(): void {
