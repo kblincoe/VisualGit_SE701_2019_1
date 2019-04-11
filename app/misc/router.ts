@@ -140,6 +140,6 @@ async function hasSavedCredentials() {
 }
 
 function closeSplashScreen(): void {
-  document.getElementById('splash').style.display = 'none';
-  document.getElementById('content').style.display = 'block';
+  document.getElementById("splash").style.display = "none";
+  document.getElementById("content").style.display = "block";
 }
