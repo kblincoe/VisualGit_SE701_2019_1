@@ -101,6 +101,14 @@ document.addEventListener('DOMContentLoaded', function() {
       addAndCommit();
     });
 
+    document.getElementById('save-button').addEventListener("click", function() {
+      saveFile();
+    });
+
+    document.getElementById('cancel-button').addEventListener("click", function() {
+      cancelEdit();
+    });
+
   }, 2000);
 
   // Update modified files on left file panel every X seconds
