@@ -105,7 +105,6 @@ function hideAddRepositoryPanel() {
 function displayDiffPanel() {
   document.getElementById('graph-panel').style.width = '20%';
   document.getElementById('diff-panel').style.width = '60%';
-  displayDiffPanelButtons();
 }
 
 function hideDiffPanel() {
