@@ -560,7 +560,7 @@ function displayModifiedFiles() {
 
   modifiedFiles = [];
 
-  Git.Repository.open(repoFullPath)
+  repoFullPath && Git.Repository.open(repoFullPath)
   .then(function(repo) {
     repo.getStatus().then(function(statuses) {
 
