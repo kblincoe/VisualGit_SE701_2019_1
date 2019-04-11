@@ -228,6 +228,10 @@ body .body-panel {
   width: 80%;
   float: right;
   z-index: 0;
+<<<<<<< HEAD
+=======
+  background-color: #181818;
+>>>>>>> Removed whitespace and unused settings in css.
 }
 
 body .body-panel .project-panel {
@@ -574,11 +578,9 @@ body .footer .git-command {
   width: 100%;
   background: whitesmoke;
   padding: 10px 12px;
-
   cursor: pointer;
   border: 1px solid lightgray;
   box-sizing: border-box;
-
 }
 
 .dropdown-label, .dropdown-quantity {
@@ -652,7 +654,6 @@ div#listhere {
   animation: lds-rolling 1s linear infinite;
   top: 100px;
   left: 100px;
-
 }
 .lds-rolling div:after {
   -webkit-transform: rotate(90deg);
@@ -723,5 +724,3 @@ div#listhere {
             -webkit-transform: rotate(-360deg);
           }
 }
-
-/* Splash Loading Animation End */
