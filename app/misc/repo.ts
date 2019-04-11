@@ -339,7 +339,9 @@ function refreshAll(repository, cb?: () => void) {
     console.log('Updating the graph and the labels');
     drawGraph(cb);
     document.getElementById('repo-name').innerHTML = repoLocalPath;
+    document.getElementById('repo-name').title = repoLocalPath;
     document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
+    document.getElementById('branch-name').title = branch; 
   });
 }
 
