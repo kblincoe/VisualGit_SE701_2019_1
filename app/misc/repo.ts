@@ -266,6 +266,7 @@ function openRepository(fullLocalPath: string, localPath: string) {
       console.log('Repo successfully opened');
       updateModalText('Repository successfully opened');
       windowAny.graphComponent.setLoading(false);
+      windowAny.diffPanelComponent.close();
     });
   },
   function(err) {

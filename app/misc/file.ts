@@ -46,7 +46,8 @@ function saveSuccess(){
 }
 
 function cancelEdit(){
-  hideDiffPanel();
+  const windowAny: any = window;
+  windowAny.diffPanelComponent.close();
 }
 
 function readFromFileEditor(filePath) {
@@ -70,4 +71,3 @@ function saveFileFromEditor() {
     saveSuccess();
   });
 }
-
