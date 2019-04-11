@@ -82,7 +82,7 @@ function addAndCommit() {
     changes = false;
     unpushedCommits = true;
     console.log(`Commit successful:  + ${oid.tostrS()}`);
-    const windowAny : any = window;
+    const windowAny: any = window;
     windowAny.diffPanelComponent.close();
     clearModifiedFilesList();
     clearCommitMessage();
@@ -548,7 +548,7 @@ function clearRemovedFiles() {
     if (!(fs.existsSync(createdFilePath))) {
       document.getElementsByClassName('file file-created')[i].remove();
       if (previousId !== createdFilePath) {
-        const windowAny : any = window;
+        const windowAny: any = window;
         windowAny.diffPanelComponent.close();
       }
     }
@@ -658,7 +658,7 @@ function displayModifiedFiles() {
 
         fileElement.onclick = function() {
           const doc = document.getElementById(`file-path-id-${index}`);
-          const windowAny : any = window;
+          const windowAny: any = window;
 
           if (previousId !== doc.innerHTML){
             windowAny.diffPanelComponent.close();
