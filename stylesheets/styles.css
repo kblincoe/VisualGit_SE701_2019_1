@@ -251,6 +251,7 @@ body .body-panel {
 =======
   background-color: #181818;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Removed whitespace and unused settings in css.
 =======
   background-color: #181818;
@@ -258,6 +259,8 @@ body .body-panel {
 =======
   bottom: 15vh;
 >>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
+=======
+>>>>>>> Removed whitespace and unused settings in css.
 }
 
 body .body-panel .project-panel {
@@ -610,9 +613,12 @@ body .footer .git-command {
   border: 1px solid lightgray;
   box-sizing: border-box;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
+=======
+>>>>>>> Removed whitespace and unused settings in css.
 }
 
 .dropdown-label, .dropdown-quantity {
@@ -686,7 +692,6 @@ div#listhere {
   animation: lds-rolling 1s linear infinite;
   top: 100px;
   left: 100px;
-
 }
 .lds-rolling div:after {
   -webkit-transform: rotate(90deg);
@@ -758,7 +763,10 @@ div#listhere {
           }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 /* Splash Loading Animation End */
 >>>>>>> Adjusted sizing and position of body panel to fit the diff panel better.
+=======
+>>>>>>> Removed whitespace and unused settings in css.
