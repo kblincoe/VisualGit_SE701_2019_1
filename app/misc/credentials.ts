@@ -20,6 +20,7 @@ async function readCredentials(): Promise<{ username: string, password: string }
   }
 }
 
+// this should be used to clear credentials (refer to index.js)
 function clearCredentials(): void {
   keytar.deletePassword(SERVICE_NAME, ACCOUNT_NAME);
 }

@@ -3,7 +3,9 @@
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain, Menu, } = electron;
 
-const credentials = require('./app/misc/credentials');
+// importing keytar is a quick fix for start stcript issues
+// const credentials = require('./app/misc/credentials');
+const keytar = require('keytar')
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')();
@@ -281,8 +283,10 @@ ipcMain.on('authenticate', (event, signedIn) => {
 	Menu.setApplicationMenu(Menu.buildFromTemplate(authMenu))
 });
 
+// this should call credentials, however until a fix is provided keytar is imported and used here
 ipcMain.on('signout', () => {
-	credentials.clearCredentials();
+  // credentials.clearCredentials();
+  keytar.deletePassword('VisualGit', 'GitHub');
 })
 
 function log(msg) {
