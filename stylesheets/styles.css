@@ -141,6 +141,7 @@ body .navbar .dropdown-menu {
 }
 
 body .navbar .dropdown-menu a {
+  border-radius: 0;
   color: #000;
   overflow-x: auto;
 }
@@ -495,6 +496,10 @@ body .footer .git-command {
 
 .download-speed {
   color: #999;
+}
+
+.list-group-item {
+  border-radius: 0 !important;
 }
 
 .input-group .form-control:first-child,
