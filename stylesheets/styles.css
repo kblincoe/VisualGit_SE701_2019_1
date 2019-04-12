@@ -7,6 +7,10 @@ ul{
   list-style-type: none;
 }
 
+.btn {
+  border-radius: 0;
+}
+
 .btn:focus {
   outline: 0;
 }
@@ -137,6 +141,7 @@ body .navbar .dropdown-menu {
 }
 
 body .navbar .dropdown-menu a {
+  border-radius: 0;
   color: #000;
   overflow-x: auto;
 }
@@ -211,6 +216,7 @@ body .file-panel .files-changed .file:hover {
 }
 
 body .file-panel .commit-panel .commit-message-input {
+  border-radius: 0;
   resize: none;
   width: 90%;
   display: block;
@@ -219,7 +225,6 @@ body .file-panel .commit-panel .commit-message-input {
   margin-top: 20px;
   margin-bottom: 5px;
   height: 50px;
-  border-radius: 5px;
   padding: 5px;
 }
 
@@ -493,6 +498,10 @@ body .footer .git-command {
   color: #999;
 }
 
+.list-group-item {
+  border-radius: 0 !important;
+}
+
 .input-group .form-control:first-child,
 .input-group-addon:first-child,
 .input-group-btn:first-child > .btn,
@@ -500,7 +509,7 @@ body .footer .git-command {
 .input-group-btn:first-child > .dropdown-toggle,
 .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
 .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .input-group .form-control:last-child,
@@ -510,11 +519,12 @@ body .footer .git-command {
 .input-group-btn:last-child > .dropdown-toggle,
 .input-group-btn:first-child > .btn:not(:first-child),
 .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .nav-tabs>li>a {
   color: gray;
+  border-radius: 0;
 }
 
 .account_group {
