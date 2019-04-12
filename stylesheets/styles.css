@@ -256,7 +256,7 @@ body .body-panel {
 
 body .body-panel .project-panel {
   float: right;
-  height: 100vh;
+  height: 100%;
   width: 20%;
 }
 
@@ -322,6 +322,7 @@ body .body-panel .diff-panel .diff-panel-minimise:hover {
 
 body .body-panel .graph-panel {
   width: 80%;
+  height: 100%;
   float: right;
 }
 
