@@ -342,7 +342,7 @@ function refreshAll(repository, cb?: () => void) {
     document.getElementById('repo-name').innerHTML = repoLocalPath;
     document.getElementById('repo-name').title = repoLocalPath;
     document.getElementById('branch-name').innerHTML = branch + '<span class="caret"></span>';
-    document.getElementById('branch-name').title = branch; 
+    document.getElementById('branch-name').title = branch;
   });
 }
 

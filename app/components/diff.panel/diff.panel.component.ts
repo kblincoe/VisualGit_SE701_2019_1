@@ -13,7 +13,7 @@ export class DiffPanelComponent {
   constructor() {
     window[DIFF_PANEL_COMPONENT_REF] = {
       close: () => this.close(),
-      open: () => this.open()
+      open: () => this.open(),
     };
   }
 
